@@ -1,0 +1,22 @@
+{
+  imports = [
+    ./atuin.nix
+    ./bat.nix
+    ./bitwarden.nix
+    ./btop.nix
+    ./chezmoi.nix
+    ./direnv.nix
+    ./eza.nix
+    ./fzf.nix
+    ./git.nix
+    ./jq.nix
+    ./keybase.nix
+    ./neovim.nix
+    ./nix.nix
+    ./nx.nix
+    ./pay-respects.nix
+    ./starship.nix
+    ./tmux.nix
+    ./zoxide.nix
+  ];
+}
