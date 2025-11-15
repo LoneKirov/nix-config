@@ -9,7 +9,6 @@
       (lib.mkIf config.programs.starship.enable {
         settings = {
           "$schema" = "https://starship.rs/config-schema.json";
-          hostname.ssh_only = false;
         };
       })
     ];

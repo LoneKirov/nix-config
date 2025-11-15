@@ -7,6 +7,7 @@
     ./chezmoi.nix
     ./direnv.nix
     ./eza.nix
+    ./fd.nix
     ./fzf.nix
     ./git.nix
     ./jq.nix
@@ -15,7 +16,9 @@
     ./nix.nix
     ./nx.nix
     ./pay-respects.nix
+    ./ssh.nix
     ./starship.nix
+    ./systemd.nix
     ./tmux.nix
     ./zoxide.nix
   ];

@@ -22,17 +22,6 @@
 
     programs = {
       home-manager.enable = true;
-
-      zsh.zplug.plugins = [
-        {
-          name = "plugins/ssh-agent";
-          tags = ["from:oh-my-zsh"];
-        }
-        {
-          name = "plugins/systemd";
-          tags = ["from:oh-my-zsh"];
-        }
-      ];
     };
   };
 }

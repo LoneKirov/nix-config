@@ -5,7 +5,10 @@
 }: {
   config = {
     # zplug needs perl
-    home.packages = with pkgs; [perl];
+    home = {
+      packages = with pkgs; [perl];
+      shell.enableZshIntegration = true;
+    };
     programs.zsh = {
       enable = true;
       dotDir = "${config.xdg.configHome}/zsh";
