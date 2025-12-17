@@ -16,6 +16,7 @@
     ./nix.nix
     ./nx.nix
     ./pay-respects.nix
+    ./ripgrep.nix
     ./ssh.nix
     ./starship.nix
     ./systemd.nix
