@@ -164,7 +164,6 @@
       home = {
         packages = with pkgs; [
           nerd-fonts.fira-code
-          swaybg # niri
         ];
         stateVersion = "25.11";
       };
@@ -175,15 +174,6 @@
           # extensions = [];
           # commandLineArgs = [];
         };
-        alacritty.enable = true; # niri
-        fuzzel.enable = true; # niri
-        swaylock.enable = true; # niri
-        waybar.enable = true; # niri
-      };
-      services = {
-        mako.enable = true; # niri
-        swayidle.enable = true; # niri
-        polkit-gnome.enable = true; # niri
       };
     };
   };

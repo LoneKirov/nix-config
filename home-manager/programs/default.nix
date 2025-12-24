@@ -13,6 +13,7 @@
     ./jq.nix
     ./keybase.nix
     ./neovim.nix
+    ./niri
     ./nix.nix
     ./nx.nix
     ./pay-respects.nix
