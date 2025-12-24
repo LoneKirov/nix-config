@@ -3,6 +3,7 @@
     ./atuin.nix
     ./bat.nix
     ./bitwarden.nix
+    ./brave.nix
     ./btop.nix
     ./chezmoi.nix
     ./direnv.nix

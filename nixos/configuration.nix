@@ -167,14 +167,6 @@
         ];
         stateVersion = "25.11";
       };
-      programs = {
-        chromium = {
-          enable = true;
-          package = pkgs.brave;
-          # extensions = [];
-          # commandLineArgs = [];
-        };
-      };
     };
   };
   programs.zsh.enable = true;
