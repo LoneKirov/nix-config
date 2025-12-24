@@ -152,8 +152,6 @@
     extraGroups = ["wheel"];
   };
   home-manager = {
-    useUserPackages = true;
-    useGlobalPkgs = true;
     users.kirov = {pkgs, ...}: {
       imports = [
         ../home-manager/shells/zsh.nix

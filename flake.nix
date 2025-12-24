@@ -18,6 +18,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
   };
 
   outputs = {
@@ -29,6 +34,7 @@
     preservation,
     lanzaboote,
     home-manager,
+    nixvim,
     ...
   } @ inputs: let
     forAllSystems = f: nixpkgs.lib.genAttrs (import systems) f;
@@ -54,6 +60,13 @@
         preservation.nixosModules.preservation
         lanzaboote.nixosModules.lanzaboote
         home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            sharedModules = [nixvim.homeModules.nixvim];
+            useUserPackages = true;
+            useGlobalPkgs = true;
+          };
+        }
         ./nixos/configuration.nix
       ];
     };
