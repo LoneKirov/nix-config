@@ -36,13 +36,23 @@
     home-manager,
     nixvim,
     ...
-  } @ inputs: let
+  }: let
     forAllSystems = f: nixpkgs.lib.genAttrs (import systems) f;
     devShell = system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = {...}: {
+          imports = [
+            ./nixvim
+            ./nixvim/lsp/nix.nix
+          ];
+        };
+      };
     in {
       default = with pkgs;
         mkShell {
+          buildInputs = [nvim];
           packages = [
             alejandra
             nil
