@@ -2,22 +2,30 @@
   description = "A simple NixOS flake";
 
   inputs = {
+    # convenient flake for linux systems
     systems.url = "github:nix-systems/default-linux";
+    # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # predefined hardware configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # declarative disk formatting and fstab generation
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # impermanence alternative for persisting state
     preservation.url = "github:nix-community/preservation/main";
+    # secureboot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # declarative home directory
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # declarative neovim configuration
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,9 +45,12 @@
     nixvim,
     ...
   }: let
+    # helper to generate attributes for each system
     forAllSystems = f: nixpkgs.lib.genAttrs (import systems) f;
+    # devShell factory to pass to forAllSystems
     devShell = system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      # custom neovim with nix lsps enabled
       nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
         inherit pkgs;
         module = {...}: {
@@ -60,6 +71,7 @@
           ];
         };
     };
+    # formatter factory to pass to forAllSystems
     formatter = system: nixpkgs.legacyPackages.${system}.alejandra;
   in {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
