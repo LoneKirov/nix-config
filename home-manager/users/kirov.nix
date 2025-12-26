@@ -9,7 +9,7 @@
     xdg.enable = true;
 
     home = {
-      stateVersion = "25.05";
+      stateVersion = "25.11";
       username = "kirov";
       homeDirectory = "/home/kirov";
       sessionPath = ["$HOME/.local/bin"];
