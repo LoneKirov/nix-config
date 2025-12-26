@@ -18,6 +18,14 @@
       experimental-features = ["nix-command" "flakes"];
       # Have nix use xdg
       use-xdg-base-directories = true;
+      # optimize the store on every build
+      auto-optimise-store = true;
+    };
+    # run gc automatically
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
   };
 
