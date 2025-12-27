@@ -159,24 +159,63 @@
     shell = pkgs.zsh;
     extraGroups = ["wheel"];
   };
-  home-manager = {
-    users.kirov = {pkgs, ...}: {
-      imports = [
-        ../home-manager/shells/zsh.nix
-        ../home-manager/programs
-      ];
+  home-manager.users.kirov = {pkgs, ...}: {
+    imports = [
+      ../home-manager/shells/zsh.nix
+      ../home-manager/programs
+    ];
 
-      xdg.enable = true;
-      home = {
-        packages = with pkgs; [
-          nerd-fonts.fira-code
-        ];
-        stateVersion = "25.11";
+    xdg.enable = true;
+    home = {
+      packages = with pkgs; [
+        nerd-fonts.fira-code
+      ];
+      stateVersion = "25.11";
+    };
+  };
+  programs = {
+    zsh.enable = true;
+    niri.enable = true;
+    # DankMaterialShell
+    dms-shell = {
+      enable = true;
+      systemd = {
+        enable = true; # Systemd service for auto-start
+        restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
+      };
+
+      # Core features
+      enableSystemMonitoring = true; # System monitoring widgets (dgop)
+      enableClipboard = true; # Clipboard history manager
+      enableVPN = true; # VPN management widget
+      enableDynamicTheming = true; # Wallpaper-based theming (matugen)
+      enableAudioWavelength = true; # Audio visualizer (cava)
+      enableCalendarEvents = true; # Calendar integration (khal)
+    };
+    # DankSearch
+    dsearch = {
+      enable = true;
+
+      # Systemd service configuration
+      systemd = {
+        enable = true; # Enable systemd user service
+        target = "graphical-session.target"; # Only start in graphical sessions
       };
     };
   };
-  programs.zsh.enable = true;
-  programs.niri.enable = true; # niri
+  # DankGreeter
+  services.displayManager.dms-greeter = {
+    enable = true;
+    compositor.name = "niri";
+    # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
+    configHome = config.home-manager.users.kirov.home.homeDirectory;
+
+    # Save the logs to a file
+    logs = {
+      save = true;
+      path = "/tmp/dms-greeter.log";
+    };
+  };
 
   # programs.firefox.enable = true;
 

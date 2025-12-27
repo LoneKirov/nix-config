@@ -31,6 +31,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -43,6 +47,7 @@
     lanzaboote,
     home-manager,
     nixvim,
+    quickshell,
     ...
   }: let
     # helper to generate attributes for each system
@@ -74,8 +79,11 @@
     # formatter factory to pass to forAllSystems
     formatter = system: nixpkgs.legacyPackages.${system}.alejandra;
   in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (let
       system = "x86_64-linux";
+      quickshellPackage = quickshell.packages.${system}.quickshell;
+    in {
+      inherit system;
       modules = [
         nixos-hardware.nixosModules.framework-amd-ai-300-series
         disko.nixosModules.disko
@@ -89,9 +97,13 @@
             useGlobalPkgs = true;
           };
         }
+        {
+          programs.dms-shell.quickshell.package = quickshellPackage;
+          services.displayManager.dms-greeter.quickshell.package = quickshellPackage;
+        }
         ./nixos/configuration.nix
       ];
-    };
+    });
 
     devShells = forAllSystems devShell;
 
