@@ -216,6 +216,7 @@
       path = "/tmp/dms-greeter.log";
     };
   };
+  services.upower.enable = true;
 
   # programs.firefox.enable = true;
 
