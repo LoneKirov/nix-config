@@ -31,6 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
+    # latest quickshell for dms
     quickshell = {
       url = "git+https://git.outfoxxed.me/quickshell/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -81,26 +82,20 @@
   in {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (let
       system = "x86_64-linux";
-      quickshellPackage = quickshell.packages.${system}.quickshell;
     in {
       inherit system;
+
+      specialArgs = {
+        inherit nixvim; # pass nixvim through to load as a home-manager shared module
+        quickshell = quickshell.packages.${system}; # pass quickshell package through to dms
+      };
+
       modules = [
         nixos-hardware.nixosModules.framework-amd-ai-300-series
         disko.nixosModules.disko
         preservation.nixosModules.preservation
         lanzaboote.nixosModules.lanzaboote
         home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            sharedModules = [nixvim.homeModules.nixvim];
-            useUserPackages = true;
-            useGlobalPkgs = true;
-          };
-        }
-        {
-          programs.dms-shell.quickshell.package = quickshellPackage;
-          services.displayManager.dms-greeter.quickshell.package = quickshellPackage;
-        }
         ./nixos/configuration.nix
       ];
     });

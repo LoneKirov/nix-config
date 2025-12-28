@@ -1,15 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix # hardware scan configuration
     ./disk-config.nix # disk configuration used to build /etc/fstab
+    ./impermanence.nix # impermanence configuration
+    ./secure-boot.nix # secure boot configuration
+    ./fde.nix # full disk encryption configuration
+    ./zswap.nix # zswap configuration
+    ./gui.nix # display manager, shell, and compositor configuration
+    ./home-manager.nix # user and home-manager configuration
   ];
 
   nix = {
@@ -30,27 +31,6 @@
   };
 
   boot = {
-    loader = {
-      # Disable systemd-boot EFI boot loader. Lanzaboote handles it.
-      systemd-boot.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = true;
-    };
-
-    # Setup Lanzaboote for SecureBoot
-    lanzaboote = {
-      enable = true;
-      # Using sbctl for key generation and management
-      pkiBundle = "/var/lib/sbctl";
-      autoGenerateKeys.enable = true;
-      autoEnrollKeys = {
-        enable = true;
-        autoReboot = true;
-      };
-    };
-
-    # Enable systemd within initrd
-    initrd.systemd.enable = true;
-
     # Use latest kernel.
     # boot.kernelPackages = pkgs.linuxPackages_latest;
     # Hibernate is broken on kernels >6.17.9
@@ -64,45 +44,6 @@
         modDirVersion = "6.17.9";
       };
     });
-
-    kernelParams = [
-      "zswap.enabled=1" # enable zswap
-      "zswap.max_pool_percent=25" # limit zswap to 20% of RAM
-      "zswap.shrinker_enabled=1" # shrink the pool proactively on memory pressure
-    ];
-  };
-
-  # Setup preservation to maintain state between wipes of /
-  preservation = {
-    enable = true;
-    preserveAt."/persistent" = {
-      directories = [
-        "/etc/nixos" # persist until user/github repo is setup
-        "/etc/secureboot" # persist secureboot config
-        "/etc/NetworkManager/system-connections" # NM connections
-        "/var/lib/nixos" # stores nixos state for generating stable uids and gids
-        "/var/lib/fwupd" # firmware update store
-        "/var/lib/sbctl" # persist secureboot keys managed by sbctl
-        "/var/lib/systemd/coredump" # coredump store
-        "/var/lib/systemd/rfkill" # RF kill switch state store
-        "/var/lib/systemd/timers" # timers state store
-        "/var/log" # system logs
-      ];
-      files = [
-        {
-          # machine id. needs to be available early in boot
-          file = "/etc/machine-id";
-          how = "symlink";
-          inInitrd = true;
-        }
-        {
-          # random seed. needs to be available early in boot
-          file = "/var/lib/systemd/random-seed";
-          how = "symlink";
-          inInitrd = true;
-        }
-      ];
-    };
   };
 
   # networking.hostName = "nixos"; # Define your hostname.
@@ -124,13 +65,6 @@
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -154,80 +88,13 @@
   #     tree
   #   ];
   # };
-  users.users.kirov = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = ["wheel"];
-  };
-  home-manager.users.kirov = {pkgs, ...}: {
-    imports = [
-      ../home-manager/shells/zsh.nix
-      ../home-manager/programs
-    ];
-
-    xdg.enable = true;
-    home = {
-      packages = with pkgs; [
-        nerd-fonts.fira-code
-      ];
-      stateVersion = "25.11";
-    };
-  };
-  programs = {
-    zsh.enable = true;
-    niri.enable = true;
-    # DankMaterialShell
-    dms-shell = {
-      enable = true;
-      systemd = {
-        enable = true; # Systemd service for auto-start
-        restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
-      };
-
-      # Core features
-      enableSystemMonitoring = true; # System monitoring widgets (dgop)
-      enableClipboard = true; # Clipboard history manager
-      enableVPN = true; # VPN management widget
-      enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-      enableAudioWavelength = true; # Audio visualizer (cava)
-      enableCalendarEvents = true; # Calendar integration (khal)
-    };
-    # DankSearch
-    dsearch = {
-      enable = true;
-
-      # Systemd service configuration
-      systemd = {
-        enable = true; # Enable systemd user service
-        target = "graphical-session.target"; # Only start in graphical sessions
-      };
-    };
-  };
-  # DankGreeter
-  services.displayManager.dms-greeter = {
-    enable = true;
-    compositor.name = "niri";
-    # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
-    configHome = config.home-manager.users.kirov.home.homeDirectory;
-
-    # Save the logs to a file
-    logs = {
-      save = true;
-      path = "/tmp/dms-greeter.log";
-    };
-  };
-  services.upower.enable = true;
 
   # programs.firefox.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    brightnessctl
     git
-    sbctl
-    tpm2-tools
-    tpm2-tss
     vim
   ];
 
