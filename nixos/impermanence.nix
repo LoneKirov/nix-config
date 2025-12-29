@@ -16,6 +16,7 @@
           directory = "/var/lib/nixos"; # stores nixos state for generating stable uids and gids
           inInitrd = true; # make it available for nix in initrd
         }
+        "/var/lib/fprint" # fingerprint store
         "/var/lib/fwupd" # firmware update store
         "/var/lib/sbctl" # persist secureboot keys managed by sbctl
         {
