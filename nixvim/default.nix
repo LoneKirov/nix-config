@@ -15,4 +15,16 @@
   lsp = {
     inlayHints.enable = true;
   };
+  keymaps = [
+    {
+      action = "<cmd>Neotree filesystem<CR>";
+      key = "<leader>ntf";
+      mode = "n";
+    }
+    {
+      action = "<cmd>Neotree git_status<CR>";
+      key = "<leader>ntg";
+      mode = "n";
+    }
+  ];
 }

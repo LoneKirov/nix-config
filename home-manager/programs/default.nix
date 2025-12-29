@@ -14,7 +14,6 @@
     ./jq.nix
     ./keybase.nix
     ./neovim.nix
-    ./niri
     ./nix.nix
     ./nx.nix
     ./pay-respects.nix
@@ -23,6 +22,7 @@
     ./starship.nix
     ./systemd.nix
     ./tmux.nix
+    ./wezterm.nix
     ./zoxide.nix
   ];
 }
