@@ -1,0 +1,13 @@
+diff --git a/src/sleep/sleep.c b/src/sleep/sleep.c
+index 4fa6f16fcd..d3fa709fb6 100644
+--- a/src/sleep/sleep.c
++++ b/src/sleep/sleep.c
+@@ -460,7 +460,7 @@ static int custom_timer_suspend(const SleepConfig *sleep_config) {
+                 if (r < 0)
+                         return r;
+ 
+-                r = fd_wait_for_event(tfd, POLLIN, 0);
++                r = fd_wait_for_event(tfd, POLLIN, 100*1000);
+                 if (r < 0)
+                         return log_error_errno(r, "Error polling timerfd: %m");
+                 /* Store fd_wait status */

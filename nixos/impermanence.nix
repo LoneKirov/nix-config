@@ -19,15 +19,7 @@
         "/var/lib/fwupd" # firmware update store
         "/var/lib/sbctl" # persist secureboot keys managed by sbctl
         {
-          directory = "/var/lib/systemd/coredump"; # coredump store
-          inInitrd = true; # make it available for systemd in initrd
-        }
-        {
-          directory = "/var/lib/systemd/rfkill"; # RF kill switch state store
-          inInitrd = true; # make it available for systemd in initrd
-        }
-        {
-          directory = "/var/lib/systemd/timers"; # timers state store
+          directory = "/var/lib/systemd"; # coredump store
           inInitrd = true; # make it available for systemd in initrd
         }
         "/var/lib/upower" # power statistics and history
@@ -45,15 +37,10 @@
           configureParent = true;
           createLinkTarget = true;
         }
-        {
-          # random seed. needs to be available early in boot
-          file = "/var/lib/systemd/random-seed";
-          how = "symlink";
-          inInitrd = true;
-        }
       ];
     };
   };
+  # https://github.com/nix-community/preservation/issues/22
   boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot/persistent/etc/machine-id".f = {
     argument = "uninitialized";
   };
