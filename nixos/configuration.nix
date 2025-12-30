@@ -10,6 +10,7 @@
     ./fde.nix # full disk encryption configuration
     ./zswap.nix # zswap configuration
     ./hibernate # configuration to get hibernate working
+    ./btrfs.nix # btrfs maintenance configuration
     ./bluetooth.nix # bluetooth configuration
     ./gui.nix # display manager, shell, and compositor configuration
     ./home-manager.nix # user and home-manager configuration
@@ -103,8 +104,6 @@
   # };
 
   # List services that you want to enable:
-
-  services.btrfs.autoScrub.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

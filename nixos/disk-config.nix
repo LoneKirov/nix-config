@@ -45,6 +45,7 @@
                       mountOptions = ["compress=zstd"];
                       mountpoint = "/home";
                     };
+                    "/home/.snapshots" = {};
                     # subvolume for nix store
                     "/nix" = {
                       mountOptions = [
@@ -60,6 +61,7 @@
                       ];
                       mountpoint = "/persistent";
                     };
+                    "/persistent/.snapshots" = {};
                     # subvolume for swapfile
                     "/swap" = {
                       mountpoint = "/.swap";
