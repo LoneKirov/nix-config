@@ -2,10 +2,12 @@
   description = "A simple NixOS flake";
 
   inputs = {
-    # convenient flake for linux systems
-    systems.url = "github:nix-systems/default-linux";
     # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # determinate nix
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    # convenient flake for linux systems
+    systems.url = "github:nix-systems/default-linux";
     # predefined hardware configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # declarative disk formatting and fstab generation
@@ -40,8 +42,9 @@
 
   outputs = {
     self,
-    systems,
     nixpkgs,
+    determinate,
+    systems,
     nixos-hardware,
     disko,
     preservation,
@@ -91,6 +94,7 @@
       };
 
       modules = [
+        determinate.nixosModules.default
         nixos-hardware.nixosModules.framework-amd-ai-300-series
         disko.nixosModules.disko
         preservation.nixosModules.preservation

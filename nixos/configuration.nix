@@ -24,12 +24,6 @@
       # optimize the store on every build
       auto-optimise-store = true;
     };
-    # run gc automatically
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
   };
 
   boot = {
