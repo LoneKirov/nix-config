@@ -11,7 +11,10 @@
             wezterm.run_child_process { 'sh', '-c', 'wl-paste -n | wl-copy' }
           end
         )
-	return {}
+        local config = {}
+        config.hide_tab_bar_if_only_one_tab = true
+        config.window_background_opacity = 0.6
+        return config
       '';
     };
   };
