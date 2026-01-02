@@ -83,7 +83,7 @@
     # formatter factory to pass to forAllSystems
     formatter = system: nixpkgs.legacyPackages.${system}.alejandra;
   in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (let
+    nixosConfigurations.mew = nixpkgs.lib.nixosSystem (let
       system = "x86_64-linux";
     in {
       inherit system;
