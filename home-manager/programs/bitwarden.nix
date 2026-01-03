@@ -25,9 +25,12 @@
           ];
         };
       };
-      home.packages = with pkgs; [
-        bitwarden-cli
-      ];
+      home = {
+        packages = with pkgs; [
+          bitwarden-cli
+        ];
+        sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
+      };
     })
   ];
 }
