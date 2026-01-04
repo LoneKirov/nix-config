@@ -41,7 +41,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     determinate,
     systems,
