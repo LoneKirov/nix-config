@@ -10,7 +10,7 @@
         cachix
       ];
       shellAliases = {
-        nixos-rebuild = "nixos-rebuild --sudo --flake $HOME/nix-config";
+        nixos-rebuild = "nixos-rebuild --sudo --flake $XDG_CONFIG_HOME/nix-config";
       };
     };
 

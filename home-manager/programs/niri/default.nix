@@ -1,11 +1,12 @@
 {config, ...}: let
+  xdgConfigHome = config.xdg.configHome;
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-  niriConfig = "/home/kirov/nix-config/home-manager/programs/niri/config.kdl";
-  dmsAltTabConfig = "/home/kirov/nix-config/home-manager/programs/niri/dms/alttab.kdl";
-  dmsBindsConfig = "/home/kirov/nix-config/home-manager/programs/niri/dms/binds.kdl";
-  dmsColorsConfig = "/home/kirov/nix-config/home-manager/programs/niri/dms/colors.kdl";
-  dmsLayoutConfig = "/home/kirov/nix-config/home-manager/programs/niri/dms/layout.kdl";
-  dmsWpblurConfig = "/home/kirov/nix-config/home-manager/programs/niri/dms/wpblur.kdl";
+  niriConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/config.kdl";
+  dmsAltTabConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/dms/alttab.kdl";
+  dmsBindsConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/dms/binds.kdl";
+  dmsColorsConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/dms/colors.kdl";
+  dmsLayoutConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/dms/layout.kdl";
+  dmsWpblurConfig = "${xdgConfigHome}/nix-config/home-manager/programs/niri/dms/wpblur.kdl";
 in {
   config = {
     xdg.configFile = {
