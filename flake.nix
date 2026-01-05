@@ -38,6 +38,8 @@
       url = "git+https://git.outfoxxed.me/quickshell/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # declarative flatpak
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
   outputs = {
@@ -51,6 +53,7 @@
     home-manager,
     nixvim,
     quickshell,
+    nix-flatpak,
     ...
   }: let
     # helper to generate attributes for each system
@@ -88,7 +91,7 @@
       inherit system;
 
       specialArgs = {
-        inherit nixvim; # pass nixvim through to load as a home-manager shared module
+        inherit nixvim nix-flatpak; # pass through to load as a home-manager shared modules
         quickshell = quickshell.packages.${system}; # pass quickshell package through to dms
       };
 

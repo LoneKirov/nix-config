@@ -1,6 +1,7 @@
 {
   pkgs,
   nixvim,
+  nix-flatpak,
   ...
 }: {
   users = {
@@ -14,7 +15,10 @@
     };
   };
   home-manager = {
-    sharedModules = [nixvim.homeModules.nixvim];
+    sharedModules = [
+      nixvim.homeModules.nixvim
+      nix-flatpak.homeManagerModules.nix-flatpak
+    ];
     useUserPackages = true;
     useGlobalPkgs = true;
 

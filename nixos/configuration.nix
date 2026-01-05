@@ -14,6 +14,7 @@
     ./bluetooth.nix # bluetooth configuration
     ./gui.nix # display manager, shell, and compositor configuration
     ./home-manager.nix # user and home-manager configuration
+    ./audio.nix # audio configuration
   ];
 
   nix = {
@@ -104,6 +105,7 @@
   # };
 
   # List services that you want to enable:
+  services.flatpak.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

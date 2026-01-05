@@ -7,6 +7,7 @@
     ./btop.nix
     ./chezmoi.nix
     ./direnv.nix
+    ./discord.nix
     ./eza.nix
     ./fd.nix
     ./fzf.nix
