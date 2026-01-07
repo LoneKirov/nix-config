@@ -2,6 +2,8 @@
   description = "A simple NixOS flake";
 
   inputs = {
+    # modular flakes
+    flake-parts.url = "github:hercules-ci/flake-parts";
     # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # determinate nix
@@ -30,8 +32,11 @@
     # declarative neovim configuration
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        flake-parts.follows = "flake-parts";
+      };
     };
     # latest quickshell for dms
     quickshell = {
@@ -42,72 +47,18 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
-  outputs = {
+  outputs = inputs @ {
+    flake-parts,
     nixpkgs,
-    determinate,
     systems,
-    nixos-hardware,
-    disko,
-    preservation,
-    lanzaboote,
-    home-manager,
-    nixvim,
-    quickshell,
-    nix-flatpak,
     ...
-  }: let
-    # helper to generate attributes for each system
-    forAllSystems = f: nixpkgs.lib.genAttrs (import systems) f;
-    # devShell factory to pass to forAllSystems
-    devShell = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      # custom neovim with nix lsps enabled
-      nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-        inherit pkgs;
-        module = {...}: {
-          imports = [
-            ./nixvim
-            ./nixvim/lsp/nix.nix
-          ];
-        };
-      };
-    in {
-      default = with pkgs;
-        mkShell {
-          buildInputs = [nvim];
-          packages = [
-            alejandra
-            nil
-            nixd
-          ];
-        };
-    };
-    # formatter factory to pass to forAllSystems
-    formatter = system: nixpkgs.legacyPackages.${system}.alejandra;
-  in {
-    nixosConfigurations.mew = nixpkgs.lib.nixosSystem (let
-      system = "x86_64-linux";
-    in {
-      inherit system;
-
-      specialArgs = {
-        inherit nixvim nix-flatpak; # pass through to load as a home-manager shared modules
-        quickshell = quickshell.packages.${system}; # pass quickshell package through to dms
-      };
-
-      modules = [
-        determinate.nixosModules.default
-        nixos-hardware.nixosModules.framework-amd-ai-300-series
-        disko.nixosModules.disko
-        preservation.nixosModules.preservation
-        lanzaboote.nixosModules.lanzaboote
-        home-manager.nixosModules.home-manager
-        ./nixos/configuration.nix
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
+      systems = import systems;
+      imports = [
+        ./modules/flake
+        ./hosts
       ];
+      flake = {};
     });
-
-    devShells = forAllSystems devShell;
-
-    formatter = forAllSystems formatter;
-  };
 }

@@ -1,5 +1,5 @@
-{
-  disko.devices = {
+{config, ...}: {
+  config.disko.devices = {
     disk = {
       main = {
         type = "disk";
@@ -59,7 +59,7 @@
                       mountOptions = [
                         "compress=zstd"
                       ];
-                      mountpoint = "/persistent";
+                      mountpoint = config.impermanence.persistentMountpoint;
                     };
                     "/persistent/.snapshots" = {};
                     # subvolume for swapfile

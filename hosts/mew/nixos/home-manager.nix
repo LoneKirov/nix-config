@@ -1,12 +1,9 @@
 {
   pkgs,
-  nixvim,
-  nix-flatpak,
+  inputs,
   ...
 }: {
   users = {
-    mutableUsers = false; # make users immutable for impermanence
-
     users.kirov = {
       isNormalUser = true;
       hashedPasswordFile = "/persistent/etc/passwords/kirov"; # impermanence means /etc/shadow isn't persisted
@@ -15,7 +12,7 @@
     };
   };
   home-manager = {
-    sharedModules = [
+    sharedModules = with inputs; [
       nixvim.homeModules.nixvim
       nix-flatpak.homeManagerModules.nix-flatpak
     ];
@@ -24,8 +21,8 @@
 
     users.kirov = {pkgs, ...}: {
       imports = [
-        ../home-manager/shells/zsh.nix
-        ../home-manager/programs
+        ../../../home-manager/shells/zsh.nix
+        ../../../home-manager/programs
       ];
 
       xdg.enable = true;

@@ -1,14 +1,13 @@
 {
   config,
-  quickshell,
+  pkgs,
+  inputs,
   ...
-}: {
+}: let
+  quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
+in {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   programs = {
     # Niri Compositor
@@ -17,7 +16,7 @@
     # DankMaterialShell
     dms-shell = {
       enable = true;
-      quickshell.package = quickshell.quickshell;
+      quickshell.package = quickshell;
       systemd = {
         enable = true; # Systemd service for auto-start
         restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
@@ -48,8 +47,8 @@
     # DankGreeter
     displayManager.dms-greeter = {
       enable = true;
-      quickshell.package = quickshell.quickshell;
-      compositor.name = "niri";
+      quickshell.package = quickshell;
+      compositor.name = config.programs.niri.package.pname;
       # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
       configHome = config.home-manager.users.kirov.home.homeDirectory;
 
