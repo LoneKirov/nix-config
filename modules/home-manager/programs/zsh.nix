@@ -28,6 +28,10 @@
             tags = ["from:oh-my-zsh"];
           }
           {name = "marlonrichert/zsh-autocomplete";}
+          {
+            name = "plugins/systemd";
+            tags = ["from:oh-my-zsh"];
+          }
         ];
       };
       enableCompletion = false;

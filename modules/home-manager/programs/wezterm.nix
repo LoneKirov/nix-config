@@ -1,7 +1,7 @@
-{...}: {
+{lib, ...}: {
   config = {
     programs.wezterm = {
-      enable = true;
+      enable = lib.mkDefault true;
       # https://github.com/wezterm/wezterm/issues/6685
       extraConfig = ''
         -- https://github.com/wezterm/wezterm/issues/6685

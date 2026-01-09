@@ -20,11 +20,10 @@
     ./nx.nix
     ./pay-respects.nix
     ./ripgrep.nix
-    ./ssh.nix
     ./starship.nix
-    ./systemd.nix
     ./tmux.nix
     ./wezterm.nix
     ./zoxide.nix
+    ./zsh.nix
   ];
 }

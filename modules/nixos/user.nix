@@ -26,8 +26,7 @@
 
       users.${username} = {pkgs, ...}: {
         imports = [
-          ../../home-manager/shells/zsh.nix
-          ../../home-manager/programs
+          ../home-manager
         ];
 
         xdg.enable = true;
