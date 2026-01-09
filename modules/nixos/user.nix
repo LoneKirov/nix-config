@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  username,
   ...
 }: {
   imports = [
@@ -9,13 +10,11 @@
   ];
 
   config = {
-    users = {
-      users.kirov = {
-        isNormalUser = true;
-        hashedPasswordFile = "/persistent/etc/passwords/kirov"; # impermanence means /etc/shadow isn't persisted
-        shell = pkgs.zsh;
-        extraGroups = ["wheel"];
-      };
+    users.users.${username} = {
+      isNormalUser = true;
+      hashedPasswordFile = "/persistent/etc/passwords/${username}"; # impermanence means /etc/shadow isn't persisted
+      shell = pkgs.zsh;
+      extraGroups = ["wheel"];
     };
     home-manager = {
       sharedModules = with inputs; [
@@ -25,10 +24,10 @@
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.kirov = {pkgs, ...}: {
+      users.${username} = {pkgs, ...}: {
         imports = [
-          ../../../home-manager/shells/zsh.nix
-          ../../../home-manager/programs
+          ../../home-manager/shells/zsh.nix
+          ../../home-manager/programs
         ];
 
         xdg.enable = true;

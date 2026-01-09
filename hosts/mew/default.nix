@@ -7,7 +7,6 @@
 in {
   flake.nixosConfigurations.mew = internal-lib.mkNixosSystem {
     hostname = "mew";
-    user = "kirov";
     hostModules = [./nixos];
   };
 }

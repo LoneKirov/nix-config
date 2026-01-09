@@ -1,4 +1,5 @@
-{...}: {
-  # Configure network connections interactively with nmcli or nmtui.
+{hostname, ...}: {
   networking.networkmanager.enable = true;
+
+  networking.hostName = hostname;
 }
