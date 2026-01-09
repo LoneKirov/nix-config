@@ -49,7 +49,6 @@
 
   outputs = inputs @ {
     flake-parts,
-    nixpkgs,
     systems,
     ...
   }:

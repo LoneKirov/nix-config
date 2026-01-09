@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   ...
@@ -6,6 +7,10 @@
   types = lib.types;
   persistentMountpoint = "/persistent";
 in {
+  imports = [
+    inputs.preservation.nixosModules.preservation
+  ];
+
   options.impermanence.persistentMountpoint = lib.mkOption {
     type = types.str;
     default = persistentMountpoint;

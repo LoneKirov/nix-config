@@ -1,19 +1,13 @@
-{inputs, ...}: let
-  inherit (inputs) nixpkgs;
+{
+  inputs,
+  internal-lib,
+  ...
+}: let
+  inherit (inputs) nixpkgs nixos-hardware;
 in {
-  flake.nixosConfigurations.mew = nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      inherit inputs;
-    };
-
-    modules = with inputs; [
-      determinate.nixosModules.default
-      nixos-hardware.nixosModules.framework-amd-ai-300-series
-      disko.nixosModules.disko
-      preservation.nixosModules.preservation
-      lanzaboote.nixosModules.lanzaboote
-      home-manager.nixosModules.home-manager
-      ./nixos/configuration.nix
-    ];
+  flake.nixosConfigurations.mew = internal-lib.mkNixosSystem {
+    hostname = "mew";
+    user = "kirov";
+    hostModules = [./nixos];
   };
 }

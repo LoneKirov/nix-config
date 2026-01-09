@@ -1,5 +1,9 @@
-{
-  nix = {
+{inputs, ...}: {
+  imports = [
+    inputs.determinate.nixosModules.default
+  ];
+
+  config.nix = {
     settings = {
       # Enable flakes
       experimental-features = ["nix-command" "flakes"];
