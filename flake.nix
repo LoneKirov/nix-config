@@ -1,5 +1,5 @@
 {
-  description = "A simple NixOS flake";
+  description = "Kirov's Nix flake";
 
   inputs = {
     # modular flakes
