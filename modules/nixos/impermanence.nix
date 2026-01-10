@@ -58,6 +58,9 @@ in {
           ]
           ++ lib.optionals config.services.upower.enable [
             "/var/lib/upower" # power statistics and history
+          ]
+          ++ lib.optionals config.services.tailscale.enable [
+            "/var/lib/tailscale" # tailscale state
           ];
         files = [
           {
