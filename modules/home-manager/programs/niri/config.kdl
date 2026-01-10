@@ -53,6 +53,12 @@ window-rule {
     open-floating true
 }
 
+window-rule {
+    match app-id=r#"brave-browser$"#
+    match app-id=r#"discord$"#
+    default-column-width { proportion 1.0; }
+}
+
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
