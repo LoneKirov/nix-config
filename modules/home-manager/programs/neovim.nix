@@ -2,7 +2,7 @@
   config.programs.nixvim = {
     enable = lib.mkDefault true;
     defaultEditor = true;
-    imports = [../../../nixvim];
+    imports = [../../nixvim];
     vimdiffAlias = true;
   };
 }

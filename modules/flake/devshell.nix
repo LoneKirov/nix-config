@@ -1,22 +1,8 @@
 {...}: {
-  perSystem = {
-    pkgs,
-    inputs',
-    ...
-  }: let
-    nvim = inputs'.nixvim.legacyPackages.makeNixvimWithModule {
-      inherit pkgs;
-      module = {
-        imports = [
-          ../../nixvim
-          ../../nixvim/lsp/nix.nix
-        ];
-      };
-    };
-  in {
+  perSystem = {pkgs, ...}: {
     devShells.default = with pkgs;
       mkShell {
-        buildInputs = [nvim];
+        buildInputs = [];
         packages = [
           alejandra
           nil
