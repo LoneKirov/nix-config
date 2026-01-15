@@ -45,6 +45,11 @@
     };
     # declarative flatpak
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    # nix-index with a regularly updated database
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
