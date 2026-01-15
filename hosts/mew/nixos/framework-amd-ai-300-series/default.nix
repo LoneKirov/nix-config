@@ -3,6 +3,7 @@
     inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
     ./audio.nix
     ./bluetooth.nix
+    ./fingerprint.nix
     ./hibernate
   ];
 }
