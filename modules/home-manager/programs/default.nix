@@ -23,6 +23,7 @@
     ./starship.nix
     ./tmux.nix
     ./wezterm.nix
+    ./yazi.nix
     ./zoxide.nix
     ./zsh.nix
   ];
