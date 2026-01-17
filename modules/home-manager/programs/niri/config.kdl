@@ -36,8 +36,6 @@ layout {
     }
 }
 
-spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
-
 hotkey-overlay {}
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -336,8 +334,10 @@ binds {
 }
 
 // DankMaterialShell overrides
-include "dms/colors.kdl"
-include "dms/layout.kdl"
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
+include "dms/colors.kdl"
+include "dms/cursor.kdl"
+include "dms/layout.kdl"
+include "dms/outputs.kdl"
 include "dms/wpblur.kdl"
