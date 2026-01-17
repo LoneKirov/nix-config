@@ -14,6 +14,7 @@
     ./git.nix
     ./jq.nix
     ./keybase.nix
+    ./mpv.nix
     ./neovim.nix
     ./niri
     ./nix.nix
