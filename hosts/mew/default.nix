@@ -1,12 +1,6 @@
-{
-  inputs,
-  internal-lib,
-  ...
-}: let
-  inherit (inputs) nixpkgs nixos-hardware;
-in {
+{internal-lib, ...}: {
   flake.nixosConfigurations.mew = internal-lib.mkNixosSystem {
     hostname = "mew";
-    hostModules = [./nixos];
+    modules = [./nixos];
   };
 }

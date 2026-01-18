@@ -17,28 +17,18 @@
       extraGroups = ["wheel"];
     };
     home-manager = {
-      sharedModules = with inputs; [
-        nixvim.homeModules.nixvim
-        nix-flatpak.homeManagerModules.nix-flatpak
-      ];
+      extraSpecialArgs = {
+        inherit inputs;
+      };
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${username} = {pkgs, ...}: {
+      users.${username} = {...}: {
         imports = [
           ../home-manager
         ];
 
-        xdg.enable = true;
-        home = {
-          packages = with pkgs; [
-            nerd-fonts.fira-code
-            noto-fonts-cjk-sans
-            noto-fonts-cjk-serif
-          ];
-          stateVersion = config.system.stateVersion;
-        };
-        fonts.fontconfig.enable = true;
+        home.stateVersion = config.system.stateVersion;
       };
     };
 

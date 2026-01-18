@@ -10,6 +10,7 @@
     ./discord.nix
     ./eza.nix
     ./fd.nix
+    ./flatpak.nix
     ./fzf.nix
     ./git.nix
     ./jq.nix

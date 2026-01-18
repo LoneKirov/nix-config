@@ -8,5 +8,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  services.xserver.enable = true;
+
   system.stateVersion = "25.11";
 }

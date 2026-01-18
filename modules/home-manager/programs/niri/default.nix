@@ -4,6 +4,8 @@
   lib,
   ...
 }: let
+  osConfig' = lib.attrsets.optionalAttrs (!isNull osConfig) osConfig;
+  niriEnabled = lib.attrsets.attrByPath ["programs" "niri" "enable"] false osConfig';
   xdgConfigHome = config.xdg.configHome;
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
   niriConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/config.kdl";
@@ -15,8 +17,8 @@
   dmsOutputsConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
   dmsWpblurConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
 in {
-  config = {
-    xdg.configFile = lib.mkIf osConfig.programs.niri.enable {
+  config = lib.mkIf niriEnabled {
+    xdg.configFile = {
       "niri/config.kdl".source = mkOutOfStoreSymlink niriConfig;
       "niri/dms/alttab.kdl".source = mkOutOfStoreSymlink dmsAltTabConfig;
       "niri/dms/binds.kdl".source = mkOutOfStoreSymlink dmsBindsConfig;

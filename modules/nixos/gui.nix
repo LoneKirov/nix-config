@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   inputs,
   username,
@@ -11,10 +12,7 @@ in {
     inputs.dms-plugin-registry.modules.default
   ];
 
-  config = {
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
-
+  config = lib.mkIf config.services.xserver.enable {
     programs = {
       # Niri Compositor
       niri.enable = true;
