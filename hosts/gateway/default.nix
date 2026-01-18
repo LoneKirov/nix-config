@@ -4,6 +4,7 @@
       inherit pkgs;
       modules = [
         {home.stateVersion = "25.05";}
+        ./home-manager
       ];
     };
   };
