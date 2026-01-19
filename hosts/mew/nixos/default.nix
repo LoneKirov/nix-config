@@ -8,6 +8,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
   services.xserver.enable = true;
 
   system.stateVersion = "25.11";

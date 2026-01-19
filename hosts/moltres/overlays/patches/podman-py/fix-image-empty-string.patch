@@ -1,0 +1,13 @@
+diff --git a/podman/domain/containers.py b/podman/domain/containers.py
+index 66ceb65..32cc375 100644
+--- a/podman/domain/containers.py
++++ b/podman/domain/containers.py
+@@ -34,7 +34,7 @@ class Container(PodmanResource):
+     @property
+     def image(self):
+         """podman.domain.images.Image: Returns Image object used to create Container."""
+-        if "Image" in self.attrs:
++        if "Image" in self.attrs and self.attrs["Image"]:
+             image_id = self.attrs["Image"]
+ 
+             return ImagesManager(client=self.client).get(image_id)

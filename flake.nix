@@ -67,6 +67,5 @@
         ./modules/flake
         ./hosts
       ];
-      flake = {};
     });
 }

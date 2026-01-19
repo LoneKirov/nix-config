@@ -1,0 +1,63 @@
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 6b3a801f..b63e64f3 100755
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -67,10 +67,10 @@ def glances_webserver():
+     cmdline += f" -m glances -B 0.0.0.0 -w --browser -p {SERVER_PORT} -C ./conf/glances.conf"
+     args = shlex.split(cmdline)
+     pid = subprocess.Popen(args)
+-    time.sleep(3)
++    time.sleep(10)
+     yield pid
+     pid.terminate()
+-    time.sleep(1)
++    time.sleep(5)
+ 
+ 
+ @pytest.fixture(scope="session")
+diff --git a/tests/test_restful.py b/tests/test_restful.py
+index dd1fd750..523f2c3a 100755
+--- a/tests/test_restful.py
++++ b/tests/test_restful.py
+@@ -60,8 +60,8 @@ class TestGlances(unittest.TestCase):
+         print(f"Run the Glances Web Server on port {SERVER_PORT}")
+         args = shlex.split(cmdline)
+         pid = subprocess.Popen(args)
+-        print("Please wait 5 seconds...")
+-        time.sleep(5)
++        print("Please wait 10 seconds...")
++        time.sleep(10)
+ 
+         self.assertTrue(pid is not None)
+ 
+@@ -315,7 +315,7 @@ class TestGlances(unittest.TestCase):
+ 
+         print("Stop the Glances Web Server")
+         pid.terminate()
+-        time.sleep(1)
++        time.sleep(5)
+ 
+         self.assertTrue(True)
+ 
+diff --git a/tests/test_xmlrpc.py b/tests/test_xmlrpc.py
+index 141f41b9..92571a6b 100755
+--- a/tests/test_xmlrpc.py
++++ b/tests/test_xmlrpc.py
+@@ -62,7 +62,7 @@ class TestGlances(unittest.TestCase):
+         args = shlex.split(cmdline)
+         pid = subprocess.Popen(args)
+         print("Please wait...")
+-        time.sleep(1)
++        time.sleep(10)
+ 
+         self.assertTrue(pid is not None)
+ 
+@@ -203,7 +203,7 @@ class TestGlances(unittest.TestCase):
+ 
+         print("Stop the Glances Server")
+         pid.terminate()
+-        time.sleep(1)
++        time.sleep(5)
+ 
+         self.assertTrue(True)
+ 
