@@ -21,6 +21,7 @@
     ./nix.nix
     ./nx.nix
     ./pay-respects.nix
+    ./podman.nix
     ./ripgrep.nix
     ./starship.nix
     ./tmux.nix

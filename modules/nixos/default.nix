@@ -8,6 +8,7 @@
     ./impermanence.nix
     ./networking.nix
     ./nix.nix
+    ./podman.nix
     ./secure-boot.nix
     ./system-packages.nix
     ./time.nix

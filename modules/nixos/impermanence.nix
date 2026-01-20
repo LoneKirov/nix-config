@@ -61,6 +61,9 @@ in {
           ]
           ++ lib.optionals config.services.tailscale.enable [
             "/var/lib/tailscale" # tailscale state
+          ]
+          ++ lib.optionals config.virtualisation.quadlet.enable [
+            "/var/lib/containers" # podman storage
           ];
         files = [
           {

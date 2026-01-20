@@ -54,6 +54,8 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # declarative quadlets
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
   };
 
   outputs = inputs @ {
