@@ -26,7 +26,6 @@ in {
       preserveAt.${persistentMountpoint} = {
         directories =
           [
-            "/etc/nixos" # persist until user/github repo is setup
             {
               directory = "/var/lib/nixos"; # stores nixos state for generating stable uids and gids
               inInitrd = true; # make it available for nix in initrd
