@@ -24,6 +24,7 @@
     ./podman.nix
     ./ripgrep.nix
     ./starship.nix
+    ./trash-cli.nix
     ./tmux.nix
     ./wezterm.nix
     ./yazi.nix
