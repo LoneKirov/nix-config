@@ -1,14 +1,16 @@
 {
-  osConfig,
+  config,
   lib,
+  pkgs,
   ...
-}: let
-  osConfig' = lib.attrsets.optionalAttrs (!isNull osConfig) osConfig;
-  xserverEnabled = lib.attrsets.attrByPath ["services" "xserver" "enable"] false osConfig';
-in {
-  config.programs.brave = {
-    enable = lib.mkDefault xserverEnabled;
-    extensions = [];
-    commandLineArgs = [];
+}: {
+  config = {
+    # https://github.com/AvengeMedia/DankMaterialShell/issues/854
+    home.packages = lib.optionals config.programs.dms-shell.enable [pkgs.adw-gtk3];
+    programs.brave = {
+      enable = lib.mkDefault config.services.xserver.enable;
+      extensions = [];
+      commandLineArgs = [];
+    };
   };
 }

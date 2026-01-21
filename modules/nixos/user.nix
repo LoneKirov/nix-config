@@ -25,6 +25,13 @@
 
       users.${username} = {...}: {
         imports = [
+          {
+            programs = {
+              niri.enable = config.programs.niri.enable;
+              dms-shell.enable = config.programs.dms-shell.enable;
+            };
+            services.xserver.enable = config.services.xserver.enable;
+          }
           ../home-manager
         ];
 

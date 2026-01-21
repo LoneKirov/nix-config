@@ -1,17 +1,13 @@
 {
   config,
-  osConfig,
   lib,
   pkgs,
   ...
-}: let
-  osConfig' = lib.attrsets.optionalAttrs (!isNull osConfig) osConfig;
-  xserverEnabled = lib.attrsets.attrByPath ["services" "xserver" "enable"] false osConfig';
-in {
+}: {
   options.programs.discord-flatpak.enable = lib.mkEnableOption "discord-flatpak";
 
   config = lib.mkMerge [
-    {programs.discord-flatpak.enable = lib.mkDefault xserverEnabled;}
+    {programs.discord-flatpak.enable = lib.mkDefault config.services.xserver.enable;}
     (lib.mkIf config.programs.discord-flatpak.enable {
       home.packages = with pkgs; [xwayland-satellite];
       services.flatpak = {

@@ -40,6 +40,12 @@ in {
       web-devicons.enable = true;
       yazi.enable = yazi;
     };
+    colorschemes.base16.enable = true;
+    extraConfigLua = lib.optionalString hmConfig.programs.dms-shell.enable ''
+      -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
+      -- with nixvim managed plugins so we just load the plugin manually
+      require('plugins/dankcolors')[1].config()
+    '';
     lsp = {
       inlayHints.enable = true;
     };
