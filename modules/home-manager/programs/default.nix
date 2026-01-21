@@ -23,7 +23,7 @@
     ./pay-respects.nix
     ./podman.nix
     ./ripgrep.nix
-    ./starship.nix
+    ./starship
     ./trash-cli.nix
     ./tmux.nix
     ./wezterm.nix
