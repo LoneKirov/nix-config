@@ -26,7 +26,7 @@
     ./starship
     ./trash-cli.nix
     ./tmux.nix
-    ./wezterm.nix
+    ./wezterm
     ./yazi.nix
     ./zoxide.nix
     ./zsh.nix
