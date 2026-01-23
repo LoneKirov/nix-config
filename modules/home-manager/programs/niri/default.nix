@@ -3,16 +3,16 @@
   lib,
   ...
 }: let
-  xdgConfigHome = config.xdg.configHome;
-  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-  niriConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/config.kdl";
-  dmsAltTabConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/alttab.kdl";
-  dmsBindsConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/binds.kdl";
-  dmsColorsConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/colors.kdl";
-  dmsCursorConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/cursor.kdl";
-  dmsLayoutConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/layout.kdl";
-  dmsOutputsConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
-  dmsWpblurConfig = "${xdgConfigHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+  inherit (config.xdg) configHome;
+  niriConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/config.kdl";
+  dmsAltTabConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/alttab.kdl";
+  dmsBindsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/binds.kdl";
+  dmsColorsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/colors.kdl";
+  dmsCursorConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/cursor.kdl";
+  dmsLayoutConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/layout.kdl";
+  dmsOutputsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
+  dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
 in {
   config = lib.mkIf config.programs.niri.enable {
     xdg.configFile = {

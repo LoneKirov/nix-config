@@ -67,6 +67,9 @@ binds {
     }
     // Application Launchers
     Mod+Space hotkey-overlay-title="Application Launcher" {
+        spawn "vicinae" "toggle";
+    }
+    Mod+Shift+Space hotkey-overlay-title="Application Launcher" {
         spawn "dms" "ipc" "call" "spotlight" "toggle";
     }
     // Mod+V hotkey-overlay-title="Clipboard Manager" {

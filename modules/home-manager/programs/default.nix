@@ -15,6 +15,7 @@
     ./git.nix
     ./jq.nix
     ./keybase.nix
+    ./matugen.nix
     ./mpv.nix
     ./neovim.nix
     ./niri
@@ -26,6 +27,7 @@
     ./starship
     ./trash-cli.nix
     ./tmux.nix
+    ./vicinae
     ./wezterm
     ./yazi.nix
     ./zoxide.nix

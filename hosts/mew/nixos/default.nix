@@ -4,6 +4,7 @@
     ./framework-amd-ai-300-series # framework specific configuration
     ./ssh.nix
     ./steam.nix
+    ./vicinae.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
