@@ -39,6 +39,7 @@ in {
       neogit.enable = git;
       web-devicons.enable = true;
       yazi.enable = yazi;
+      transparent.enable = true;
     };
     colorschemes.base16.enable = true;
     extraConfigLua = lib.optionalString hmConfig.programs.dms-shell.enable ''

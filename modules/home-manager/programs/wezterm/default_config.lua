@@ -26,7 +26,7 @@ end
 
 function module.apply_dms_theme(config)
   wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/colors/dank-theme.toml")
-  config.window_background_opacity = 0.6
+  config.window_background_opacity = 0.7
   config.color_scheme = "dank-theme"
 end
 
