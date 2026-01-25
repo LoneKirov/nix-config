@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   home-manager.users.kirov = {
     programs.ssh = {
       enable = true;
@@ -23,11 +27,11 @@
         RuntimeDirectory = "sshfs";
         RuntimeDirectoryPreserve = true;
         ExecStart = ''
-          ${pkgs.afuse}/bin/afuse -f \
+          ${lib.getExe' pkgs.afuse "afuse"} -f \
             -o timeout=60 \
             -o auto_unmount \
             -o flushwrites \
-            -o mount_template="${pkgs.sshfs}/bin/sshfs -o reconnect %%r: %%m" \
+            -o mount_template="${lib.getExe' pkgs.sshfs "sshfs"} -o reconnect %%r: %%m" \
             -o unmount_template="umount -l %%m" \
             %t/sshfs
         '';

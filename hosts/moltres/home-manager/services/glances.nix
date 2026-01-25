@@ -3,19 +3,17 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.services.glances;
   inherit (pkgs) glances;
-  inherit (lib)
+  inherit
+    (lib)
     mkEnableOption
     mkOption
     mkIf
     types
     ;
-in
-{
+in {
   options.services.glances = {
     enable = mkEnableOption "glances";
     config = mkOption {
@@ -31,22 +29,20 @@ in
         After = "network.target";
       };
 
-      Service =
-        let
-          configFile = pkgs.writeTextFile {
-            name = "glances.conf";
-            text = cfg.config;
-          };
-        in
-        {
-          ExecStart = "${glances}/bin/glances -C ${configFile} -w";
-          Restart = "always";
-          RemainAfterExit = "no";
+      Service = let
+        configFile = pkgs.writeTextFile {
+          name = "glances.conf";
+          text = cfg.config;
         };
+      in {
+        ExecStart = "${lib.getExe' glances "glances"} -C ${configFile} -w";
+        Restart = "always";
+        RemainAfterExit = "no";
+      };
 
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = ["default.target"];
     };
 
-    home.packages = [ glances ];
+    home.packages = [glances];
   };
 }

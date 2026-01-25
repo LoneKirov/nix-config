@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   # Adapted from https://github.com/kariudo/framework-13-fingerprint-fix
   systemd.services."reset-fingerprint-reader-on-resume" = {
     environment = {
@@ -10,13 +14,13 @@
       # Rebind USB controller 0000:c1:00.4 after resume to restore Goodix fingerprint reader.
       echo "<6>Checking PCI function $PCI_BUS_ID for Goodix device ID $GOODIX_USB_ID"
       sleep 1
-      if ! ${pkgs.usbutils}/bin/lsusb -d "$GOODIX_USB_ID" >/dev/null 2>&1; then
+      if ! ${lib.getExe' pkgs.usbutils "lsusb"} -d "$GOODIX_USB_ID" >/dev/null 2>&1; then
         echo "<6>Goodix missing after resume, resetting xHCI controller $PCI_BUS_ID"
         echo "$PCI_BUS_ID" >"$XHCI_DRIVER_PATH/unbind"
         sleep 1
         echo "$PCI_BUS_ID" >"$XHCI_DRIVER_PATH/bind"
         sleep 1
-        ${pkgs.systemd}/bin/systemctl try-restart fprintd.service
+        ${lib.getExe' pkgs.systemd "systemctl"} try-restart fprintd.service
       else
         echo "<6>Goodix doesn't need to be reset"
       fi
