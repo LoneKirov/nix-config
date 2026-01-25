@@ -4,7 +4,10 @@
   pkgs,
   ...
 }: {
-  options.programs.bw.enable = lib.mkEnableOption "bw";
+  options.programs.bw = {
+    enable = lib.mkEnableOption "bw";
+    sshAgent = lib.mkEnableOption "sshAgent";
+  };
 
   config = lib.mkMerge [
     {programs.bw.enable = lib.mkDefault true;}
@@ -29,7 +32,9 @@
         packages = with pkgs; [
           bitwarden-cli
         ];
-        sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
+        sessionVariables = lib.mkIf config.programs.bw.sshAgent {
+          SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
+        };
       };
     })
   ];
