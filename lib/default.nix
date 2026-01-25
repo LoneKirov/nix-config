@@ -28,6 +28,7 @@
         [
           ../modules/home-manager
           ({...}: {
+            nixpkgs.config.allowUnfree = true;
             home = {
               inherit username;
               homeDirectory = "/home/${username}";
