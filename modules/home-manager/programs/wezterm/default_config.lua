@@ -39,6 +39,7 @@ function module.apply_domains(config)
   config.ssh_domains = {} 
   for _, dom in ipairs(wezterm.default_ssh_domains()) do
     if string.find(dom.remote_address, ".host") == nil then
+      dom.assume_shell = 'Posix'
       table.insert(config.ssh_domains, dom)
     end
   end
