@@ -4,7 +4,7 @@
     ./bat.nix
     ./bitwarden.nix
     ./brave.nix
-    ./btop.nix
+    ./btop
     ./chezmoi.nix
     ./direnv.nix
     ./discord.nix

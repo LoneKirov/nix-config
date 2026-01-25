@@ -44,7 +44,7 @@ in {
           systemd.enable = true;
         };
         matugen.config.templates.vicinae = {
-          input_path = ./vicinae.toml;
+          input_path = ./vicinae.theme.toml;
           output_path = "${dataHome}/vicinae/themes/matugen.toml";
           post_hook = "vicinae theme set matugen";
         };
