@@ -15,9 +15,48 @@ in {
     plugins = {
       lspconfig.enable = true;
       lsp-format.enable = true;
+      treesitter = {
+        enable = true;
+        highlight.enable = true;
+        indent.enable = false;
+        folding.enable = true;
+      };
       blink-cmp = {
         enable = true;
-        settings.keymap.preset = "super-tab";
+        settings = {
+          appearance = {
+            nerd_font_variant = "mono";
+            use_nvim_cmp_as_default = true;
+          };
+          keymap.preset = "super-tab";
+          fuzzy.implementation = "prefer_rust_with_warning";
+          completion = {
+            ghost_text.enabled = true;
+            documentation = {
+              auto_show = true;
+              auto_show_delay_ms = 500;
+            };
+            trigger.show_in_snippet = false;
+            menu.draw = lib.nixvim.mkRaw ''
+              {
+                  treesitter = { 'lsp' },
+                  -- We don't need label_description now because label and label_description are already
+                  -- combined together in label by colorful-menu.nvim.
+                  columns = { { "kind_icon" }, { "label", gap = 1 } },
+                  components = {
+                      label = {
+                          text = function(ctx)
+                              return require("colorful-menu").blink_components_text(ctx)
+                          end,
+                          highlight = function(ctx)
+                              return require("colorful-menu").blink_components_highlight(ctx)
+                          end,
+                      },
+                  },
+              },
+            '';
+          };
+        };
       };
       telescope = {
         enable = true;
@@ -28,6 +67,7 @@ in {
         settings = {
           close_if_last_window = true;
           filesystem = {
+            use_libuv_file_watcher = true;
             follow_current_file = {
               enabled = true;
               leave_dirs_open = true;
@@ -40,12 +80,16 @@ in {
       web-devicons.enable = true;
       yazi.enable = yazi;
       transparent.enable = true;
+      colorful-menu.enable = true;
     };
     colorschemes.base16.enable = true;
-    extraConfigLua = lib.optionalString hmConfig.programs.dms-shell.enable ''
-      -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
-      -- with nixvim managed plugins so we just load the plugin manually
-      require('plugins/dankcolors')[1].config()
+    extraConfigLua = ''
+      vim.opt.foldenable = false
+      ${lib.optionalString hmConfig.programs.dms-shell.enable ''
+        -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
+        -- with nixvim managed plugins so we just load the plugin manually
+        require('plugins/dankcolors')[1].config()
+      ''}
     '';
     lsp = {
       inlayHints.enable = true;
