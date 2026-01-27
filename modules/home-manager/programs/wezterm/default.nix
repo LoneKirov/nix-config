@@ -19,6 +19,7 @@
 
         local config = {}
         keybinds.apply_to_config(config)
+        default_config.apply_fonts(config)
         default_config.apply_tab_bar_config(config)
         default_config.apply_domains(config)
         ${lib.optionalString config.programs.niri.enable ''

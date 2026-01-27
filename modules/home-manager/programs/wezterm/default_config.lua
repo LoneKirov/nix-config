@@ -36,7 +36,7 @@ function module.apply_domains(config)
       name = 'unix',
     },
   }
-  config.ssh_domains = {} 
+  config.ssh_domains = {}
   for _, dom in ipairs(wezterm.default_ssh_domains()) do
     if string.find(dom.remote_address, ".host") == nil then
       dom.assume_shell = 'Posix'
@@ -44,5 +44,14 @@ function module.apply_domains(config)
     end
   end
 end
+
+function module.apply_fonts(config)
+  config.font = wezterm.font_with_fallback {
+    'Maple Mono Normal NL NF CN',
+    'JetBrainsMono NF',
+    'Noto Color Emoji',
+  }
+end
+
 
 return module

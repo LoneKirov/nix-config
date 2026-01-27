@@ -16,7 +16,7 @@ in {
   options.programs.vicinae.baseSettings = lib.mkOption {
     inherit (jsonFormat) type;
     default = {
-      font.normal.family = "FiraCode Nerd Font";
+      font.normal.family = "Maple Mono Normal NL NF CN";
       theme.dark.name = "matugen";
       providers = {
         applications.entrypoints = {
