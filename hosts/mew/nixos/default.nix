@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./disk-config.nix
     ./hardware-configuration.nix # hardware scan configuration
     ./framework-amd-ai-300-series # framework specific configuration
     ./ledger.nix

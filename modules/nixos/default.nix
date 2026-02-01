@@ -2,7 +2,6 @@
   imports = [
     ./boot.nix
     ./btrfs.nix
-    ./disk-config.nix
     ./flatpak.nix
     ./gui.nix
     ./impermanence.nix
