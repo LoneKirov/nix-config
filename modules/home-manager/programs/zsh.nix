@@ -11,7 +11,6 @@
     };
     programs.zsh = {
       enable = true;
-      dotDir = "${config.xdg.configHome}/zsh";
       history.path = "${config.xdg.stateHome}/zsh/zsh_history";
       zplug = {
         enable = true;
