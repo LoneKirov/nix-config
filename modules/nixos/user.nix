@@ -14,7 +14,10 @@
       isNormalUser = true;
       hashedPasswordFile = "/persistent/etc/passwords/${username}"; # impermanence means /etc/shadow isn't persisted
       shell = pkgs.zsh;
-      extraGroups = ["wheel"];
+      extraGroups = [
+        "wheel" # sudo
+        "dialout" # serial devices
+      ];
     };
     home-manager = {
       extraSpecialArgs = {
