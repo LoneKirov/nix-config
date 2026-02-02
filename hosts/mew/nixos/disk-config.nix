@@ -11,7 +11,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-WD_BLACK_SN850X_1000GB_251623803193_1";
+        device = "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b4df1708f";
         content = {
           type = "gpt";
           partitions = {
