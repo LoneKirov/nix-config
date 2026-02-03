@@ -7,6 +7,7 @@
     ./impermanence.nix
     ./networking.nix
     ./nix.nix
+    ./pam.nix
     ./podman.nix
     ./secure-boot.nix
     ./ssh.nix
