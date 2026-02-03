@@ -1,0 +1,5 @@
+{...}: {
+  users.users.kirov.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUlo/XEzK3peTjqKEwvRAHBc4vzCJNXbfxpceUxQ2KA"
+  ];
+}

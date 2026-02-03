@@ -18,6 +18,8 @@ in {
   };
 
   config = {
+    # Enable systemd within initrd
+    boot.initrd.systemd.enable = true;
     # need /persistent available in initrd so preservation has access to it
     fileSystems.${persistentMountpoint}.neededForBoot = true;
     # Setup preservation to maintain state between wipes of /

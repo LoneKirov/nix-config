@@ -9,6 +9,7 @@
     ./nix.nix
     ./podman.nix
     ./secure-boot.nix
+    ./ssh.nix
     ./system-packages.nix
     ./time.nix
     ./tpm2.nix
