@@ -46,7 +46,7 @@ in {
         matugen.config.templates.vicinae = {
           input_path = ./vicinae.theme.toml;
           output_path = "${dataHome}/vicinae/themes/matugen.toml";
-          post_hook = "vicinae theme set matugen";
+          post_hook = "${lib.getExe' pkgs.vicinae "vicinae"} theme set matugen";
         };
       };
       xdg.configFile = {
