@@ -1,12 +1,13 @@
 {inputs, ...}: {
   mkNixosSystem = {
     hostname,
+    authorizedKeys ? [],
     username ? "kirov",
     modules ? [],
   }:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs username hostname;
+        inherit inputs username hostname authorizedKeys;
       };
 
       modules = [../modules/nixos] ++ modules;

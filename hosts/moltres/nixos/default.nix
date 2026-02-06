@@ -2,7 +2,6 @@
   imports = [
     ./disk-config.nix
     ./hardware-configuration.nix # hardware scan configuration
-    ./ssh.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

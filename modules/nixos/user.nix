@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   username,
+  authorizedKeys,
   ...
 }: {
   imports = [
@@ -18,6 +19,7 @@
         "wheel" # sudo
         "dialout" # serial devices
       ];
+      openssh.authorizedKeys.keys = authorizedKeys;
     };
     home-manager = {
       extraSpecialArgs = {
