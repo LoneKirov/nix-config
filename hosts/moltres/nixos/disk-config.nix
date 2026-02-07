@@ -141,6 +141,7 @@
                 content = {
                   type = "luks";
                   name = "cryptstorage3";
+                  initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
                     keyFile = storageKey;
@@ -161,6 +162,7 @@
                 content = {
                   type = "luks";
                   name = "cryptstorage4";
+                  initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
                     keyFile = storageKey;
@@ -176,7 +178,23 @@
                       "/dev/mapper/cryptstorage2"
                       "/dev/mapper/cryptstorage3"
                     ];
-                    subvolumes = {};
+                    subvolumes = {
+                      "/plex" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/plex";
+                      };
+                      "/plex/.snapshots" = {};
+                      "/resilio-sync" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/resilio-sync";
+                      };
+                      "/resilio-sync/.snapshots" = {};
+                      "/torrents" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/torrents";
+                      };
+                      "/torrents/.snapshots" = {};
+                    };
                   };
                 };
               };
@@ -194,6 +212,7 @@
                 content = {
                   type = "luks";
                   name = "cryptbackup1";
+                  initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
                     keyFile = backupKey;
@@ -214,6 +233,7 @@
                 content = {
                   type = "luks";
                   name = "cryptbackup2";
+                  initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
                     keyFile = backupKey;
