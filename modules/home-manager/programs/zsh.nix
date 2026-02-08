@@ -12,6 +12,12 @@
     programs.zsh = {
       enable = true;
       history.path = "${config.xdg.stateHome}/zsh/zsh_history";
+      initContent = ''
+        # [Ctrl-RightArrow] - move forward one word
+        bindkey '^[[1;5C' forward-word
+        # [Ctrl-LeftArrow] - move backward one word
+        bindkey '^[[1;5D' backward-word
+      '';
       zplug = {
         enable = true;
         zplugHome = "${config.xdg.stateHome}/zplug";
