@@ -12,6 +12,7 @@
 
   config = {
     users.users.${username} = {
+      uid = 1000;
       isNormalUser = true;
       hashedPasswordFile = "/persistent/etc/passwords/${username}"; # impermanence means /etc/shadow isn't persisted
       shell = pkgs.zsh;

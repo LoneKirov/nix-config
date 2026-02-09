@@ -19,6 +19,7 @@
           "target"
           "info"
           "receive"
+          "delete"
         ];
       }
     ];

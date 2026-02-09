@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   authorizedKeys,
   ...
 }: {
@@ -24,21 +25,28 @@
       };
     }
     (lib.mkIf (! config.services.xserver.enable)
-      {
+      (let
+        nixremote = "nixremote";
+      in {
         users = {
-          users.nixremote = {
-            isNormalUser = true;
-            home = "/tmp/nixremote";
-            group = "nixremote";
+          users.${nixremote} = {
+            isSystemUser = true;
+            home = "/var/lib/${nixremote}";
+            group = nixremote;
             extraGroups = ["wheel"];
-            useDefaultShell = true;
+            shell = "${lib.getExe' pkgs.bash "bash"}";
 
             openssh.authorizedKeys.keys = authorizedKeys;
           };
-          groups.nixremote = {};
+          groups.${nixremote} = {};
         };
 
-        nix.settings.trusted-users = ["nixremote"];
-      })
+        systemd.tmpfiles.rules = [
+          "d /var/lib/${nixremote} 0750 ${nixremote} ${nixremote}"
+          "d /var/lib/${nixremote}/.ssh 0700 ${nixremote} ${nixremote}"
+        ];
+
+        nix.settings.trusted-users = [nixremote];
+      }))
   ];
 }
