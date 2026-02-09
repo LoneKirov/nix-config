@@ -34,7 +34,13 @@ in {
         enableCalendarEvents = true; # Calendar integration (khal)
 
         plugins = {
+          calculator.enable = true;
+          dankBitwarden.enable = true;
+          dankClight.enable = true;
+          dankLauncherKeys.enable = true;
+          homeAssistantMonitor.enable = true;
           niriWindows.enable = true;
+          powerOptions.enable = true;
           tailscale.enable = true;
         };
       };
