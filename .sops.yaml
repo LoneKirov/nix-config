@@ -1,0 +1,11 @@
+keys:
+  - &kirov age1arp20x5v3fjcvn8vy9udgg5fsn5ht0fjq4qg0yt8ulh3qgs89e3strvap8
+  - &moltres age14eql5hfcrs2dkvfulckq6ntjyvhd6ytk2mpx2qlak8lvmv2zd48qgkcvve
+  - &mew age12evvsyf2kt9x7j5wtn672jwztrp8k2mmhjwdrkggazgxxfzhtc4q294je2
+creation_rules:
+  - path_regex: secrets/.*
+    key_groups:
+    - age:
+      - *kirov
+      - *mew
+      - *moltres

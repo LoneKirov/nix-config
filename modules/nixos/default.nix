@@ -10,6 +10,7 @@
     ./pam.nix
     ./podman.nix
     ./secure-boot.nix
+    ./sops.nix
     ./ssh.nix
     ./system-packages.nix
     ./time.nix

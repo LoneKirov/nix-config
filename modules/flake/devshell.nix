@@ -4,9 +4,12 @@
       mkShell {
         buildInputs = [];
         packages = [
+          age
           alejandra
           nil
           nixd
+          sops
+          ssh-to-age
         ];
       };
   };

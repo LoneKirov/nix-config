@@ -4,6 +4,7 @@
     btrbk.instances.btrbk = {
       onCalendar = "hourly";
       settings = {
+        ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
         snapshot_create = "onchange";
         snapshot_preserve = "24h 14d 4w";
         snapshot_preserve_min = "1h";
@@ -19,4 +20,5 @@
       };
     };
   };
+  sops.secrets.btrbk_ssh_key.owner = config.users.users.btrbk.name;
 }
