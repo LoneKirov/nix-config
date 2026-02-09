@@ -1,13 +1,14 @@
 {
   config,
   pkgs,
+  hostname,
   ...
 }: {
   services = {
     btrfs.autoScrub.enable = true;
     btrbk = {
       extraPackages = [pkgs.lz4];
-      instances.btrbk = {
+      instances.${hostname} = {
         onCalendar = "hourly";
         settings = {
           ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
