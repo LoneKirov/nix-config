@@ -291,7 +291,8 @@
                       "/dev/mapper/cryptbackup2"
                       "/dev/mapper/cryptbackup3"
                     ];
-                    subvolumes = {};
+                    mountpoint = "/srv/backup";
+                    mountOptions = ["compress=zstd"];
                   };
                 };
               };
