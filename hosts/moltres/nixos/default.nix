@@ -1,9 +1,9 @@
 {...}: {
   imports = [
+    ./btrfs.nix
     ./disk-config.nix
     ./hardware-configuration.nix # hardware scan configuration
     ./services
-    ./snapper.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
