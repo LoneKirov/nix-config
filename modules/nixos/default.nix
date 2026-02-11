@@ -12,6 +12,7 @@
     ./secure-boot.nix
     ./sops.nix
     ./ssh.nix
+    ./sudo.nix
     ./system-packages.nix
     ./time.nix
     ./tpm2.nix
