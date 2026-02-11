@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  services.btrbk.instances.mew.settings = {
+  services.btrbk.instances.btrbk.settings = {
     subvolume."${config.impermanence.persistentMountpoint}" = {
       target."ssh://moltres/srv/backup/mew/persistent" = {};
     };
@@ -12,14 +12,14 @@
       target."ssh://moltres/srv/backup/mew/home" = {};
     };
   };
-  systemd.services."btrbk-mew".serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "btrbk-metered.sh" ''
-    ${lib.getExe' pkgs.btrbk "btrbk"} -c /etc/btrbk/mew.conf snapshot
+  systemd.services."btrbk-btrbk".serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "btrbk-metered.sh" ''
+    ${lib.getExe' pkgs.btrbk "btrbk"} -c /etc/btrbk/btrbk.conf snapshot
     metered_status=$(${lib.getExe' pkgs.systemd "busctl"} -j get-property \
              org.freedesktop.NetworkManager /org/freedesktop/NetworkManager \
              org.freedesktop.NetworkManager Metered | ${lib.getExe' pkgs.jq "jq"} ".data")
     # 1 is yes, 3 is guess_yes
     if [[ ! $metered_status =~ (1|3) ]]; then
-      ${lib.getExe' pkgs.btrbk "btrbk"} -c /etc/btrbk/mew.conf resume
+      ${lib.getExe' pkgs.btrbk "btrbk"} -c /etc/btrbk/btrbk.conf resume
     fi
   '');
 }

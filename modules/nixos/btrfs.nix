@@ -8,7 +8,7 @@
     btrfs.autoScrub.enable = true;
     btrbk = {
       extraPackages = [pkgs.lz4];
-      instances.${hostname} = {
+      instances.btrbk = {
         onCalendar = "hourly";
         settings = {
           ssh_identity = config.sops.secrets.btrbk_ssh_key.path;
