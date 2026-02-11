@@ -4,8 +4,8 @@
   ...
 }: {
   config = lib.mkIf config.nix.enable {
-    programs.zsh.zplug.plugins = [
-      {name = "nix-community/nix-zsh-completions";}
+    programs.zsh.antidote.plugins = [
+      "nix-community/nix-zsh-completions"
     ];
   };
 }

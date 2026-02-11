@@ -17,11 +17,8 @@
             pull.rebase = false;
           };
         };
-        zsh.zplug.plugins = [
-          {
-            name = "plugins/git";
-            tags = ["from:oh-my-zsh"];
-          }
+        zsh.antidote.plugins = [
+          "ohmyzsh/ohmyzsh path:plugins/git"
         ];
       };
     })

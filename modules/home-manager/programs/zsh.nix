@@ -1,14 +1,9 @@
 {
   config,
-  pkgs,
+  lib,
   ...
 }: {
   config = {
-    # zplug needs perl
-    home = {
-      packages = with pkgs; [perl];
-      shell.enableZshIntegration = true;
-    };
     programs.zsh = {
       enable = true;
       history.path = "${config.xdg.stateHome}/zsh/zsh_history";
@@ -18,25 +13,17 @@
         # [Ctrl-LeftArrow] - move backward one word
         bindkey '^[[1;5D' backward-word
       '';
-      zplug = {
+      antidote = {
         enable = true;
-        zplugHome = "${config.xdg.stateHome}/zplug";
-        plugins = [
-          {name = "zsh-users/zsh-autosuggestions";}
-          {name = "zsh-users/zsh-syntax-highlighting";}
-          {
-            name = "plugins/sudo";
-            tags = ["from:oh-my-zsh"];
-          }
-          {
-            name = "plugins/colored-man-pages";
-            tags = ["from:oh-my-zsh"];
-          }
-          {name = "marlonrichert/zsh-autocomplete";}
-          {
-            name = "plugins/systemd";
-            tags = ["from:oh-my-zsh"];
-          }
+        useFriendlyNames = true;
+        plugins = lib.mkBefore [
+          "getantidote/use-omz"
+          "zsh-users/zsh-autosuggestions"
+          "zsh-users/zsh-syntax-highlighting"
+          "ohmyzsh/ohmyzsh path:plugins/sudo"
+          "ohmyzsh/ohmyzsh path:plugins/colored-man-pages"
+          "marlonrichert/zsh-autocomplete"
+          "ohmyzsh/ohmyzsh path:plugins/systemd"
         ];
       };
       enableCompletion = false;

@@ -31,11 +31,8 @@
           }
         ];
       };
-      programs.zsh.zplug.plugins = [
-        {
-          name = "plugins/tmux";
-          tags = ["from:oh-my-zsh"];
-        }
+      programs.zsh.antidote.plugins = [
+        "ohmyzsh/ohmyzsh path:plugins/tmux"
       ];
     })
   ];
