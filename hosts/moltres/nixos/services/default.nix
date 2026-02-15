@@ -1,3 +1,6 @@
 {...}: {
-  imports = [./plex.nix];
+  imports = [
+    ./caddy
+    ./plex.nix
+  ];
 }
