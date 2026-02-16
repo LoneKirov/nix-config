@@ -178,6 +178,7 @@
                       "/dev/mapper/cryptstorage2"
                       "/dev/mapper/cryptstorage3"
                     ];
+                    mountpoint = "/srv/storage";
                     subvolumes = {
                       "/plex" = {
                         mountOptions = ["compress=zstd"];
