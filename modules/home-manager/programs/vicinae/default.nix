@@ -17,7 +17,10 @@ in {
     inherit (jsonFormat) type;
     default = {
       font.normal.family = "Maple Mono Normal NL NF CN";
-      theme.dark.name = "matugen";
+      theme.dark = {
+        name = "matugen";
+        icon_theme = config.gtk.iconTheme.name;
+      };
       providers = {
         applications.entrypoints = {
           btop.enabled = false;

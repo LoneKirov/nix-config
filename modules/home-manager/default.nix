@@ -2,6 +2,7 @@
   imports = [
     ./fonts.nix
     ./programs
+    ./theme.nix
   ];
 
   options = {
