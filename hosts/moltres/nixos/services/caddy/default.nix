@@ -43,7 +43,7 @@
         ];
       };
       serviceConfig = {
-        Restart = "always";
+        Restart = "unless-stopped";
       };
       autoStart = true;
     };

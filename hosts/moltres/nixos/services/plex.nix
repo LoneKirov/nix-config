@@ -33,6 +33,7 @@
     };
     serviceConfig = {
       TimeoutStartSec = 900;
+      Restart = "always";
     };
     autoStart = true;
   };

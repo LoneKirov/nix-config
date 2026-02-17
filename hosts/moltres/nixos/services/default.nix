@@ -3,5 +3,6 @@
     ./caddy
     ./glances
     ./plex.nix
+    ./torrents
   ];
 }
