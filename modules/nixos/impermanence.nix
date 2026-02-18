@@ -65,6 +65,9 @@ in {
           ]
           ++ lib.optionals config.virtualisation.quadlet.enable [
             "/var/lib/containers" # podman storage
+          ]
+          ++ lib.optionals config.hardware.bluetooth.enable [
+            "/var/lib/bluetooth" # bluetooth store
           ];
         files = [
           {
