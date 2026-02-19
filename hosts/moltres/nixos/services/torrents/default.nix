@@ -1,3 +1,6 @@
 {...}: {
-  imports = [./gluetun.nix];
+  imports = [
+    ./gluetun.nix
+    ./transmission.nix
+  ];
 }

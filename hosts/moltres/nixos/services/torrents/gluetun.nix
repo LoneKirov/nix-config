@@ -24,7 +24,7 @@
       notify = "healthy";
     };
     serviceConfig = {
-      Restart = "unless-stopped";
+      Restart = "on-failure";
     };
     autoStart = true;
   };

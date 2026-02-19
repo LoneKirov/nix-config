@@ -12,7 +12,7 @@
 (resilio-sync) {
         sync.{$HOSTNAME}.kanto.casa {
                 bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
-                reverse_proxy systemd-resilio-sync:8888
+                reverse_proxy resilio-sync:8888
                 import cloudflare-tls
         }
 }
@@ -27,7 +27,7 @@
 
 transmission.kanto.casa {
         bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
-        reverse_proxy systemd-gluetun:9091
+        reverse_proxy gluetun:9091
         import cloudflare-tls
 }
 
