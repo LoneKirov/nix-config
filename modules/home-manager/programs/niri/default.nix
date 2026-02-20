@@ -12,6 +12,7 @@
   dmsLayoutConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/layout.kdl";
   dmsOutputsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
   dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
+  dmsWindowrulesConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/windowrules.kdl";
 in {
   config = lib.mkIf config.programs.niri.enable {
     xdg.configFile = {
@@ -22,6 +23,7 @@ in {
       "niri/dms/layout.kdl".source = mkOutOfStoreSymlink dmsLayoutConfig;
       "niri/dms/outputs.kdl".source = mkOutOfStoreSymlink dmsOutputsConfig;
       "niri/dms/wpblur.kdl".source = mkOutOfStoreSymlink dmsWpblurConfig;
+      "niri/dms/windowrules.kdl".source = mkOutOfStoreSymlink dmsWindowrulesConfig;
     };
   };
 }

@@ -19,4 +19,14 @@
     ./user.nix
     ./zswap.nix
   ];
+
+  config.nixpkgs.overlays = [
+    (final: prev: {
+      wezterm = prev.wezterm.overrideAttrs (finalAttrs: previousAttrs: {
+        postPatch = ''
+          echo ${finalAttrs.version} > .tag
+        '';
+      });
+    })
+  ];
 }

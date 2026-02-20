@@ -1,0 +1,20 @@
+// DMS Window Rules - Managed by DankMaterialShell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1771491370778130141 @name=org.quickshell
+window-rule {
+    match app-id="^org.quickshell$"
+    open-maximized true
+}
+
+// @id=wr_1771491468944669799 @name=brave-browser
+window-rule {
+    match app-id="^brave-browser$"
+    open-maximized true
+}
+
+// @id=wr_1771491486708158402 @name=discord
+window-rule {
+    match app-id="^discord$"
+    open-maximized true
+}

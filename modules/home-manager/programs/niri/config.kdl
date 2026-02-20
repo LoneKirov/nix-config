@@ -36,26 +36,14 @@ layout {
     }
 }
 
-hotkey-overlay {}
+hotkey-overlay {
+    skip-at-startup
+    hide-not-bound
+}
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 animations {}
-
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-}
-
-window-rule {
-    match app-id=r#"brave-browser$"#
-    match app-id=r#"discord$"#
-    default-column-width { proportion 1.0; }
-}
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
@@ -67,10 +55,10 @@ binds {
     }
     // Application Launchers
     Mod+Space hotkey-overlay-title="Application Launcher" {
-        spawn "vicinae" "toggle";
+        spawn "dms" "ipc" "call" "spotlight" "toggle";
     }
     Mod+Shift+Space hotkey-overlay-title="Application Launcher" {
-        spawn "dms" "ipc" "call" "spotlight" "toggle";
+        spawn "vicinae" "toggle";
     }
     // Mod+V hotkey-overlay-title="Clipboard Manager" {
     //     spawn "dms" "ipc" "call" "clipboard" "toggle";
@@ -349,3 +337,4 @@ include "dms/cursor.kdl"
 include "dms/layout.kdl"
 include "dms/outputs.kdl"
 include "dms/wpblur.kdl"
+include "dms/windowrules.kdl"

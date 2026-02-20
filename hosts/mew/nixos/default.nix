@@ -1,9 +1,9 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
-    ./disk-config.nix
-    ./hardware-configuration.nix # hardware scan configuration
-    ./framework-amd-ai-300-series # framework specific configuration
     ./btrfs.nix
+    ./disk-config.nix
+    ./hardware-configuration.nix
+    ./framework-amd-ai-300-series
     ./ledger.nix
     ./nix.nix
     ./ssh.nix
