@@ -21,6 +21,7 @@
     ./niri
     ./nix.nix
     ./nx.nix
+    ./parallel.nix
     ./pay-respects.nix
     ./podman.nix
     ./ripgrep.nix
