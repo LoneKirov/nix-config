@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  home-manager.users.kirov = {
+  local.kirov.home-manager = {
     programs = {
       ssh = {
         enable = true;

@@ -1,16 +1,28 @@
 {inputs, ...}: {
   mkNixosSystem = {
     hostname,
-    authorizedKeys ? [],
     username ? "kirov",
     modules ? [],
-  }:
-    inputs.nixpkgs.lib.nixosSystem {
+  }: let
+    lib = inputs.nixpkgs.lib;
+  in
+    lib.nixosSystem {
       specialArgs = {
-        inherit inputs username hostname authorizedKeys;
+        inherit inputs;
       };
 
-      modules = [../modules/nixos] ++ modules;
+      modules =
+        [
+          # local.${username} convenience alias for host specific config
+          (lib.mkAliasOptionModule ["local" username "nixos"] ["users" "users" username])
+          (lib.mkAliasOptionModule ["local" username "home-manager"] ["home-manager" "users" username])
+          # local.user alias for generic module config
+          (lib.mkAliasOptionModule ["local" "user" "nixos"] ["users" "users" username])
+          (lib.mkAliasOptionModule ["local" "user" "home-manager"] ["home-manager" "users" username])
+          {networking.hostName = hostname;}
+          ../modules/nixos
+        ]
+        ++ modules;
     };
 
   mkHomeManagerConfiguration = {

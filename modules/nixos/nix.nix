@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  authorizedKeys,
   ...
 }: {
   imports = [
@@ -36,7 +35,7 @@
             extraGroups = ["wheel"];
             shell = "${lib.getExe' pkgs.bash "bash"}";
 
-            openssh.authorizedKeys.keys = authorizedKeys;
+            openssh.authorizedKeys.keys = config.local.user.nixos.openssh.authorizedKeys.keys;
           };
           groups.${nixremote} = {};
         };

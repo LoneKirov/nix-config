@@ -3,7 +3,6 @@
   lib,
   pkgs,
   inputs,
-  username,
   ...
 }: let
   quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
@@ -65,7 +64,7 @@ in {
         quickshell.package = quickshell;
         compositor.name = config.programs.niri.package.pname;
         # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
-        configHome = config.home-manager.users.${username}.home.homeDirectory;
+        configHome = config.local.user.home-manager.home.homeDirectory;
 
         # Save the logs to a file
         logs = {

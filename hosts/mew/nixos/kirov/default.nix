@@ -10,5 +10,5 @@
     key = "hashed";
   };
 
-  users.users.kirov.hashedPasswordFile = config.sops.secrets.kirov_hashed_password.path;
+  local.kirov.nixos.hashedPasswordFile = config.sops.secrets.kirov_hashed_password.path;
 }

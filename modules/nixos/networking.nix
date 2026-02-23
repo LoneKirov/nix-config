@@ -1,14 +1,9 @@
-{
-  hostname,
-  username,
-  ...
-}: {
+{config, ...}: {
   networking = {
     networkmanager.enable = true;
-    hostName = hostname;
   };
   services.tailscale = {
     enable = true;
-    extraSetFlags = ["--operator=${username}"];
+    extraSetFlags = ["--operator=${config.local.user.nixos.name}"];
   };
 }

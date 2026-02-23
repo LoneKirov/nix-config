@@ -2,8 +2,6 @@
   config,
   pkgs,
   inputs,
-  username,
-  authorizedKeys,
   ...
 }: {
   imports = [
@@ -11,24 +9,26 @@
   ];
 
   config = {
-    users.users.${username} = {
-      uid = 1000;
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      extraGroups = [
-        "wheel" # sudo
-        "dialout" # serial devices
-      ];
-      openssh.authorizedKeys.keys = authorizedKeys;
-    };
     home-manager = {
       extraSpecialArgs = {
         inherit inputs;
       };
       useUserPackages = true;
       useGlobalPkgs = true;
+    };
 
-      users.${username} = {...}: {
+    local.user = {
+      nixos = {
+        uid = 1000;
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        extraGroups = [
+          "wheel" # sudo
+          "dialout" # serial devices
+        ];
+      };
+
+      home-manager = {...}: {
         imports = [
           {
             programs = {
