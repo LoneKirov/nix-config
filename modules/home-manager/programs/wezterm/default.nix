@@ -10,8 +10,18 @@
       "wezterm/default_config.lua".source = ./default_config.lua;
       "wezterm/keybinds.lua".source = ./keybinds.lua;
     };
-    programs.wezterm = {
+    programs.wezterm = let
+      wezterm =
+        if config.services.xserver.enable
+        then pkgs.wezterm
+        else pkgs.wezterm.headless;
+    in {
       enable = lib.mkDefault true;
+      package = wezterm.overrideAttrs (finalAttrs: previousAttrs: {
+        postPatch = ''
+          echo ${finalAttrs.version} > .tag
+        '';
+      });
       # https://github.com/wezterm/wezterm/issues/6685
       extraConfig = ''
         local default_config = require 'default_config'
