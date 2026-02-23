@@ -3,12 +3,11 @@
     ./btrfs.nix
     ./disk-config.nix
     ./hardware-configuration.nix
+    ./kirov
     ./framework-amd-ai-300-series
     ./ledger.nix
     ./nix.nix
     ./ssh.nix
-    ./steam.nix
-    ./vicinae.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

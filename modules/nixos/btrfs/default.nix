@@ -28,5 +28,10 @@
       };
     };
   };
-  sops.secrets.btrbk_ssh_key.owner = config.users.users.btrbk.name;
+  sops.secrets.btrbk_ssh_key = {
+    format = "yaml";
+    sopsFile = ./btrbk.sops.yaml;
+    key = "ssh_key";
+    owner = config.users.users.btrbk.name;
+  };
 }

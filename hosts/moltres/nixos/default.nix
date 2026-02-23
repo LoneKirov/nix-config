@@ -3,6 +3,7 @@
     ./btrfs.nix
     ./disk-config.nix
     ./hardware-configuration.nix # hardware scan configuration
+    ./kirov
     ./services
   ];
 

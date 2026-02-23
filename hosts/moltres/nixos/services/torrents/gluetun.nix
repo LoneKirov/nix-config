@@ -1,7 +1,7 @@
 {config, ...}: {
   sops.secrets.gluetun = {
     format = "dotenv";
-    sopsFile = ../../../../../secrets/gluetun.env;
+    sopsFile = ./gluetun.sops.env;
     key = "";
   };
   virtualisation.quadlet.containers.gluetun = {

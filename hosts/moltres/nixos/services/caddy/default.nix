@@ -1,7 +1,7 @@
 {config, ...}: {
   sops.secrets.caddy = {
     format = "dotenv";
-    sopsFile = ../../../../../secrets/caddy.env;
+    sopsFile = ./caddy.sops.env;
     key = "";
   };
   virtualisation.quadlet = {

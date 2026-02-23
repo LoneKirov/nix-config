@@ -1,7 +1,7 @@
 {
   imports = [
     ./boot.nix
-    ./btrfs.nix
+    ./btrfs
     ./flatpak.nix
     ./gui.nix
     ./impermanence.nix
