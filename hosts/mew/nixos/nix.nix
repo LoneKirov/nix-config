@@ -7,7 +7,7 @@
     local.kirov.home-manager.home = {
       shellAliases = {
         nixos-rebuild = "nixos-rebuild --sudo --flake $XDG_CONFIG_HOME/nix-config";
-        moltres-rebuild = "nixos-rebuild --sudo --flake $XDG_CONFIG_HOME/nix-config#moltres --target-host nixremote@moltres";
+        moltres-rebuild = "'nixos-rebuild' --sudo --flake $XDG_CONFIG_HOME/nix-config#moltres --target-host nixremote@moltres";
       };
     };
   };
