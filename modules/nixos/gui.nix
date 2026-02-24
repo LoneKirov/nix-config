@@ -35,7 +35,6 @@ in {
         plugins = {
           calculator.enable = true;
           dankBitwarden.enable = true;
-          dankClight.enable = true;
           dankGifSearch.enable = true;
           dankLauncherKeys.enable = true;
           homeAssistantMonitor.enable = true;
@@ -75,8 +74,6 @@ in {
 
       # dms uses upower for battery stats
       upower.enable = true;
-      # used by clight plugin
-      clight.enable = true;
     };
     location.provider = "geoclue2";
   };
