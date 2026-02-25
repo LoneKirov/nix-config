@@ -1,0 +1,20 @@
+name: "CI: flake check"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: "write"
+      contents: "read"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wimpysworld/nothing-but-nix@main
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/flake-checker-action@main
+      - name: Run `nix flake check`
+        run: nix flake check
