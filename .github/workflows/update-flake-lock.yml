@@ -18,7 +18,11 @@ jobs:
       - uses: DeterminateSystems/determinate-nix-action@v3
       - uses: DeterminateSystems/update-flake-lock@main
         with:
-          pr-title: "Update Nix flake inputs" # Title of PR to be created
-          pr-labels: |                  # Labels to be set on the PR
+          token: ${{ secrets.NIX_FLAKE_UPDATE_TOKEN }}
+          git-author-name: github-actions[bot]
+          git-author-email: github-actions[bot]@users.noreply.github.com
+          git-committer-name: github-actions[bot]
+          git-committer-email: github-actions[bot]@users.noreply.github.com
+          pr-labels: |
             dependencies
             automated
