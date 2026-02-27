@@ -15,5 +15,9 @@
 
   networking.firewall.enable = false;
 
-  system.stateVersion = "26.05";
+  system = {
+    autoUpgrade.enable = true;
+
+    stateVersion = "26.05";
+  };
 }

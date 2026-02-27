@@ -22,6 +22,17 @@
           auto-optimise-store = true;
         };
       };
+      system.autoUpgrade = {
+        flake = "github:LoneKirov/nix-config";
+        dates = "daily";
+        allowReboot = true;
+        rebootWindow = {
+          lower = "01:00";
+          upper = "05:00";
+        };
+        randomizedDelaySec = "45min";
+        runGarbageCollection = true;
+      };
     }
     (lib.mkIf (! config.services.xserver.enable)
       (let
