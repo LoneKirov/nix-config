@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [
     ./btrfs.nix
     ./disk-config.nix
