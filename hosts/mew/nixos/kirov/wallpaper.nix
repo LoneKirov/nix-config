@@ -13,6 +13,14 @@
       };
       Service = {
         Type = "simple";
+        ExecCondition = let
+          isUnlocked = pkgs.writeShellScript "is-unlocked.sh" ''
+            ${lib.getExe' pkgs.systemd "busctl"} get-property -j org.freedesktop.login1 /org/freedesktop/login1/session/auto org.freedesktop.login1.Session LockedHint | ${lib.getExe pkgs.jq} -e '.data | not'
+          '';
+          isDMSActive = pkgs.writeShellScript "is-dms-active.sh" ''
+            ${lib.getExe' pkgs.systemd "systemctl"} --user is-active dms.service
+          '';
+        in [isDMSActive isUnlocked];
         ExecStart = let
           script =
             pkgs.writeShellApplication
@@ -34,7 +42,6 @@
     timers.dms-random-wallpaper = {
       Unit.Description = "dms-random-wallpaper timer";
       Timer = {
-        Unit = "dms-random-wallpaper";
         OnBootSec = "1min";
         OnUnitActiveSec = "15min";
       };
