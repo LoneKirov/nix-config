@@ -2,6 +2,7 @@
   imports = [
     ./steam.nix
     ./vicinae.nix
+    ./wallpaper.nix
   ];
 
   sops.secrets.kirov_hashed_password = {

@@ -1,0 +1,44 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  local.kirov.home-manager.systemd.user = {
+    services.dms-random-wallpaper = {
+      Unit = {
+        Description = "Set random DMS wallpaper";
+        After = ["dms.service"];
+        ConditionPathExists = "%t/danklinux.path";
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = let
+          script =
+            pkgs.writeShellApplication
+            {
+              name = "dms-random-wallpaper";
+              runtimeInputs = with pkgs; [findutils dms-shell coreutils-full];
+              runtimeEnv = {
+                HOME = config.local.kirov.nixos.home;
+              };
+              text = ''
+                wallpaper=$(find $HOME/Pictures/wallpapers -type f | shuf -n 1)
+                dms ipc call wallpaper set "$wallpaper"
+              '';
+            };
+        in
+          lib.getExe script;
+      };
+    };
+    timers.dms-random-wallpaper = {
+      Unit.Description = "dms-random-wallpaper timer";
+      Timer = {
+        Unit = "dms-random-wallpaper";
+        OnBootSec = "1min";
+        OnUnitActiveSec = "15min";
+      };
+      Install.WantedBy = ["timers.target"];
+    };
+  };
+}
