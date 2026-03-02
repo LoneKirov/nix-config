@@ -27,6 +27,7 @@
       DOCKER_HOST = "127.0.0.1:2375";
     };
     requires = ["docker-socket-proxy.service"];
+    after = ["docker-socket-proxy.service"];
   };
 
   virtualisation.quadlet.containers.docker-socket-proxy = let
