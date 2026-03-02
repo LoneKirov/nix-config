@@ -90,6 +90,7 @@ in {
         -- with nixvim managed plugins so we just load the plugin manually
         require('plugins/dankcolors')[1].config()
       ''}
+      require('transparent').clear_prefix('NeoTree')
     '';
     lsp = {
       inlayHints.enable = true;
