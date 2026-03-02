@@ -20,8 +20,8 @@
           paths = let
             pinentry =
               if config.services.xserver.enable
-              then lib.getExe' pkgs.pinentry-gnome3 "pinentry-gnome3"
-              else lib.getExe' pkgs.pinentry-curses "pinentry-curses";
+              then lib.getExe pkgs.pinentry-gnome3
+              else lib.getExe pkgs.pinentry-curses;
           in [
             (pkgs.writeShellScriptBin "pinentry" ''${pinentry} "$@"'')
             pkgs.rbw

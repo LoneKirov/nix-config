@@ -9,6 +9,6 @@
       useApiForSearch = false;
     };
     "@tonka3000/store.raycast.homeassistant".preferences.instance = "https://homeassistant.kanto.casa/";
-    "@jomifepe/store.raycast.bitwarden".preferences.cliPath = lib.getExe' pkgs.bitwarden-cli "bw";
+    "@jomifepe/store.raycast.bitwarden".preferences.cliPath = lib.getExe pkgs.bitwarden-cli;
   };
 }

@@ -40,7 +40,7 @@
             home = "/var/lib/${nixremote}";
             group = nixremote;
             extraGroups = ["wheel"];
-            shell = "${lib.getExe' pkgs.bash "bash"}";
+            shell = "${lib.getExe pkgs.bash}";
 
             openssh.authorizedKeys.keys = config.local.user.nixos.openssh.authorizedKeys.keys;
           };

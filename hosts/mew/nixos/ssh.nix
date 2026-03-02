@@ -34,7 +34,7 @@
             -o timeout=60 \
             -o auto_unmount \
             -o flushwrites \
-            -o mount_template="${lib.getExe' pkgs.sshfs "sshfs"} -o reconnect %%r: %%m" \
+            -o mount_template="${lib.getExe pkgs.sshfs} -o reconnect %%r: %%m" \
             -o unmount_template="umount -l %%m" \
             %t/sshfs
         '';
