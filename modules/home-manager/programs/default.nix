@@ -8,6 +8,7 @@
     ./chezmoi.nix
     ./direnv.nix
     ./discord.nix
+    ./dms
     ./eza.nix
     ./fd.nix
     ./flatpak.nix
