@@ -26,6 +26,7 @@
         "/srv/plex/config:/config:idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/plex/optimized:/optimized:idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/plex/media:/data/media:ro,idmap=uids=@${host-uid}-${container-uid}-1"
+        "/srv/arr/data/media:/data/media2:ro,idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/resilio-sync/folders/Patreon:/data/patreon:ro,idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/torrents/downloads/complete:/data/torrents:ro,idmap=uids=@${host-uid}-${container-uid}-1"
       ];

@@ -9,9 +9,13 @@
         }
 }
 
+(caddy-network-bind) {
+        bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
+}
+
 (resilio-sync) {
         sync.{$HOSTNAME}.kanto.casa {
-                bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
+                import caddy-network-bind
                 reverse_proxy resilio-sync:8888
                 import cloudflare-tls
         }
@@ -19,15 +23,45 @@
 
 (glances) {
         glances.{$HOSTNAME}.kanto.casa {
-                bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
+                import caddy-network-bind
                 reverse_proxy host.containers.internal:61208
                 import cloudflare-tls
         }
 }
 
-transmission.kanto.casa {
-        bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
-        reverse_proxy gluetun:9091
+torrents.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy gluetun:8080
+        import cloudflare-tls
+}
+
+sonarr.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy sonarr:8989
+        import cloudflare-tls
+}
+
+radarr.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy radarr:7878
+        import cloudflare-tls
+}
+
+prowlarr.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy prowlarr:9696
+        import cloudflare-tls
+}
+
+profilarr.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy profilarr:6868
+        import cloudflare-tls
+}
+
+seerr.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy seerr:5055
         import cloudflare-tls
 }
 

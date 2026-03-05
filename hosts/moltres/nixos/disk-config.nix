@@ -180,6 +180,11 @@
                     ];
                     mountpoint = "/srv/storage";
                     subvolumes = {
+                      "/arr" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/arr";
+                      };
+                      "/arr/.snapshots" = {};
                       "/plex" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/plex";

@@ -6,7 +6,7 @@
   };
   virtualisation.quadlet.containers.gluetun = {
     unitConfig = {
-      Description = "gluetun vpn";
+      Description = "Gluetun - VPN";
     };
     containerConfig = {
       image = "docker.io/qmcgaw/gluetun:latest";
