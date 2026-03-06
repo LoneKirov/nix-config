@@ -11,6 +11,10 @@
         snapshot_dir = "/srv/plex/.snapshots";
         target."/srv/backup/moltres/plex" = {};
       };
+      subvolume."/srv/arr" = {
+        snapshot_dir = "/srv/arr/.snapshots";
+        target."/srv/backup/moltres/arr" = {};
+      };
     };
     sshAccess = [
       {

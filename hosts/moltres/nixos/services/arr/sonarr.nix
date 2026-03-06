@@ -8,6 +8,7 @@
       Description = "Sonarr - TV Shows";
       Requires = [
         config.virtualisation.quadlet.containers.qbittorrent.ref
+        config.virtualisation.quadlet.containers.sabnzbd.ref
       ];
     };
     containerConfig = {
