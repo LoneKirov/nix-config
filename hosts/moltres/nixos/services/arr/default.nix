@@ -7,6 +7,7 @@
     ./prowlarr.nix
     ./qbittorrent.nix
     ./radarr.nix
+    ./sabnzbd.nix
     ./seerr.nix
     ./sonarr.nix
   ];

@@ -9,7 +9,7 @@ job_defaults:
   max_concurrent_searches: 3
 
 jobs:
-  remove_bad_files:
+  # remove_bad_files:
   remove_done_seeding:
   remove_failed_downloads:
   remove_failed_imports:
@@ -22,8 +22,8 @@ jobs:
       - "One or more episodes expected in this release were not imported or missing from the release"
   remove_metadata_missing:
   remove_missing_files:
-  remove_orphans:
-  remove_slow:
+  # remove_orphans:
+  # remove_slow:
   remove_stalled:
   remove_unmonitored:
   search_unmet_cutoff:

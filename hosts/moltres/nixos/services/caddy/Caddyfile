@@ -65,5 +65,17 @@ seerr.kanto.casa {
         import cloudflare-tls
 }
 
+sabnzbd.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy sabnzbd:8080
+        import cloudflare-tls
+}
+
+plex.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy host.containers.internal:32400
+        import cloudflare-tls
+}
+
 import resilio-sync
 import glances
