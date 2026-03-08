@@ -38,6 +38,7 @@
           users.${nixremote} = {
             isSystemUser = true;
             home = "/var/lib/${nixremote}";
+            createHome = true;
             group = nixremote;
             extraGroups = ["wheel"];
             shell = "${lib.getExe pkgs.bash}";
