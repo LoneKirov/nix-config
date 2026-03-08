@@ -3,6 +3,7 @@
     format = "yaml";
     sopsFile = ./password.sops.yaml;
     key = "hashed";
+    neededForUsers = true;
   };
 
   local.kirov.nixos = {

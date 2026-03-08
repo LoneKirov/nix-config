@@ -40,6 +40,10 @@ in {
               directory = "/var/log"; # system logs
               inInitrd = true; # make it available for journald in initrd
             }
+            {
+              directory = "/etc/ssh"; # ssh host keys
+              inInitrd = true; # make it available for sops in initrd
+            }
           ]
           ++ lib.optionals config.boot.lanzaboote.enable [
             {

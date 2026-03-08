@@ -9,6 +9,7 @@
     format = "yaml";
     sopsFile = ./password.sops.yaml;
     key = "hashed";
+    neededForUsers = true;
   };
 
   local.kirov.nixos.hashedPasswordFile = config.sops.secrets.kirov_hashed_password.path;
