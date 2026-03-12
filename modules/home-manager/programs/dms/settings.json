@@ -460,15 +460,15 @@
           "enabled": true
         },
         {
+          "id": "catWidget",
+          "enabled": true
+        },
+        {
           "id": "systemTray",
           "enabled": true
         },
         {
           "id": "notificationButton",
-          "enabled": true
-        },
-        {
-          "id": "dankKDEConnect",
           "enabled": true
         },
         {
