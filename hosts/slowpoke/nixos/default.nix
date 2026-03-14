@@ -4,19 +4,23 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     ./kirov
-    ./services
+    ./raspberry-pi-3
+    ./nix.nix
+    ./tailscale.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
-
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   services.xserver.enable = false;
 
   networking.firewall.enable = false;
 
   system = {
-    autoUpgrade.enable = true;
+    autoUpgrade = {
+      enable = true;
+      # don't want to run at the same time as moltres
+      dates = "*-*-* 04:00:00";
+    };
 
     stateVersion = "26.05";
   };

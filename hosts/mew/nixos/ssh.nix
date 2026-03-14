@@ -13,8 +13,8 @@
             host = "moltres";
             forwardAgent = true;
           };
-          zapdos = {
-            host = "zapdos";
+          slowpoke = {
+            host = "slowpoke";
             forwardAgent = true;
           };
         };
