@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   imports = [
     ./btrfs.nix
     ./disk-config.nix
@@ -19,7 +19,7 @@
     autoUpgrade = {
       enable = true;
       # don't want to run at the same time as moltres
-      dates = "*-*-* 04:00:00";
+      dates = lib.mkForce "*-*-* 04:00:00";
     };
 
     stateVersion = "26.05";
