@@ -15,6 +15,10 @@
     ];
     distributedBuilds = true;
     settings.max-jobs = 0;
+    extraOptions = ''
+      min-free = ${toString (1024 * 1024 * 1024)}
+      max-free = ${toString (4096 * 1024 * 1024)}
+    '';
   };
   systemd.tmpfiles.rules = [
     "f /root/.ssh/config 0700 root root - StrictHostKeyChecking=accept-new"
