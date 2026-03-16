@@ -7,7 +7,7 @@
         protocol = "ssh-ng";
         sshUser = "nixremote";
         sshKey = config.sops.secrets.nixremote_ssh_key.path;
-        maxJobs = 1;
+        maxJobs = 6;
         speedFactor = 2;
         supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
         mandatoryFeatures = [];
