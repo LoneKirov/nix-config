@@ -14,4 +14,7 @@
   ];
   # use suspend-then-hibernate when closing the lid
   services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "3h";
+  };
 }
