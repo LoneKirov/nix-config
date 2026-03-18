@@ -7,10 +7,7 @@
     inputs.disko.nixosModules.disko
   ];
 
-  config = let
-    storageKey = "${config.impermanence.persistentMountpoint}/etc/cryptsetup-keys.d/storage.key";
-    backupKey = "${config.impermanence.persistentMountpoint}/etc/cryptsetup-keys.d/backup.key";
-  in {
+  config = {
     disko.devices = {
       disk = {
         main = {
@@ -102,7 +99,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = storageKey;
                   };
                 };
               };
@@ -123,7 +119,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = storageKey;
                   };
                 };
               };
@@ -144,7 +139,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = storageKey;
                   };
                 };
               };
@@ -165,7 +159,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = storageKey;
                   };
                   content = {
                     type = "btrfs";
@@ -221,7 +214,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = backupKey;
                   };
                 };
               };
@@ -242,7 +234,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = backupKey;
                   };
                 };
               };
@@ -263,7 +254,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = backupKey;
                   };
                 };
               };
@@ -284,7 +274,6 @@
                   initrdUnlock = false;
                   settings = {
                     allowDiscards = true;
-                    keyFile = backupKey;
                   };
                   content = {
                     type = "btrfs";
@@ -318,7 +307,7 @@
       disks = config.disko.devices.disk;
       mkCrypttabEntry = disk: let
         luks = disk.content.partitions.luks.content;
-      in "${luks.name} ${disk.device}-part1 ${luks.settings.keyFile}";
+      in "${luks.name} ${disk.device}-part1 none tpm2-device=auto";
     in ''
       ${mkCrypttabEntry disks.storage1}
       ${mkCrypttabEntry disks.storage2}
