@@ -1,1 +1,3 @@
-binds {}
+binds {
+    Mod+W hotkey-overlay-title="Wallpaper Carousel" { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
+}

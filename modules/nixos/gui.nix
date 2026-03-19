@@ -42,6 +42,7 @@ in {
           niriWindows.enable = true;
           powerOptions.enable = true;
           tailscale.enable = true;
+          wallpaperCarousel.enable = true;
         };
       };
 
