@@ -7,3 +7,9 @@ output "eDP-1" {
     variable-refresh-rate
 }
 
+output "LG Electronics 27GN950 106NTVS9P119" {
+    mode "3840x2160@94.981"
+    scale 1.5
+    position x=0 y=0
+}
+

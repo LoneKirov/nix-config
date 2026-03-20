@@ -5,6 +5,7 @@
     ./flatpak.nix
     ./gui.nix
     ./impermanence.nix
+    ./ledger.nix
     ./networking.nix
     ./nix
     ./pam.nix
@@ -12,6 +13,7 @@
     ./secure-boot.nix
     ./sops.nix
     ./ssh.nix
+    ./steam
     ./sudo.nix
     ./system-packages.nix
     ./time.nix

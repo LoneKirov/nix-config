@@ -1,17 +1,20 @@
-{...}: {
+{lib, ...}: {
   imports = [
     ./btrfs.nix
     ./disk-config.nix
     ./hardware-configuration.nix
     ./kirov
-    ./framework-amd-ai-300-series
+    ./nvidia.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
-  services.xserver.enable = true;
+  services = {
+    xserver.enable = true;
+    openssh.enable = lib.mkForce true;
+  };
 
   system.stateVersion = "26.05";
 

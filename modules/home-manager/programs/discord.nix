@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: {
-  options.programs.discord-flatpak.enable = lib.mkEnableOption "discord-flatpak";
+  options.local.programs.discord-flatpak.enable = lib.mkEnableOption "discord-flatpak";
 
   config = lib.mkMerge [
-    {programs.discord-flatpak.enable = lib.mkDefault config.services.xserver.enable;}
-    (lib.mkIf config.programs.discord-flatpak.enable {
+    {local.programs.discord-flatpak.enable = lib.mkDefault config.services.xserver.enable;}
+    (lib.mkIf config.local.programs.discord-flatpak.enable {
       home.packages = with pkgs; [xwayland-satellite];
       services.flatpak.packages = ["com.discordapp.Discord"];
     })

@@ -26,7 +26,9 @@
     ./pay-respects.nix
     ./podman.nix
     ./ripgrep.nix
+    ./ssh.nix
     ./starship
+    ./steam.nix
     ./trash-cli.nix
     ./tmux.nix
     ./vicinae

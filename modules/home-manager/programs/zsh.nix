@@ -18,11 +18,11 @@
         useFriendlyNames = true;
         plugins = lib.mkBefore [
           "getantidote/use-omz"
+          "marlonrichert/zsh-autocomplete"
           "zsh-users/zsh-autosuggestions"
           "zsh-users/zsh-syntax-highlighting"
           "ohmyzsh/ohmyzsh path:plugins/sudo"
           "ohmyzsh/ohmyzsh path:plugins/colored-man-pages"
-          "marlonrichert/zsh-autocomplete"
           "ohmyzsh/ohmyzsh path:plugins/systemd"
         ];
       };

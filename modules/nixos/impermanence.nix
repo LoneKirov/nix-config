@@ -11,7 +11,7 @@ in {
     inputs.preservation.nixosModules.preservation
   ];
 
-  options.impermanence.persistentMountpoint = lib.mkOption {
+  options.local.impermanence.persistentMountpoint = lib.mkOption {
     type = types.str;
     default = persistentMountpoint;
     readOnly = true;

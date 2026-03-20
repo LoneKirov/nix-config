@@ -402,7 +402,7 @@
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
-  "displayNameMode": "system",
+  "displayNameMode": "model",
   "screenPreferences": {
     "wallpaper": [
       "all"
@@ -412,7 +412,8 @@
   "niriOutputSettings": {
     "eDP-1": {
       "vrrOnDemand": false
-    }
+    },
+    "LG Electronics 27GN950 106NTVS9P119": {}
   },
   "hyprlandOutputSettings": {},
   "displayProfiles": {},

@@ -21,8 +21,8 @@
           subvolume."/home" = {
             snapshot_dir = "/home/.snapshots";
           };
-          subvolume."${config.impermanence.persistentMountpoint}" = {
-            snapshot_dir = "${config.impermanence.persistentMountpoint}/.snapshots";
+          subvolume."${config.local.impermanence.persistentMountpoint}" = {
+            snapshot_dir = "${config.local.impermanence.persistentMountpoint}/.snapshots";
           };
         };
       };
