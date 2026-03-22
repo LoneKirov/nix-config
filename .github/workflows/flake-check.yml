@@ -20,4 +20,4 @@ jobs:
       # - uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: DeterminateSystems/flake-checker-action@main
       - name: Run `nix flake check`
-        run: nix flake check
+        run: nix flake check --all-systems --build-all
