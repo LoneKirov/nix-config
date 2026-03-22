@@ -3,6 +3,7 @@
     ./boot.nix
     ./btrfs
     ./flatpak.nix
+    ./fwupd.nix
     ./gui.nix
     ./impermanence.nix
     ./ledger.nix
