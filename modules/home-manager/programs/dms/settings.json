@@ -410,10 +410,8 @@
   },
   "showOnLastDisplay": {},
   "niriOutputSettings": {
-    "eDP-1": {
-      "vrrOnDemand": false
-    },
-    "LG Electronics 27GN950 106NTVS9P119": {}
+    "LG Electronics 27GN950 106NTVS9P119": {},
+    "BOE NE135A1M-NY1 Unknown": {}
   },
   "hyprlandOutputSettings": {},
   "displayProfiles": {},

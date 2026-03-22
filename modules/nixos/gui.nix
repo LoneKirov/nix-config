@@ -35,7 +35,6 @@ in {
         plugins = {
           calculator.enable = true;
           catWidget.enable = true;
-          dankBitwarden.enable = true;
           dankGifSearch.enable = true;
           dankLauncherKeys.enable = true;
           homeAssistantMonitor.enable = true;
