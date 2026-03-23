@@ -23,19 +23,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wimpysworld/nothing-but-nix@main
-      - uses: DeterminateSystems/nix-installer-action@main
-      # https://github.com/DeterminateSystems/magic-nix-cache/issues/154
-      # - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
       - uses: tailscale/github-action@v4
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:ci
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs=
+            extra-substituters = https://cache.kanto.casa
+      # https://github.com/DeterminateSystems/magic-nix-cache/issues/154
+      # - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/flake-checker-action@main
       - name: Run `nix flake check`
         run: nix flake check --build-all
       - uses: webfactory/ssh-agent@v0.9.0
         with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Push store to cache
         run: NIX_SSHOPTS="-o StrictHostKeyChecking=accept-new" nix copy --all --to ssh://nixremote@cache.kanto.casa
