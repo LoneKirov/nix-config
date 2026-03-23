@@ -20,4 +20,6 @@
 
     stateVersion = "26.05";
   };
+
+  users.users.nixremote.openssh.authorizedKeys.keys = [(builtins.readFile ../../../keys/github.pub)];
 }

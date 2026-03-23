@@ -77,5 +77,11 @@ plex.kanto.casa {
         import cloudflare-tls
 }
 
+cache.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy host.containers.internal:5000
+        import cloudflare-tls
+}
+
 import resilio-sync
 import glances

@@ -14,6 +14,8 @@
         use-xdg-base-directories = true;
         # optimize the store on every build
         auto-optimise-store = true;
+        substituters = ["https://cache.kanto.casa"];
+        trusted-public-keys = [(builtins.readFile ../../../keys/harmonia.pub)];
       };
     };
     system.autoUpgrade = {
