@@ -1,7 +1,7 @@
 {config, ...}: {
   sops.secrets.harmonia = {
-    format = "dotenv";
-    sopsFile = ./harmonia.sops.env;
+    format = "yaml";
+    sopsFile = ./harmonia.sops.yaml;
     key = "secret";
   };
   services.harmonia.cache = {
