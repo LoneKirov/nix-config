@@ -38,4 +38,4 @@ jobs:
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Push store to cache
-        run: nix copy --all --to ssh://nixremote@cache.kanto.casa
+        run: NIX_SSHOPTS="-o StrictHostKeyChecking=accept-new" nix copy --all --to ssh://nixremote@cache.kanto.casa
