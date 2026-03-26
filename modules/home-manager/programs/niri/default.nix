@@ -14,7 +14,7 @@
   dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
   dmsWindowrulesConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/windowrules.kdl";
 in {
-  config = lib.mkIf config.programs.niri.enable {
+  config = lib.mkIf config.local.programs.niri.enable {
     xdg.configFile = {
       "niri/config.kdl".source = mkOutOfStoreSymlink niriConfig;
       "niri/dms/alttab.kdl".source = mkOutOfStoreSymlink dmsAltTabConfig;

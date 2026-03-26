@@ -5,7 +5,7 @@
     ./theme.nix
   ];
 
-  options = {
+  options.local = {
     programs = {
       niri.enable = lib.mkEnableOption "niri";
       dms-shell.enable = lib.mkEnableOption "dms-shell";

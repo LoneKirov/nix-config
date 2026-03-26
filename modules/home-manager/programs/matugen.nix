@@ -19,7 +19,7 @@ in {
   };
 
   config = {
-    local.programs.matugen.enable = lib.mkDefault config.programs.dms-shell.enable;
+    local.programs.matugen.enable = lib.mkDefault config.local.programs.dms-shell.enable;
 
     xdg.configFile = lib.mkIf config.local.programs.matugen.enable {
       "matugen/config.toml".source = tomlFormat.generate "matugen-config" matugenConfig;

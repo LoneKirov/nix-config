@@ -42,7 +42,7 @@ in {
   };
 
   config = lib.mkMerge [
-    {programs.vicinae.enable = lib.mkDefault config.programs.niri.enable;}
+    {programs.vicinae.enable = lib.mkDefault config.local.programs.niri.enable;}
     (lib.mkIf config.programs.vicinae.enable {
       local.programs.matugen.config.templates.vicinae = {
         input_path = ./vicinae.theme.toml;

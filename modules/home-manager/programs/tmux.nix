@@ -5,7 +5,7 @@
   ...
 }: {
   config = lib.mkMerge [
-    {programs.tmux.enable = lib.mkDefault (!config.services.xserver.enable);}
+    {programs.tmux.enable = lib.mkDefault (!config.local.services.xserver.enable);}
     (lib.mkIf config.programs.tmux.enable {
       programs.tmux = {
         prefix = "C-a";

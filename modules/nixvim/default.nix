@@ -85,7 +85,7 @@ in {
     colorschemes.base16.enable = true;
     extraConfigLua = ''
       vim.opt.foldenable = false
-      ${lib.optionalString hmConfig.programs.dms-shell.enable ''
+      ${lib.optionalString hmConfig.local.programs.dms-shell.enable ''
         -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
         -- with nixvim managed plugins so we just load the plugin manually
         require('plugins/dankcolors')[1].config()

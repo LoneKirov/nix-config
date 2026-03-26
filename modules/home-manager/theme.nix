@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  config = lib.mkIf config.programs.dms-shell.enable {
+  config = lib.mkIf config.local.programs.dms-shell.enable {
     gtk = {
       enable = true;
       theme = {

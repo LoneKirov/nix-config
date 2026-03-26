@@ -10,7 +10,7 @@
   settings = "${configHome}/nix-config/modules/home-manager/programs/dms/settings.json";
   face = "${configHome}/nix-config/modules/home-manager/programs/dms/face.png";
 in {
-  config = lib.mkIf config.programs.dms-shell.enable {
+  config = lib.mkIf config.local.programs.dms-shell.enable {
     xdg.configFile = {
       "DankMaterialShell/clsettings.json".source = mkOutOfStoreSymlink clsettings;
       "DankMaterialShell/settings.json".source = mkOutOfStoreSymlink settings;

@@ -19,7 +19,7 @@
           name = "rbw-wrapped";
           paths = let
             pinentry =
-              if config.services.xserver.enable
+              if config.local.services.xserver.enable
               then lib.getExe pkgs.pinentry-gnome3
               else lib.getExe pkgs.pinentry-curses;
           in [

@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.yazi = {
     enable = true;
     package = pkgs.yazi.override {_7zz = pkgs._7zz-rar;};
@@ -30,6 +35,23 @@
         max_width = 4000;
         max_height = 4000;
       };
+      opener.set-wallpaper =
+        []
+        ++ lib.optionals config.local.programs.dms-shell.enable [
+          {
+            run = "dms ipc call wallpaper set %s1";
+            for = "linux";
+            desc = "Set as wallpaper";
+          }
+        ];
+      open.prepend_rules =
+        []
+        ++ lib.optionals config.local.programs.dms-shell.enable [
+          {
+            mime = "image/*";
+            use = ["open" "reveal" "set-wallpaper"];
+          }
+        ];
     };
     keymap = {
       mgr.prepend_keymap = [
