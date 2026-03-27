@@ -15,7 +15,10 @@ in {
       "DankMaterialShell/clsettings.json".source = mkOutOfStoreSymlink clsettings;
       "DankMaterialShell/settings.json".source = mkOutOfStoreSymlink settings;
     };
-    home.file.".face".source = mkOutOfStoreSymlink face;
+    home = {
+      file.".face".source = mkOutOfStoreSymlink face;
+      packages = [pkgs.dragon-drop];
+    };
 
     systemd.user = {
       services.dms-random-wallpaper = {

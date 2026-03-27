@@ -29,6 +29,7 @@
     ./ssh.nix
     ./starship
     ./steam.nix
+    ./syncthing.nix
     ./trash-cli.nix
     ./tmux.nix
     ./vicinae

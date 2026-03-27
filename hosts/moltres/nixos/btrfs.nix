@@ -19,6 +19,10 @@
         snapshot_dir = "/srv/resilio-sync/.snapshots";
         target."/srv/backup/moltres/resilio-sync" = {};
       };
+      subvolume."/srv/syncthing" = {
+        snapshot_dir = "/srv/syncthing/.snapshots";
+        target."/srv/backup/moltres/syncthing" = {};
+      };
     };
     sshAccess = [
       {

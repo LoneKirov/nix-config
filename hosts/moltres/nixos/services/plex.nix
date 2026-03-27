@@ -1,8 +1,7 @@
 {config, ...}: {
   virtualisation.quadlet.containers.plex = let
     host-uid = toString config.users.users.kirov.uid;
-    # host group is 26 is video for /dev/dri access
-    host-gid = "26";
+    host-gid = toString config.users.groups.video.gid;
     container-uid = "1000";
     container-gid = "1000";
   in {
@@ -28,7 +27,6 @@
         "/srv/arr/plex/media:/data/media.old:ro,idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/arr/data/media:/data/media:ro,idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/resilio-sync/folders/Patreon:/data/patreon:ro,idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/torrents/downloads/complete:/data/torrents:ro,idmap=uids=@${host-uid}-${container-uid}-1"
       ];
       tmpfses = ["/transcode:size=10G"];
     };

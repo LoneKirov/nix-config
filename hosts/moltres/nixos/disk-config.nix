@@ -188,6 +188,11 @@
                         mountpoint = "/srv/resilio-sync";
                       };
                       "/resilio-sync/.snapshots" = {};
+                      "/syncthing" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/syncthing";
+                      };
+                      "/syncthing/.snapshots" = {};
                       "/torrents" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/torrents";

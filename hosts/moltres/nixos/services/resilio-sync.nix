@@ -26,6 +26,6 @@
     serviceConfig = {
       Restart = "on-failure";
     };
-    autoStart = true;
+    autoStart = false;
   };
 }
