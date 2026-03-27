@@ -5,7 +5,6 @@
     ./glances
     ./harmonia
     ./plex.nix
-    ./resilio-sync.nix
     ./syncthing.nix
   ];
 }

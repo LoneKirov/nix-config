@@ -26,7 +26,7 @@
         "/srv/arr/plex/optimized:/optimized:idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/arr/plex/media:/data/media.old:ro,idmap=uids=@${host-uid}-${container-uid}-1"
         "/srv/arr/data/media:/data/media:ro,idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/resilio-sync/folders/Patreon:/data/patreon:ro,idmap=uids=@${host-uid}-${container-uid}-1"
+        "/srv/syncthing/folders/Patreon:/data/patreon:ro,idmap=uids=@${host-uid}-${container-uid}-1"
       ];
       tmpfses = ["/transcode:size=10G"];
     };

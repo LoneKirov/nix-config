@@ -15,10 +15,6 @@
         snapshot_dir = "/srv/arr/.snapshots";
         target."/srv/backup/moltres/arr" = {};
       };
-      subvolume."/srv/resilio-sync" = {
-        snapshot_dir = "/srv/resilio-sync/.snapshots";
-        target."/srv/backup/moltres/resilio-sync" = {};
-      };
       subvolume."/srv/syncthing" = {
         snapshot_dir = "/srv/syncthing/.snapshots";
         target."/srv/backup/moltres/syncthing" = {};

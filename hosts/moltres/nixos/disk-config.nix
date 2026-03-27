@@ -183,11 +183,6 @@
                         mountpoint = "/srv/plex";
                       };
                       "/plex/.snapshots" = {};
-                      "/resilio-sync" = {
-                        mountOptions = ["compress=zstd"];
-                        mountpoint = "/srv/resilio-sync";
-                      };
-                      "/resilio-sync/.snapshots" = {};
                       "/syncthing" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/syncthing";

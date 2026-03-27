@@ -13,22 +13,6 @@
         bind 10.89.0.17 [fde6:1612:79ee:c19d::11]
 }
 
-(resilio-sync) {
-        sync.{$HOSTNAME}.kanto.casa {
-                import caddy-network-bind
-                reverse_proxy resilio-sync:8888
-                import cloudflare-tls
-        }
-}
-
-(glances) {
-        glances.{$HOSTNAME}.kanto.casa {
-                import caddy-network-bind
-                reverse_proxy host.containers.internal:61208
-                import cloudflare-tls
-        }
-}
-
 torrents.kanto.casa {
         import caddy-network-bind
         reverse_proxy gluetun:8080
@@ -83,5 +67,14 @@ cache.kanto.casa {
         import cloudflare-tls
 }
 
-import resilio-sync
-import glances
+syncthing.moltres.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy host.containers.internal:8384
+        import cloudflare-tls
+}
+
+glances.moltres.kanto.casa {
+        import caddy-network-bind
+        reverse_proxy host.containers.internal:61208
+        import cloudflare-tls
+}
