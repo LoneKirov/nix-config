@@ -72,6 +72,9 @@ in {
           ]
           ++ lib.optionals config.hardware.bluetooth.enable [
             "/var/lib/bluetooth" # bluetooth store
+          ]
+          ++ lib.optionals config.services.howdy.enable [
+            "/var/lib/howdy" # howdy models
           ];
         files = [
           {
