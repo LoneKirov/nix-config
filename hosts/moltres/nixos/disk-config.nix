@@ -188,11 +188,6 @@
                         mountpoint = "/srv/syncthing";
                       };
                       "/syncthing/.snapshots" = {};
-                      "/torrents" = {
-                        mountOptions = ["compress=zstd"];
-                        mountpoint = "/srv/torrents";
-                      };
-                      "/torrents/.snapshots" = {};
                     };
                   };
                 };
