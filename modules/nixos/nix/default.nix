@@ -18,6 +18,7 @@
         trusted-public-keys = [(builtins.readFile ../../../keys/harmonia.pub)];
       };
     };
+    boot.loader.systemd-boot.configurationLimit = 10;
     system.autoUpgrade = {
       flake = "github:LoneKirov/nix-config";
       dates = "daily";
