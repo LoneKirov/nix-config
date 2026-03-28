@@ -17,6 +17,8 @@
     openssh.enable = lib.mkForce true;
   };
 
+  time.hardwareClockInLocalTime = true;
+
   system.stateVersion = "26.05";
 
   local.udev.ledger.enable = true;
