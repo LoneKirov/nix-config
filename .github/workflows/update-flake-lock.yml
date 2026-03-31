@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/determinate-nix-action@v3
       - uses: DeterminateSystems/update-flake-lock@main
+        id: update
         with:
           token: ${{ secrets.NIX_FLAKE_UPDATE_TOKEN }}
           git-author-name: github-actions[bot]
@@ -26,3 +27,8 @@ jobs:
           pr-labels: |
             dependencies
             automated
+            auto-merge
+      - name: Enable auto-merge
+        run: "gh pr merge --auto --squash ${{ steps.update.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.NIX_FLAKE_UPDATE_TOKEN }}
