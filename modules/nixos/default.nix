@@ -7,7 +7,7 @@
     ./gui.nix
     ./impermanence.nix
     ./ledger.nix
-    ./networking.nix
+    ./networking
     ./nix
     ./pam.nix
     ./podman.nix

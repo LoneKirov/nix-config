@@ -35,12 +35,10 @@ in {
         plugins = {
           calculator.enable = true;
           catWidget.enable = true;
-          dankGifSearch.enable = true;
           dankLauncherKeys.enable = true;
           homeAssistantMonitor.enable = true;
           niriWindows.enable = true;
           powerOptions.enable = true;
-          tailscale.enable = true;
           wallpaperCarousel.enable = true;
         };
       };
