@@ -4,8 +4,9 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     ./kirov
-    ./raspberry-pi-3
     ./nix.nix
+    ./raspberry-pi-3
+    ./services
     ./tailscale.nix
   ];
 
