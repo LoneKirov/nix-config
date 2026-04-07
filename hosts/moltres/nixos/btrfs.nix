@@ -32,4 +32,10 @@
       }
     ];
   };
+  services.beesd.filesystems = {
+    storage = {
+      spec = "/srv/storage";
+      hashTableSizeMB = 4096;
+    };
+  };
 }
