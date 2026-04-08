@@ -46,6 +46,7 @@
                 };
                 content = {
                   type = "btrfs";
+                  mountpoint = "/srv/root";
                   extraArgs = ["-f"];
                   subvolumes = {
                     # subvolume for home directories

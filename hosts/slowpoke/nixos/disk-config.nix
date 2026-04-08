@@ -35,6 +35,7 @@
                 content = {
                   type = "btrfs";
                   extraArgs = ["-f"];
+                  mountpoint = "/srv/root";
                   subvolumes = {
                     # subvolume for home directories
                     "/home" = {
