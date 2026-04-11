@@ -52,6 +52,12 @@ in {
             }
             "/var/lib/sbctl" # persist secureboot keys managed by sbctl
           ]
+          ++ lib.optionals config.boot.lanzaboote.measuredBoot.enable [
+            {
+              directory = "/var/lib/pcrlock.d";
+              inInitrd = true;
+            }
+          ]
           ++ lib.optionals config.networking.networkmanager.enable [
             "/etc/NetworkManager/system-connections" # NM connections
           ]

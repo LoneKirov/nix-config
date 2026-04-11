@@ -13,13 +13,17 @@
     {
       boot = {
         lanzaboote.enable = lib.mkDefault true;
-        # llanzaboote handles systemd-boot if enabled
+        # lanzaboote handles systemd-boot if enabled
         loader.systemd-boot.enable = ! config.boot.lanzaboote.enable;
       };
     }
     (lib.mkIf config.boot.lanzaboote.enable {
       boot = {
-        loader.efi.canTouchEfiVariables = true;
+        loader = {
+          efi.canTouchEfiVariables = true;
+          # lanzaboote measured boot required limiting to 8
+          systemd-boot.configurationLimit = lib.mkForce 8;
+        };
 
         # Setup Lanzaboote for SecureBoot
         lanzaboote = {
@@ -29,6 +33,10 @@
           autoEnrollKeys = {
             enable = true;
             autoReboot = true;
+          };
+          measuredBoot = {
+            enable = true;
+            pcrs = [0 1 2 3 4 7];
           };
         };
 

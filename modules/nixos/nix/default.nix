@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  lib,
+  ...
+}: {
   imports = [
     inputs.determinate.nixosModules.default
     inputs.nix-index-database.nixosModules.default
@@ -18,7 +22,7 @@
         trusted-public-keys = [(builtins.readFile ../../../keys/harmonia.pub)];
       };
     };
-    boot.loader.systemd-boot.configurationLimit = 10;
+    boot.loader.systemd-boot.configurationLimit = lib.mkDefault 10;
     system.autoUpgrade = {
       flake = "github:LoneKirov/nix-config";
       dates = "daily";

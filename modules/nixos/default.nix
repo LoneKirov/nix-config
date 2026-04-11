@@ -6,12 +6,12 @@
     ./fwupd.nix
     ./gui.nix
     ./impermanence.nix
+    ./lanzaboote.nix
     ./ledger.nix
     ./networking
     ./nix
     ./pam.nix
     ./podman.nix
-    ./secure-boot.nix
     ./sops.nix
     ./ssh.nix
     ./steam
