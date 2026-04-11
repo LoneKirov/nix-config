@@ -3,6 +3,7 @@
     ./atuin.nix
     ./bat.nix
     ./bitwarden.nix
+    ./bottom.nix
     ./brave.nix
     ./btop
     ./chezmoi.nix
