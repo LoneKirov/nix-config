@@ -271,8 +271,8 @@
       },
       "original": {
         "owner": "nix-community",
-        "ref": "master",
         "repo": "lanzaboote",
+        "rev": "29d2cca7fc3841708c1d48e2d1272f79db1538b6",
         "type": "github"
       }
     },
