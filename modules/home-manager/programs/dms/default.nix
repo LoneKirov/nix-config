@@ -47,7 +47,8 @@ in {
                   HOME = config.home.homeDirectory;
                 };
                 text = ''
-                  wallpaper=$(find $HOME/Pictures/wallpapers -type f | shuf -n 1)
+                  wallpaperDir="$HOME/Pictures/wallpapers"
+                  wallpaper=$(find $wallpaperDir -path $wallpaperDir/.stfolder -prune -o -type f -print | shuf -n 1)
                   dms ipc call wallpaper set "$wallpaper"
                 '';
               };
