@@ -44,6 +44,11 @@
         hashTableSizeMB = 7168;
         extraOptions = ["--loadavg-target=4.0"];
       };
+      backup = {
+        spec = "/srv/backup";
+        hashTableSizeMB = 7168;
+        extraOptions = ["--loadavg-target=4.0"];
+      };
     };
   };
 }
