@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./howdy.nix
     ./kirov
+    ./lanzaboote.nix
     ./nvidia.nix
   ];
 

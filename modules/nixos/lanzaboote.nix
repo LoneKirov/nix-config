@@ -36,7 +36,14 @@
           };
           measuredBoot = {
             enable = true;
-            pcrs = [0 1 2 3 4 7];
+            pcrs = [
+              0 # platform-code
+              1 # platform-config
+              2 # external-code
+              3 # external-config
+              4 # boot-loader-code
+              7 # secure-boot-policy
+            ];
           };
         };
 
