@@ -424,8 +424,10 @@
   },
   "showOnLastDisplay": {},
   "niriOutputSettings": {
-    "LG Electronics 27GN950 106NTVS9P119": {},
-    "BOE NE135A1M-NY1 Unknown": {}
+    "BOE NE135A1M-NY1 Unknown": {},
+    "ASUSTek COMPUTER INC PG27UCDM W1LMAV003072": {
+      "vrrOnDemand": true
+    }
   },
   "hyprlandOutputSettings": {},
   "displayProfiles": {},
