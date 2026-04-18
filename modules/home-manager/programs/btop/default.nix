@@ -10,6 +10,11 @@ in {
   local.programs.matugen.config.templates.btop = {
     input_path = ./btop.theme.toml;
     output_path = "${configHome}/btop/themes/matugen.theme";
-    post_hook = "${lib.getExe' pkgs.procps "pkill"} -SIGUSR2 btop";
+    post_hook = pkgs.writeShellScript "matugen-btop.sh" ''
+      if ${lib.getExe' pkgs.procps "pgrep"} -x "btop" > /dev/null
+      then
+          ${lib.getExe' pkgs.procps "pkill"} -SIGUSR2 btop
+      fi
+    '';
   };
 }
