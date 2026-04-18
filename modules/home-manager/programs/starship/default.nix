@@ -10,6 +10,7 @@
         {
           "$schema" = "https://starship.rs/config-schema.json";
           direnv.disabled = false;
+          hostname.ssh_only = ! config.local.services.xserver.enable;
         }
         // fromTOML (builtins.readFile ./nerd-font-symbols.toml);
     })
