@@ -28,7 +28,7 @@
     ./podman.nix
     ./ripgrep.nix
     ./ssh.nix
-    ./starship
+    ./starship.nix
     ./steam.nix
     ./syncthing.nix
     ./trash-cli.nix
