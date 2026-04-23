@@ -8,6 +8,7 @@
           alejandra
           nil
           nixd
+          nurl
           sops
           ssh-to-age
         ];

@@ -2,9 +2,9 @@
   imports = [
     ./btrfs.nix
     ./disk-config.nix
+    ./framework-amd-ai-300-series
     ./hardware-configuration.nix
     ./kirov
-    ./framework-amd-ai-300-series
   ];
 
   nixpkgs.config.allowUnfree = true;

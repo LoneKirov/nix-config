@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -30,5 +31,7 @@
       randomizedDelaySec = "45min";
       runGarbageCollection = true;
     };
+    programs.nix-index-database.comma.enable = true;
+    environment.systemPackages = with pkgs; [dix nom];
   };
 }
