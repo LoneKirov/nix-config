@@ -32,6 +32,6 @@
       runGarbageCollection = true;
     };
     programs.nix-index-database.comma.enable = true;
-    environment.systemPackages = with pkgs; [dix nom];
+    environment.systemPackages = with pkgs; [dix nix-output-monitor];
   };
 }
