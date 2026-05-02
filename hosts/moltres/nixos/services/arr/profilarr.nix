@@ -14,7 +14,7 @@
     containerConfig = {
       image = "docker.io/santiagosayshey/profilarr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.caddy.ref];
+      networks = [config.virtualisation.quadlet.networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";
@@ -30,4 +30,8 @@
     };
     autoStart = true;
   };
+
+  local.services.caddy.virtualHosts."profilarr.kanto.casa" = ''
+    reverse_proxy profilarr:6868
+  '';
 }

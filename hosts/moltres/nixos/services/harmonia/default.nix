@@ -13,6 +13,9 @@
 
     signKeyPaths = [config.sops.secrets.harmonia.path];
   };
+  local.services.caddy.virtualHosts."cache.kanto.casa" = ''
+    reverse_proxy host.containers.internal:5000
+  '';
 
   # disable detnix automatic gc to make better use of store as cache
   environment.etc."determinate/config.json".text = ''

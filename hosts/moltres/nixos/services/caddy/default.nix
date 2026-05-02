@@ -1,51 +1,87 @@
-{config, ...}: {
-  sops.secrets.caddy = {
-    format = "dotenv";
-    sopsFile = ./caddy.sops.env;
-    key = "";
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  options.local.services.caddy.virtualHosts = lib.mkOption {
+    type = lib.types.attrsOf lib.types.lines;
+    default = {};
+    description = "Accumulator for containerized Caddy virtual hosts.";
   };
-  virtualisation.quadlet = {
-    networks.caddy = {
-      unitConfig = {
-        Description = "Network for Caddy exposed services";
-        Wants = ["network-online.target"];
-        After = ["network-online.target"];
-      };
-      networkConfig = {
-        ipv6 = true;
-        subnets = [
-          "10.89.0.0/24"
-          "fde6:1612:79ee:c19d::/64"
-        ];
-      };
-      autoStart = true;
+  config = let
+    cfg = config.local.services.caddy.virtualHosts;
+    caddyfile = pkgs.writeText "Caddyfile" ''
+      {
+              email caddy@adammill.dev
+      }
+
+      (cloudflare-tls) {
+              tls {
+                      dns cloudflare {$CLOUDFLARE_API_TOKEN}
+                      propagation_timeout 60m
+              }
+      }
+
+      ${lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (domain: extraConfig: ''
+          ${domain} {
+              import cloudflare-tls
+              ${extraConfig}
+          }
+        '')
+        cfg
+      )}
+    '';
+  in {
+    sops.secrets.caddy = {
+      format = "dotenv";
+      sopsFile = ./caddy.sops.env;
+      key = "";
     };
-    volumes.caddy = {};
-    containers.caddy = {
-      unitConfig = {
-        Description = "Caddy services reverse proxy";
-      };
-      containerConfig = {
-        image = "ghcr.io/caddybuilds/caddy-cloudflare:alpine";
-        autoUpdate = "registry";
-        networks = [config.virtualisation.quadlet.networks.caddy.ref];
-        userns = "auto";
-        ip = "10.89.0.17";
-        ip6 = "fde6:1612:79ee:c19d::11";
-        publishPorts = ["80:80" "443:443"];
-        environmentFiles = [config.sops.secrets.caddy.path];
-        environments = {
-          HOSTNAME = "%H";
+    virtualisation.quadlet = {
+      networks.caddy = {
+        unitConfig = {
+          Description = "Network for Caddy";
+          Wants = ["network-online.target"];
+          After = ["network-online.target"];
         };
-        volumes = [
-          "${config.virtualisation.quadlet.volumes.caddy.ref}:/data:idmap"
-          "${./Caddyfile}:/etc/caddy/Caddyfile:ro,idmap"
-        ];
+        networkConfig = {
+          ipv6 = true;
+          options = {
+            isolate = "strict";
+          };
+        };
+        autoStart = true;
       };
-      serviceConfig = {
-        Restart = "on-failure";
+      volumes.caddy = {};
+      containers.caddy = {
+        unitConfig = {
+          Description = "Caddy services reverse proxy";
+        };
+        containerConfig = {
+          image = "ghcr.io/caddybuilds/caddy-cloudflare:alpine";
+          autoUpdate = "registry";
+          networks = [
+            config.virtualisation.quadlet.networks.caddy.ref
+            config.virtualisation.quadlet.networks.arr.ref
+          ];
+          userns = "auto";
+          publishPorts = ["80:80" "443:443"];
+          environmentFiles = [config.sops.secrets.caddy.path];
+          environments = {
+            HOSTNAME = "%H";
+          };
+          volumes = [
+            "${config.virtualisation.quadlet.volumes.caddy.ref}:/data:idmap"
+            "${caddyfile}:/etc/caddy/Caddyfile:ro,idmap"
+          ];
+        };
+        serviceConfig = {
+          Restart = "on-failure";
+        };
+        autoStart = true;
       };
-      autoStart = true;
     };
   };
 }

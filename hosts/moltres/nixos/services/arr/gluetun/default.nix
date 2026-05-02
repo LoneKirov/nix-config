@@ -11,7 +11,7 @@
     containerConfig = {
       image = "docker.io/qmcgaw/gluetun:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.caddy.ref];
+      networks = [config.virtualisation.quadlet.networks.arr.ref];
       userns = "auto";
       addCapabilities = ["NET_ADMIN" "NET_RAW"];
       devices = ["/dev/net/tun"];

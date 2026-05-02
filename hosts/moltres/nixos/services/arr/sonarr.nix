@@ -14,7 +14,7 @@
     containerConfig = {
       image = "lscr.io/linuxserver/sonarr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.caddy.ref];
+      networks = [config.virtualisation.quadlet.networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";
@@ -31,4 +31,8 @@
     };
     autoStart = true;
   };
+
+  local.services.caddy.virtualHosts."sonarr.kanto.casa" = ''
+    reverse_proxy sonarr:8989
+  '';
 }
