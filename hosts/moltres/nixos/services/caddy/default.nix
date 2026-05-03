@@ -65,6 +65,7 @@
           networks = [
             config.virtualisation.quadlet.networks.caddy.ref
             config.virtualisation.quadlet.networks.arr.ref
+            config.virtualisation.quadlet.networks.monarch-pl-bridge.ref
           ];
           userns = "auto";
           publishPorts = ["80:80" "443:443"];
