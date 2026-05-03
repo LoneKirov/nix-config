@@ -10,6 +10,8 @@ in {
   imports = [./lsp];
 
   config = {
+    nixpkgs.config.allowUnfree = true;
+
     viAlias = true;
     vimAlias = true;
     plugins = {
@@ -78,7 +80,6 @@ in {
       diffview.enable = true;
       neogit.enable = git;
       web-devicons.enable = true;
-      yazi.enable = yazi;
       transparent.enable = true;
       colorful-menu.enable = true;
     };
