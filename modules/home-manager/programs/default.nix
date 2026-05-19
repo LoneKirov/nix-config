@@ -16,6 +16,7 @@
     ./fzf.nix
     ./git.nix
     ./jq.nix
+    ./jujutsu.nix
     ./keybase.nix
     ./matugen.nix
     ./mpv.nix
