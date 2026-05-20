@@ -1,5 +1,6 @@
 {
   imports = [
+    ./beszel-agent
     ./boot.nix
     ./btrfs
     ./dbus.nix

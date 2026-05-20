@@ -6,7 +6,6 @@
     ./kirov
     ./nix.nix
     ./raspberry-pi-3
-    ./services
     ./tailscale.nix
   ];
 

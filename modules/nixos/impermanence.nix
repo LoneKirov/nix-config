@@ -81,6 +81,9 @@ in {
           ]
           ++ lib.optionals config.services.howdy.enable [
             "/var/lib/howdy" # howdy models
+          ]
+          ++ lib.optionals config.services.beszel.hub.enable [
+            "/var/lib/private/beszel-hub" # beszel hub
           ];
         files = [
           {
@@ -94,6 +97,10 @@ in {
         ];
       };
     };
+    # setup /var/lib/private for persisting DynamicUser services
+    systemd.tmpfiles.rules = [
+      "d /var/lib/private 0700 root root"
+    ];
     # https://github.com/nix-community/preservation/issues/22
     boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot${persistentMountpoint}/etc/machine-id".f = {
       argument = "uninitialized";

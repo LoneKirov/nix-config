@@ -1,8 +1,8 @@
 {...}: {
   imports = [
     ./arr
+    ./beszel-hub.nix
     ./caddy
-    ./glances
     ./harmonia
     ./monarch-pl-bridge
     ./plex.nix
