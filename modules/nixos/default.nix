@@ -2,6 +2,7 @@
   imports = [
     ./boot.nix
     ./btrfs
+    ./dbus.nix
     ./flatpak.nix
     ./fwupd.nix
     ./gui.nix
