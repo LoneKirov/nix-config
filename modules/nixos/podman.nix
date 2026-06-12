@@ -2,9 +2,12 @@
   imports = [inputs.quadlet-nix.nixosModules.quadlet];
 
   config = {
-    virtualisation.quadlet = {
-      enable = true;
-      autoUpdate.enable = true;
+    virtualisation = {
+      quadlet = {
+        enable = true;
+        autoUpdate.enable = true;
+      };
+      podman.autoPrune.enable = true;
     };
 
     users.users.containers = {
