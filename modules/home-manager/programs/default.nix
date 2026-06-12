@@ -35,7 +35,7 @@
     ./trash-cli.nix
     ./tmux.nix
     ./vicinae
-    ./wezterm
+    ./wezterm.nix
     ./yazi.nix
     ./zoxide.nix
     ./zsh.nix

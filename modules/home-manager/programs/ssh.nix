@@ -6,11 +6,11 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = let
+    settings = let
       nixosConfigurations = inputs.self.outputs.nixosConfigurations;
       withSsh = lib.filterAttrs (name: value: value.config.services.openssh.enable) nixosConfigurations;
       names = builtins.attrNames withSsh;
-      matchBlocks =
+      settings =
         map (host: {
           "${host}" = {
             inherit host;
@@ -23,6 +23,6 @@
         })
         names;
     in
-      lib.mkMerge matchBlocks;
+      lib.mkMerge settings;
   };
 }
