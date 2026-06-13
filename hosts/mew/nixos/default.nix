@@ -5,6 +5,7 @@
     ./framework-amd-ai-300-series
     ./hardware-configuration.nix
     ./kirov
+    ./services
   ];
 
   nixpkgs.config.allowUnfree = true;

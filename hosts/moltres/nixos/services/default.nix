@@ -1,7 +1,7 @@
 {...}: {
   imports = [
     ./arr
-    ./beszel-hub.nix
+    ./beszel
     ./caddy
     ./harmonia
     ./monarch-pl-bridge

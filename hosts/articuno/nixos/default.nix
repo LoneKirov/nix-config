@@ -7,6 +7,7 @@
     ./kirov
     ./lanzaboote.nix
     ./nvidia.nix
+    ./services
   ];
 
   nixpkgs.config.allowUnfree = true;
