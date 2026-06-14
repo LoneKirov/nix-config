@@ -28,6 +28,10 @@
       };
     };
   };
+  systemd.services.btrbk-btrbk = {
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+  };
   sops.secrets.btrbk_ssh_key = {
     format = "yaml";
     sopsFile = ./btrbk.sops.yaml;
