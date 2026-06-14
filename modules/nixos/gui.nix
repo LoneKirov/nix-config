@@ -8,7 +8,7 @@
   quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
 in {
   imports = [
-    inputs.dms-plugin-registry.modules.default
+    inputs.dms-plugin-registry.nixosModules.default
   ];
 
   config = lib.mkIf config.services.xserver.enable {

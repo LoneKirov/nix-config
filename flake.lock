@@ -100,11 +100,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780792552,
-        "narHash": "sha256-LfLjOWJMBWEdIfACViIRWvVU4W9k4ZEg+lSfNwLCEpY=",
+        "lastModified": 1781405131,
+        "narHash": "sha256-j1PHF0WNWmiBtk2jBnrfxGa67M8lGV3QPP/KBdYQOE0=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "e27e3c4567a7451186c6704e05933f69d0af0660",
+        "rev": "2504757530335213814d8c7f75816260bc1ace83",
         "type": "github"
       },
       "original": {
