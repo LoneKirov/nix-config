@@ -1,5 +1,7 @@
-{internal-lib, ...}:
-internal-lib.mkNixosSystem {
-  hostname = "slowpoke";
-  modules = [./nixos];
+{config, ...}:
+config.flake.lib.nixosSystem {
+  modules = [
+    {networking.hostName = "slowpoke";}
+    ./nixos
+  ];
 }

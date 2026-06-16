@@ -1,5 +1,7 @@
-{internal-lib, ...}:
-internal-lib.mkNixosSystem {
-  hostname = "moltres";
-  modules = [./nixos];
+{config, ...}:
+config.flake.lib.nixosSystem {
+  modules = [
+    {networking.hostName = "moltres";}
+    ./nixos
+  ];
 }

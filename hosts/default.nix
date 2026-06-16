@@ -1,10 +1,10 @@
-{internal-lib, ...}: {
+{config, ...}: {
   config.flake = {
     nixosConfigurations = {
-      articuno = import ./articuno {inherit internal-lib;};
-      mew = import ./mew {inherit internal-lib;};
-      moltres = import ./moltres {inherit internal-lib;};
-      slowpoke = import ./slowpoke {inherit internal-lib;};
+      articuno = import ./articuno {inherit config;};
+      mew = import ./mew {inherit config;};
+      moltres = import ./moltres {inherit config;};
+      slowpoke = import ./slowpoke {inherit config;};
     };
   };
 }
