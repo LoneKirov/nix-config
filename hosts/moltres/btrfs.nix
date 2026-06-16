@@ -23,7 +23,7 @@
       };
       sshAccess = [
         {
-          key = builtins.readFile ../../../keys/btrbk.pub;
+          key = builtins.readFile ../../keys/btrbk.pub;
           roles = [
             "target"
             "info"

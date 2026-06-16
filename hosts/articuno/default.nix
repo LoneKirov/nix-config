@@ -1,7 +1,31 @@
-{config, ...}:
-config.flake.lib.nixosSystem {
-  modules = [
-    {networking.hostName = "articuno";}
-    ./nixos
-  ];
+{
+  config,
+  lib,
+  ...
+}: {
+  flake.nixosConfigurations.articuno = config.flake.lib.nixosSystem {
+    modules = [
+      {
+        imports = [
+          ./btrfs.nix
+          ./disk-config.nix
+          ./hardware-configuration.nix
+          ./howdy.nix
+          ./kirov
+          ./lanzaboote.nix
+          ./nvidia.nix
+          ./services
+        ];
+
+        networking.hostName = "articuno";
+        boot.binfmt.emulatedSystems = ["aarch64-linux"];
+        services = {
+          xserver.enable = true;
+          openssh.enable = lib.mkForce true;
+        };
+        system.stateVersion = "26.05";
+        local.udev.ledger.enable = true;
+      }
+    ];
+  };
 }

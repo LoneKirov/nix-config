@@ -8,6 +8,6 @@
 
   local.kirov.nixos = {
     hashedPasswordFile = config.sops.secrets.kirov_hashed_password.path;
-    openssh.authorizedKeys.keys = [(builtins.readFile ../../../../keys/kirov.pub)];
+    openssh.authorizedKeys.keys = [(builtins.readFile ../../../keys/kirov.pub)];
   };
 }

@@ -18,6 +18,7 @@
             # local.user alias for generic module config
             (lib.mkAliasOptionModule ["local" "user" "nixos"] ["users" "users" username])
             (lib.mkAliasOptionModule ["local" "user" "home-manager"] ["home-manager" "users" username])
+            {nixpkgs.config.allowUnfree = true;}
             ../nixos
           ]
           ++ modules;
