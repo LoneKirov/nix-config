@@ -4,7 +4,7 @@
   ...
 }: {
   programs.ssh = {
-    enable = true;
+    enable = lib.mkDefault true;
     enableDefaultConfig = false;
     settings = let
       nixosConfigurations = inputs.self.outputs.nixosConfigurations;

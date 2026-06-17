@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     maple-mono.NormalNL-NF-CN-unhinted
     nerd-fonts.jetbrains-mono
@@ -8,7 +12,7 @@
     noto-fonts-cjk-serif
   ];
   fonts.fontconfig = {
-    enable = true;
+    enable = lib.mkDefault true;
     defaultFonts = {
       serif = ["Noto Serif"];
       sansSerif = ["Noto Sans"];

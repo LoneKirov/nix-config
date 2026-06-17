@@ -5,7 +5,7 @@
   ...
 }: {
   programs.yazi = {
-    enable = true;
+    enable = lib.mkDefault true;
     package = pkgs.yazi.override {_7zz = pkgs._7zz-rar;};
     plugins = {
       inherit (pkgs.yaziPlugins) toggle-pane recycle-bin starship;
