@@ -6,7 +6,7 @@
 }: {
   services.tailscale = {
     enable = true;
-    extraSetFlags = ["--operator=${config.local.user.nixos.name}"];
+    extraSetFlags = ["--operator=${config.user.username}"];
   };
   systemd.services."tailscale-restart-on-resume" = {
     description = "Restart Tailscale after resuming";

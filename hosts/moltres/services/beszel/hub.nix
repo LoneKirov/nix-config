@@ -4,7 +4,7 @@
     host = "0.0.0.0";
   };
 
-  local.services.caddy.virtualHosts."beszel.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."beszel.kanto.casa" = ''
     request_body {
         max_size 10MB
     }

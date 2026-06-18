@@ -56,7 +56,7 @@
                       mountOptions = [
                         "compress=zstd"
                       ];
-                      mountpoint = config.local.impermanence.persistentMountpoint;
+                      mountpoint = config.impermanence.persistentMountpoint;
                     };
                     "/persistent/.snapshots" = {};
                     # subvolume for swapfile

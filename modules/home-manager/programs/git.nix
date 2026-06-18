@@ -17,7 +17,7 @@
             merge.conflictstyle = "diff3";
             pull.rebase = false;
           }
-          (lib.mkIf config.local.programs.keybase.enable {
+          (lib.mkIf config.programs.keybase.enable {
             protocol.keybase.allow = "always";
           })
         ];

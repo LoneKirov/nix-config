@@ -24,7 +24,7 @@
           openssh.enable = lib.mkForce true;
         };
         system.stateVersion = "26.05";
-        local.udev.ledger.enable = true;
+        hardware.ledger.enable = true;
       }
     ];
   };

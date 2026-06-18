@@ -1,17 +1,11 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   config = {
-    programs.pay-respects = lib.mkMerge [
-      {enable = lib.mkDefault true;}
-      (lib.mkIf config.programs.pay-respects.enable {
-        options = [
-          "--alias"
-          "fuck"
-        ];
-      })
-    ];
+    programs.pay-respects = {
+      enable = lib.mkDefault true;
+      options = [
+        "--alias"
+        "fuck"
+      ];
+    };
   };
 }

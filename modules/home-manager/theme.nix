@@ -1,10 +1,12 @@
 {
-  config,
   lib,
+  osConfig,
   pkgs,
   ...
-}: {
-  config = lib.mkIf config.local.programs.dms-shell.enable {
+}: let
+  dms-shell = osConfig.programs.dms-shell.enable or false;
+in {
+  config = lib.mkIf dms-shell {
     gtk = {
       enable = true;
       theme = {

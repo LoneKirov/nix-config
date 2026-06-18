@@ -1,13 +1,16 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   ...
 }: let
   tomlFormat = pkgs.formats.toml {};
-  matugenConfig = {config = {};} // config.local.programs.matugen.config;
+  matugenConfig = {config = {};} // config.programs.matugen.config;
+  dms-shell = osConfig.programs.dms-shell.enable or false;
+  matugen = config.programs.matugen.enable;
 in {
-  options.local.programs.matugen = {
+  options.programs.matugen = {
     enable = lib.mkEnableOption "matugen";
     config = lib.mkOption {
       inherit (tomlFormat) type;
@@ -19,9 +22,9 @@ in {
   };
 
   config = {
-    local.programs.matugen.enable = lib.mkDefault config.local.programs.dms-shell.enable;
+    programs.matugen.enable = lib.mkDefault dms-shell;
 
-    xdg.configFile = lib.mkIf config.local.programs.matugen.enable {
+    xdg.configFile = lib.mkIf matugen {
       "matugen/config.toml".source = tomlFormat.generate "matugen-config" matugenConfig;
     };
   };

@@ -37,7 +37,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."plex.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."plex.kanto.casa" = ''
     reverse_proxy host.containers.internal:32400
   '';
 }

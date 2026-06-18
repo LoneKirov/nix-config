@@ -3,9 +3,9 @@
   lib,
   ...
 }: {
-  options.local.programs.nx.enable = lib.mkEnableOption "nx";
+  options.programs.nx.enable = lib.mkEnableOption "nx";
 
-  config = lib.mkIf config.local.programs.nx.enable {
+  config = lib.mkIf config.programs.nx.enable {
     programs.zsh.antidote.plugins = [
       "jscutlery/nx-completion"
     ];

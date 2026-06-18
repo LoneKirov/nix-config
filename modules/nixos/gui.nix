@@ -5,7 +5,11 @@
   inputs,
   ...
 }: let
-  quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
+  inherit (pkgs.stdenv.hostPlatform) system;
+  quickshell = inputs.quickshell.packages.${system}.quickshell;
+  inherit (config.user) username;
+  home-manager = config.home-manager.users.${username};
+  inherit (home-manager.home) homeDirectory;
 in {
   imports = [
     inputs.dms-plugin-registry.nixosModules.default
@@ -62,7 +66,7 @@ in {
         quickshell.package = quickshell;
         compositor.name = config.programs.niri.package.pname;
         # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
-        configHome = config.local.user.home-manager.home.homeDirectory;
+        configHome = homeDirectory;
 
         # Save the logs to a file
         logs = {

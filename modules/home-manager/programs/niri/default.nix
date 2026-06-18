@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  osConfig,
   ...
 }: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -13,8 +14,9 @@
   dmsOutputsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
   dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
   dmsWindowrulesConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/windowrules.kdl";
+  niri = osConfig.programs.niri.enable or false;
 in {
-  config = lib.mkIf config.local.programs.niri.enable {
+  config = lib.mkIf niri {
     xdg.configFile = {
       "niri/config.kdl".source = mkOutOfStoreSymlink niriConfig;
       "niri/dms/alttab.kdl".source = mkOutOfStoreSymlink dmsAltTabConfig;

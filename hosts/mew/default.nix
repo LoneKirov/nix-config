@@ -15,7 +15,7 @@
         boot.binfmt.emulatedSystems = ["aarch64-linux"];
         services.xserver.enable = true;
         system.stateVersion = "26.05";
-        local.udev.ledger.enable = true;
+        hardware.ledger.enable = true;
       }
     ];
   };

@@ -2,7 +2,7 @@
   services = {
     btrbk = {
       instances.btrbk.settings = {
-        subvolume."${config.local.impermanence.persistentMountpoint}" = {
+        subvolume."${config.impermanence.persistentMountpoint}" = {
           target."/srv/backup/moltres/persistent" = {};
         };
         subvolume."/home" = {

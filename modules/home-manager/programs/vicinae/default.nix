@@ -1,19 +1,21 @@
 {
   config,
   lib,
-  pkgs,
   options,
+  osConfig,
+  pkgs,
   ...
 }: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.xdg) configHome dataHome;
   vicinaeSettings = "${configHome}/nix-config/modules/home-manager/programs/vicinae/settings.json";
-  defaultBaseSettings = options.local.programs.vicinae.baseSettings.default;
-  baseSettings = config.local.programs.vicinae.baseSettings;
+  inherit (config.programs.vicinae) baseSettings;
+  defaultBaseSettings = options.programs.vicinae.baseSettings.default;
   mergedBaseSettings = lib.recursiveUpdate defaultBaseSettings baseSettings;
   jsonFormat = pkgs.formats.json {};
+  niri = osConfig.programs.niri.enable or false;
 in {
-  options.local.programs.vicinae.baseSettings = lib.mkOption {
+  options.programs.vicinae.baseSettings = lib.mkOption {
     inherit (jsonFormat) type;
     default = {
       font.normal.family = "Maple Mono Normal NL NF CN";
@@ -42,9 +44,9 @@ in {
   };
 
   config = lib.mkMerge [
-    {programs.vicinae.enable = lib.mkDefault config.local.programs.niri.enable;}
+    {programs.vicinae.enable = lib.mkDefault niri;}
     (lib.mkIf config.programs.vicinae.enable {
-      local.programs.matugen.config.templates.vicinae = {
+      programs.matugen.config.templates.vicinae = {
         input_path = ./vicinae.theme.toml;
         output_path = "${dataHome}/vicinae/themes/matugen.toml";
         post_hook = "${lib.getExe pkgs.vicinae} theme set matugen";

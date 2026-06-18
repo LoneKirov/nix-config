@@ -9,7 +9,6 @@
     ./gui.nix
     ./impermanence.nix
     ./lanzaboote.nix
-    ./ledger.nix
     ./networking
     ./nix
     ./pam.nix

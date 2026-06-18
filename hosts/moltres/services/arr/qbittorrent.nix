@@ -28,7 +28,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."torrents.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."torrents.kanto.casa" = ''
     reverse_proxy gluetun:8080
   '';
 }

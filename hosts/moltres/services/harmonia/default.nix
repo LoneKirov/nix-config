@@ -13,7 +13,7 @@
 
     signKeyPaths = [config.sops.secrets.harmonia.path];
   };
-  local.services.caddy.virtualHosts."cache.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."cache.kanto.casa" = ''
     reverse_proxy host.containers.internal:5000
   '';
 

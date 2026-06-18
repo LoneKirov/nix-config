@@ -47,7 +47,7 @@ in {
     };
   };
 
-  local.services.caddy.virtualHosts."monarch-pl-bridge.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."monarch-pl-bridge.kanto.casa" = ''
     reverse_proxy monarch-pl-bridge:47821
   '';
 }

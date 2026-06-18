@@ -32,7 +32,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."prowlarr.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."prowlarr.kanto.casa" = ''
     reverse_proxy prowlarr:9696
   '';
 }

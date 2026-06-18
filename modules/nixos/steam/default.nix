@@ -3,8 +3,12 @@
   lib,
   pkgs,
   ...
-}: {
-  config = lib.mkIf config.local.user.home-manager.local.programs.steam-flatpak.enable {
+}: let
+  inherit (config.user) username;
+  home-manager = config.home-manager.users.${username};
+  steam-flatpak = home-manager.programs.steam-flatpak.enable;
+in {
+  config = lib.mkIf steam-flatpak {
     hardware.steam-hardware.enable = true;
 
     # https://github.com/alsa-project/alsa-ucm-conf/issues/677#issuecomment-3755019801

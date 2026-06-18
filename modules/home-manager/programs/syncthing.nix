@@ -1,10 +1,12 @@
 {
-  config,
   lib,
+  osConfig,
   ...
-}: {
+}: let
+  dms-shell = osConfig.programs.dms-shell.enable or false;
+in {
   services.syncthing = {
-    enable = lib.mkDefault config.local.programs.dms-shell.enable;
+    enable = lib.mkDefault dms-shell;
     overrideDevices = false;
     overrideFolders = false;
     settings.options.alwaysLocalNets = [

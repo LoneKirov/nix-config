@@ -1,13 +1,16 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   ...
-}: {
-  config = lib.mkMerge [
-    {programs.tmux.enable = lib.mkDefault (!config.local.services.xserver.enable);}
-    (lib.mkIf config.programs.tmux.enable {
-      programs.tmux = {
+}: let
+  xserver = osConfig.services.xserver.enable or false;
+in {
+  config = {
+    programs = {
+      tmux = {
+        enable = lib.mkDefault (!xserver);
         prefix = "C-a";
         keyMode = "vi";
         sensibleOnTop = true;
@@ -31,9 +34,9 @@
           }
         ];
       };
-      programs.zsh.antidote.plugins = [
+      zsh.antidote.plugins = lib.optionals config.programs.tmux.enable [
         "ohmyzsh/ohmyzsh path:plugins/tmux"
       ];
-    })
-  ];
+    };
+  };
 }

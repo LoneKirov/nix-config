@@ -1,53 +1,56 @@
 {
   config,
-  pkgs,
   inputs,
+  lib,
+  pkgs,
   ...
-}: {
+}: let
+  inherit (config.user) username;
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  options = let
+    inherit (lib) types;
+  in {
+    user = {
+      username = lib.mkOption {
+        type = types.nonEmptyStr;
+        default = "kirov";
+      };
+      sshKey = lib.mkOption {
+        type = types.nonEmptyStr;
+        default = builtins.readFile ../../keys/kirov.pub;
+      };
+    };
+  };
+
   config = {
+    users.users.${username} = {
+      uid = 1000;
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      extraGroups = [
+        "wheel" # sudo
+        "dialout" # serial devices
+      ];
+    };
+
     home-manager = {
       extraSpecialArgs = {
         inherit inputs;
       };
       useUserPackages = true;
       useGlobalPkgs = true;
-    };
 
-    local.user = {
-      nixos = {
-        uid = 1000;
-        isNormalUser = true;
-        shell = pkgs.zsh;
-        extraGroups = [
-          "wheel" # sudo
-          "dialout" # serial devices
-        ];
-      };
-
-      home-manager = {...}: {
-        imports = [
-          {
-            local = {
-              programs = {
-                niri.enable = config.programs.niri.enable;
-                dms-shell.enable = config.programs.dms-shell.enable;
-              };
-              services.xserver.enable = config.services.xserver.enable;
-            };
-          }
-          ../home-manager
-        ];
+      users.${username} = {...}: {
+        imports = [../home-manager];
 
         home.stateVersion = config.system.stateVersion;
       };
     };
 
-    programs = {
-      zsh.enable = true;
-    };
+    programs.zsh.enable = true;
   };
 }

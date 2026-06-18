@@ -1,7 +1,9 @@
 {
-  config,
   lib,
+  osConfig,
   ...
-}: {
-  programs.mpv.enable = lib.mkDefault config.local.programs.dms-shell.enable;
+}: let
+  xserver = osConfig.services.xserver.enable or false;
+in {
+  programs.mpv.enable = lib.mkDefault xserver;
 }

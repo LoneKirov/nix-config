@@ -1,14 +1,19 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   ...
-}: {
+}: let
+  niri = osConfig.programs.niri.enable or false;
+  dms-shell = osConfig.programs.dms-shell.enable or false;
+  xserver = osConfig.services.xserver.enable or false;
+in {
   config = {
-    home.packages = lib.optionals config.local.programs.niri.enable [pkgs.wl-clipboard-rs];
+    home.packages = lib.optionals niri [pkgs.wl-clipboard-rs];
     programs.wezterm = let
       wezterm =
-        if config.local.services.xserver.enable
+        if xserver
         then pkgs.wezterm
         else pkgs.wezterm.headless;
       mkLuaInline = lib.generators.mkLuaInline;
@@ -121,7 +126,7 @@
           };
         }
         # fix copy and paste - https://github.com/wezterm/wezterm/issues/6685
-        (lib.mkIf config.local.programs.niri.enable {
+        (lib.mkIf niri {
           extraConfig = ''
             wezterm.on('window-focus-changed', function(window, pane)
               wezterm.run_child_process { 'sh', '-c', 'wl-paste -n | wl-copy' }
@@ -129,7 +134,7 @@
           '';
         })
         # DMS theme
-        (lib.mkIf config.local.programs.dms-shell.enable {
+        (lib.mkIf dms-shell {
           settings = {
             window_background_opacity = 0.7;
             color_scheme = "dank-theme";

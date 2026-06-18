@@ -6,6 +6,7 @@
   yazi = hmConfig.programs.yazi.enable;
   git = hmConfig.programs.git.enable;
   fzf = hmConfig.programs.fzf.enable;
+  matugen = hmConfig.programs.matugen.enable;
 in {
   imports = [./lsp];
 
@@ -86,7 +87,7 @@ in {
     colorschemes.base16.enable = true;
     extraConfigLua = ''
       vim.opt.foldenable = false
-      ${lib.optionalString hmConfig.local.programs.dms-shell.enable ''
+      ${lib.optionalString matugen ''
         -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
         -- with nixvim managed plugins so we just load the plugin manually
         require('plugins/dankcolors')[1].config()

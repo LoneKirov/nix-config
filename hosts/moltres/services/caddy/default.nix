@@ -4,13 +4,13 @@
   pkgs,
   ...
 }: {
-  options.local.services.caddy.virtualHosts = lib.mkOption {
+  options.services.caddy-podman.virtualHosts = lib.mkOption {
     type = lib.types.attrsOf lib.types.lines;
     default = {};
     description = "Accumulator for containerized Caddy virtual hosts.";
   };
   config = let
-    cfg = config.local.services.caddy.virtualHosts;
+    cfg = config.services.caddy-podman.virtualHosts;
     caddyfile = pkgs.writeText "Caddyfile" ''
       {
               email caddy@adammill.dev

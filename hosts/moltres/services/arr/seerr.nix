@@ -33,7 +33,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."seerr.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."seerr.kanto.casa" = ''
     reverse_proxy seerr:5055
   '';
 }

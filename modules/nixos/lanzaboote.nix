@@ -4,7 +4,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  lanzaboote = config.boot.lanzaboote.enable;
+in {
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
@@ -14,10 +16,10 @@
       boot = {
         lanzaboote.enable = lib.mkDefault true;
         # lanzaboote handles systemd-boot if enabled
-        loader.systemd-boot.enable = ! config.boot.lanzaboote.enable;
+        loader.systemd-boot.enable = ! lanzaboote;
       };
     }
-    (lib.mkIf config.boot.lanzaboote.enable {
+    (lib.mkIf lanzaboote {
       boot = {
         loader = {
           efi.canTouchEfiVariables = true;

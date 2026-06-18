@@ -13,7 +13,7 @@
     ];
   };
 
-  local.services.caddy.virtualHosts."syncthing.moltres.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."syncthing.moltres.kanto.casa" = ''
     reverse_proxy host.containers.internal:8384
   '';
 }

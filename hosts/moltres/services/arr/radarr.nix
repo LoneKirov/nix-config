@@ -32,7 +32,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."radarr.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."radarr.kanto.casa" = ''
     reverse_proxy radarr:7878
   '';
 }

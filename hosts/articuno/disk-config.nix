@@ -63,7 +63,7 @@
                         mountOptions = [
                           "compress=zstd"
                         ];
-                        mountpoint = config.local.impermanence.persistentMountpoint;
+                        mountpoint = config.impermanence.persistentMountpoint;
                       };
                       "/persistent/.snapshots" = {};
                       # subvolume for home directories
@@ -99,7 +99,7 @@
       device = "/dev/disk/by-id/nvme-eui.0025384751a24e91-part3";
       fsType = "ntfs3";
       options = [
-        "uid=${toString config.local.kirov.nixos.uid}"
+        "uid=${toString config.users.users.kirov.uid}"
         "gid=${toString config.users.groups.users.gid}"
         "nofail"
       ];

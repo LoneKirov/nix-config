@@ -2,9 +2,12 @@
   config,
   inputs,
   lib,
+  osConfig,
   pkgs,
   ...
-}: {
+}: let
+  xserver = osConfig.services.xserver.enable or false;
+in {
   config.programs.starship = let
     jujutsu = config.programs.jujutsu.enable;
     system = pkgs.stdenv.hostPlatform.system;
@@ -16,7 +19,7 @@
       {
         "$schema" = "https://starship.rs/config-schema.json";
         direnv.disabled = false;
-        hostname.ssh_only = config.local.services.xserver.enable;
+        hostname.ssh_only = xserver;
       }
       (lib.mkIf jujutsu {
         custom.jj = {

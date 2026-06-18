@@ -28,7 +28,7 @@
     autoStart = true;
   };
 
-  local.services.caddy.virtualHosts."sabnzbd.kanto.casa" = ''
+  services.caddy-podman.virtualHosts."sabnzbd.kanto.casa" = ''
     reverse_proxy sabnzbd:8080
   '';
 }
