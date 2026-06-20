@@ -19,7 +19,6 @@
 
     homeManagerConfiguration = {
       pkgs,
-      username ? "kirov",
       modules ? [],
       extraSpecialArgs ? {},
     }:
@@ -31,11 +30,15 @@
         modules =
           [
             ../home-manager
-            ({...}: {
+            ({
+              config,
+              lib,
+              ...
+            }: {
               nixpkgs.config.allowUnfree = true;
               home = {
-                inherit username;
-                homeDirectory = "/home/${username}";
+                username = lib.mkDefault "kirov";
+                homeDirectory = lib.mkDefault "/home/${config.home.username}";
               };
               programs.home-manager.enable = true;
             })
