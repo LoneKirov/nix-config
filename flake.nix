@@ -23,7 +23,7 @@
     lanzaboote = {
       # pinned to a specific revision until there is a better way to remove
       # 350-action-efi-application.pcrlock for some hosts
-      url = "github:nix-community/lanzaboote?rev=29d2cca7fc3841708c1d48e2d1272f79db1538b6";
+      url = "github:nix-community/lanzaboote?rev=001e560fffc8f0235e9db20ebeb4ccde0ade1caf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # declarative home directory
