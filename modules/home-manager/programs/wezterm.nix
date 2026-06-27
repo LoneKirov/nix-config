@@ -20,11 +20,7 @@ in {
       lib.mkMerge [
         {
           enable = lib.mkDefault true;
-          package = wezterm.overrideAttrs (finalAttrs: previousAttrs: {
-            postPatch = ''
-              echo ${finalAttrs.version} > .tag
-            '';
-          });
+          package = wezterm;
         }
         # fonts
         {

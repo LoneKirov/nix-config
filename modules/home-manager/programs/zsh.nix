@@ -5,7 +5,7 @@
 }: {
   config = {
     programs.zsh = {
-      enable = lib.mkDefault true;
+      enable = lib.mkDefault false;
       history.path = "${config.xdg.stateHome}/zsh/zsh_history";
       initContent = ''
         # [Ctrl-RightArrow] - move forward one word

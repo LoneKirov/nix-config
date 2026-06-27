@@ -30,7 +30,6 @@ in {
     users.users.${username} = {
       uid = 1000;
       isNormalUser = true;
-      shell = pkgs.zsh;
       extraGroups = [
         "wheel" # sudo
         "dialout" # serial devices

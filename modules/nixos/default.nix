@@ -4,6 +4,7 @@
     ./boot.nix
     ./btrfs
     ./dbus.nix
+    ./fish.nix
     ./flatpak.nix
     ./fwupd.nix
     ./gui.nix

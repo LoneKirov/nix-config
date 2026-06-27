@@ -12,6 +12,7 @@
     ./dms
     ./eza.nix
     ./fd.nix
+    ./fish.nix
     ./flatpak.nix
     ./fzf.nix
     ./git.nix
