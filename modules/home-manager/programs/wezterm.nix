@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   osConfig,
   pkgs,
@@ -7,6 +8,7 @@
   niri = osConfig.programs.niri.enable or false;
   dms-shell = osConfig.programs.dms-shell.enable or false;
   xserver = osConfig.services.xserver.enable or false;
+  fish = config.programs.fish.enable or false;
 in {
   config = {
     home.packages = lib.optionals niri [pkgs.wl-clipboard-rs];
@@ -137,6 +139,11 @@ in {
           extraConfig = ''
             wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/colors/dank-theme.toml")
           '';
+        })
+        (lib.mkIf fish {
+          settings = {
+            default_prog = [(lib.getExe pkgs.fish)];
+          };
         })
       ];
   };

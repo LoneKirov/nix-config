@@ -42,5 +42,8 @@ in {
         SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
       };
     };
+    systemd.user.sessionVariables = lib.mkIf bw.sshAgent {
+      SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
+    };
   };
 }
