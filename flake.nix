@@ -35,6 +35,7 @@
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs = {
+        nixpkgs.follows = "nixpkgs"; # https://github.com/nix-community/nixvim/issues/4463
         systems.follows = "systems";
         flake-parts.follows = "flake-parts";
       };
