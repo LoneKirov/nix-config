@@ -47,6 +47,7 @@ in {
               7 # secure-boot-policy
             ];
           };
+          bootCounting.initialTries = 3;
         };
 
         # Enable systemd within initrd

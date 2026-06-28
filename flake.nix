@@ -21,9 +21,7 @@
     preservation.url = "github:nix-community/preservation/main";
     # secureboot
     lanzaboote = {
-      # pinned to a specific revision until there is a better way to remove
-      # 350-action-efi-application.pcrlock for some hosts
-      url = "github:nix-community/lanzaboote?rev=001e560fffc8f0235e9db20ebeb4ccde0ade1caf";
+      url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # declarative home directory
