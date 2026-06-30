@@ -1,10 +1,11 @@
 {
   hmConfig,
   lib,
+  pkgs,
   ...
 }: let
-  yazi = hmConfig.programs.yazi.enable;
   git = hmConfig.programs.git.enable;
+  jj = hmConfig.programs.jujutsu.enable;
   fzf = hmConfig.programs.fzf.enable;
   matugen = hmConfig.programs.matugen.enable;
 in {
@@ -84,6 +85,17 @@ in {
       transparent.enable = true;
       colorful-menu.enable = true;
     };
+    extraPlugins = lib.optionals jj [
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "jjui";
+        src = pkgs.fetchFromGitHub {
+          owner = "xdagiz";
+          repo = "jjui.nvim";
+          rev = "e3ab2c482ed06b358dbd0d631b5579a4ae4c5d9b";
+          sha256 = "DcFkJwT4lEOC7cW+mYxewFmhgtOTkVCS0mdbllNGPiA=";
+        };
+      })
+    ];
     colorschemes.base16.enable = true;
     extraConfigLua = ''
       vim.opt.foldenable = false
@@ -93,6 +105,9 @@ in {
         require('plugins/dankcolors')[1].config()
       ''}
       require('transparent').clear_prefix('NeoTree')
+      ${lib.optionalString jj ''
+        require('jjui')
+      ''}
     '';
     lsp = {
       inlayHints.enable = true;
@@ -154,10 +169,10 @@ in {
           mode = "n";
         }
       ]
-      ++ lib.optionals yazi [
+      ++ lib.optionals jj [
         {
-          action = "<cmd>Yazi<CR>";
-          key = "<leader>yy";
+          action = "<cmd>Jjui<CR>";
+          key = "<leader>jj";
           mode = "n";
         }
       ];
