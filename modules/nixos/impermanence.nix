@@ -89,10 +89,7 @@ in {
           {
             # machine id. needs to be available early in boot
             file = "/etc/machine-id";
-            how = "symlink";
             inInitrd = true;
-            configureParent = true;
-            createLinkTarget = true;
           }
         ];
       };
@@ -105,6 +102,7 @@ in {
     boot.initrd.systemd.tmpfiles.settings.preservation."/sysroot${persistentMountpoint}/etc/machine-id".f = {
       argument = "uninitialized";
     };
+    systemd.services.systemd-machine-id-commit.unitConfig.ConditionFirstBoot = true;
     # user mutations won't persist across reboots
     users.mutableUsers = false;
   };
