@@ -1,7 +1,5 @@
-{lib, ...}: {
-  # https://github.com/nix-community/lanzaboote/pull/564#issuecomment-41896858291
-  boot.lanzaboote.measuredBoot.upstreamStaticMeasurements = lib.mkForce [
-    "500-separator.pcrlock.d/300-0x00000000.pcrlock"
-    "400-secureboot-separator.pcrlock.d/300-0x00000000.pcrlock"
-  ];
+{...}: {
+  # https://github.com/nix-community/lanzaboote/issues/584
+  # https://github.com/systemd/systemd/issues/40381
+  systemd.services.systemd-pcrlock-secureboot-authority.enable = false;
 }
