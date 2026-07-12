@@ -10,7 +10,7 @@
           ./btrfs.nix
           ./disk-config.nix
           ./hardware-configuration.nix
-          ./howdy.nix
+          # ./howdy.nix
           ./kirov
           ./lanzaboote.nix
           ./nvidia.nix
