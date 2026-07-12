@@ -88,6 +88,12 @@ in {
             ]
             ++ lib.optionals config.services.beszel.hub.enable [
               "/var/lib/private/beszel-hub" # beszel hub
+            ]
+            ++ lib.optionals config.services.xserver.enable [
+              "/var/lib/AccountsService"
+            ]
+            ++ lib.optionals config.services.displayManager.dms-greeter.enable [
+              "/var/lib/dms-greeter"
             ];
           files = [
             {

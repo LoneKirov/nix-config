@@ -17,10 +17,8 @@ in {
 
   config = lib.mkIf config.services.xserver.enable {
     programs = {
-      # Niri Compositor
       niri.enable = true;
 
-      # DankMaterialShell
       dms-shell = {
         enable = true;
         quickshell.package = quickshell;
@@ -31,7 +29,6 @@ in {
 
         # Core features
         enableSystemMonitoring = true; # System monitoring widgets (dgop)
-        enableVPN = true; # VPN management widget
         enableDynamicTheming = true; # Wallpaper-based theming (matugen)
         enableAudioWavelength = true; # Audio visualizer (cava)
         enableCalendarEvents = true; # Calendar integration (khal)
@@ -40,44 +37,44 @@ in {
           calculator.enable = true;
           catWidget.enable = true;
           dankLauncherKeys.enable = true;
-          homeAssistantMonitor.enable = true;
           niriWindows.enable = true;
           powerOptions.enable = true;
           wallpaperCarousel.enable = true;
+          nixPackageRunner.enable = true;
         };
       };
 
-      # DankSearch
       dsearch = {
         enable = true;
 
-        # Systemd service configuration
         systemd = {
-          enable = true; # Enable systemd user service
-          target = "graphical-session.target"; # Only start in graphical sessions
+          enable = true;
+          target = "graphical-session.target";
         };
       };
     };
 
     services = {
-      # DankGreeter
-      displayManager.dms-greeter = {
-        enable = true;
-        quickshell.package = quickshell;
-        compositor.name = config.programs.niri.package.pname;
-        # Sync your user's DankMaterialShell theme with the greeter. You'll probably want this
-        configHome = homeDirectory;
-
-        # Save the logs to a file
-        logs = {
-          save = true;
-          path = "/tmp/dms-greeter.log";
+      displayManager = {
+        dms-greeter = {
+          enable = true;
+          quickshell.package = quickshell;
+          compositor.name = config.programs.niri.package.pname;
+          # Sync your user's DankMaterialShell theme with the greeter
+          configHome = homeDirectory;
         };
       };
 
       # dms uses upower for battery stats
       upower.enable = true;
     };
+
+    # initial login via biometric requires entering password later to unlock user keychain
+    security.pam.services.greetd = {
+      fprintAuth = false;
+      howdy.enable = false;
+    };
+
     location.provider = "geoclue2";
   };
 }
