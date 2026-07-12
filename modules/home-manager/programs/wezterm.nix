@@ -122,14 +122,6 @@ in {
             '';
           };
         }
-        # fix copy and paste - https://github.com/wezterm/wezterm/issues/6685
-        (lib.mkIf niri {
-          extraConfig = ''
-            wezterm.on('window-focus-changed', function(window, pane)
-              wezterm.run_child_process { 'sh', '-c', 'wl-paste -n | wl-copy' }
-            end)
-          '';
-        })
         # DMS theme
         (lib.mkIf dms-shell {
           settings = {
