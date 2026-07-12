@@ -16,7 +16,7 @@
     ./podman.nix
     ./sops.nix
     ./ssh.nix
-    ./steam
+    ./steam.nix
     ./sudo.nix
     ./system-packages.nix
     ./time.nix
