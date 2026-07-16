@@ -3,6 +3,7 @@
     modules = [
       {
         imports = [
+          ./kirov
           ./wsl.nix
         ];
 
