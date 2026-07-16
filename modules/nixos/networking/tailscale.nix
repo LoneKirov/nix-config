@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  isWSL = config.wsl.enable or false;
+in {
   services.tailscale = {
-    enable = true;
+    enable = lib.mkDefault (! isWSL);
     extraSetFlags = ["--operator=${config.user.username}"];
   };
   systemd.services."tailscale-restart-on-resume" = {

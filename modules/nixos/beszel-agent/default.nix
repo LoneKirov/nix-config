@@ -1,6 +1,12 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: let
+  isWSL = config.wsl.enable or false;
+in {
   services.beszel.agent = {
-    enable = true;
+    enable = lib.mkDefault (! isWSL);
     environment = {
       DOCKER_HOST = "unix:///run/podman/podman.sock";
     };

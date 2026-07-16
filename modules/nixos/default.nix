@@ -8,19 +8,18 @@
     ./flatpak.nix
     ./fwupd.nix
     ./gui.nix
-    ./impermanence.nix
     ./lanzaboote.nix
     ./networking
     ./nix
     ./pam.nix
     ./podman.nix
+    ./preservation.nix
     ./sops.nix
     ./ssh.nix
     ./steam.nix
     ./sudo.nix
     ./system-packages.nix
     ./time.nix
-    ./tpm2.nix
     ./user.nix
     ./zswap.nix
   ];

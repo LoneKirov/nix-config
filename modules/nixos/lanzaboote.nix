@@ -6,19 +6,20 @@
   ...
 }: let
   lanzaboote = config.boot.lanzaboote.enable;
+  isWSL = config.wsl.enable or false;
 in {
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   config = lib.mkMerge [
-    {
+    (lib.mkIf (! isWSL) {
       boot = {
         lanzaboote.enable = lib.mkDefault true;
         # lanzaboote handles systemd-boot if enabled
-        loader.systemd-boot.enable = ! lanzaboote;
+        loader.systemd-boot.enable = lib.mkDefault (! lanzaboote);
       };
-    }
+    })
     (lib.mkIf lanzaboote {
       boot = {
         loader = {
@@ -56,6 +57,8 @@ in {
 
       environment.systemPackages = with pkgs; [
         sbctl
+        tpm2-tools
+        tpm2-tss
       ];
     })
   ];

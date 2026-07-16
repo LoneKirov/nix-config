@@ -2,7 +2,7 @@
   services = {
     btrbk = {
       instances.btrbk.settings = {
-        subvolume."${config.impermanence.persistentMountpoint}" = {
+        subvolume."${config.preservation.persistentMountpoint}" = {
           target."ssh://moltres/srv/backup/slowpoke/persistent" = {};
         };
         subvolume."/home" = {

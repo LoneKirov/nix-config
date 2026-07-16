@@ -65,6 +65,8 @@
       url = "github:dmmulroy/jj-starship";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # wsl support
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
 
   outputs = inputs @ {

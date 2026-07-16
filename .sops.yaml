@@ -1,6 +1,7 @@
 keys:
   - &kirov age1arp20x5v3fjcvn8vy9udgg5fsn5ht0fjq4qg0yt8ulh3qgs89e3strvap8
   - &articuno age1y4fmywng3a4ksqaatez7k6fyaezxlz5qclhzqdrqt0rr73dc3a4s8vntge
+  - &articuno-wsl age1t5vnm4p2agu8t6u0nq066843zgc48yfmfdcs9qlrx06wew2tduxq6e3jm6
   - &mew age12evvsyf2kt9x7j5wtn672jwztrp8k2mmhjwdrkggazgxxfzhtc4q294je2
   - &moltres age14eql5hfcrs2dkvfulckq6ntjyvhd6ytk2mpx2qlak8lvmv2zd48qgkcvve
   - &slowpoke age1y62zzjnt22sm4lvt4dlxwvezed4r0pp5unjxegtyl73qvwdtwdaqg88m6q
@@ -10,6 +11,11 @@ creation_rules:
     - age:
       - *kirov
       - *articuno
+  - path_regex: articuno-wsl/.*\.sops\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *kirov
+      - *articuno-wsl
   - path_regex: mew/.*\.sops\.(yaml|json|env|ini)$
     key_groups:
     - age:
@@ -30,6 +36,7 @@ creation_rules:
     - age:
       - *kirov
       - *articuno
+      - *articuno-wsl
       - *mew
       - *moltres
       - *slowpoke
