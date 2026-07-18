@@ -18,7 +18,7 @@ in {
   options.programs.vicinae.baseSettings = lib.mkOption {
     inherit (jsonFormat) type;
     default = {
-      font.normal.family = "Maple Mono Normal NL NF CN";
+      font.normal.family = "Maple Mono NF CN";
       theme.dark = {
         name = "matugen";
         icon_theme = config.gtk.iconTheme.name;

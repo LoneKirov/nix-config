@@ -28,7 +28,7 @@ in {
         {
           settings.font = mkLuaInline ''
             wezterm.font_with_fallback {
-                'Maple Mono Normal NL NF CN',
+                'Maple Mono NF CN',
                 'JetBrainsMono NF',
                 'Noto Color Emoji',
               }

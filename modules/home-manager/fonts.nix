@@ -4,7 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    maple-mono.NormalNL-NF-CN-unhinted
+    maple-mono.NF-CN-unhinted
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-color-emoji
@@ -16,7 +16,7 @@
     defaultFonts = {
       serif = ["Noto Serif"];
       sansSerif = ["Noto Sans"];
-      monospace = ["Maple Mono Normal NL NF CN" "JetBrainsMono NF"];
+      monospace = ["Maple Mono NF CN" "JetBrainsMono NF"];
       emoji = ["Noto Color Emoji"];
     };
   };
