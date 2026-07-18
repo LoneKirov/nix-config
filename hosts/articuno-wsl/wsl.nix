@@ -14,9 +14,15 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  home-manager.users.kirov = {lib, ...}: {
-    home.activation.syncWindowsWezterm = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      $DRY_RUN_CMD cp -L -f ${./wezterm.windows.lua} /mnt/c/Users/kirov/.wezterm.lua
-    '';
+  home-manager.users.kirov = {
+    config,
+    lib,
+    ...
+  }: {
+    home.activation = lib.mkIf config.programs.wezterm.enable {
+      syncWindowsWezterm = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD cp -L -f ${config.xdg.configHome}/wezterm/wezterm.lua /mnt/c/Users/kirov/.wezterm.lua
+      '';
+    };
   };
 }
