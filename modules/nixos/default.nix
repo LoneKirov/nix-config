@@ -8,6 +8,7 @@
     ./flatpak.nix
     ./fwupd.nix
     ./gui.nix
+    ./gvfs.nix
     ./lanzaboote.nix
     ./networking
     ./nix
