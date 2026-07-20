@@ -5,6 +5,7 @@
   ...
 }: let
   dms-shell = osConfig.programs.dms-shell.enable or false;
+  gvfs = osConfig.services.gvfs.enable or false;
 in {
   programs.yazi = lib.mkMerge [
     {
@@ -67,7 +68,7 @@ in {
         ];
       };
     }
-    (lib.mkIf osConfig.services.gvfs.enable {
+    (lib.mkIf gvfs {
       plugins = {
         inherit (pkgs.yaziPlugins) gvfs;
       };
