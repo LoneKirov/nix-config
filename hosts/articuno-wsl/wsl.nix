@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -13,6 +14,11 @@
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
+
+  programs.fuse.enable = true;
+  environment.systemPackages = with pkgs; [
+    sshfs
+  ];
 
   home-manager.users.kirov = {
     config,
