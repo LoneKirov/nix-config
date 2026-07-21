@@ -9,7 +9,7 @@
   dms-shell = osConfig.programs.dms-shell.enable or false;
   xserver = osConfig.services.xserver.enable or false;
   fish = config.programs.fish.enable or false;
-  isWSL = osConfig.wsl.enable or false;
+  isWSL = config.wsl.enable;
 in {
   config = {
     home.packages = lib.optionals niri [pkgs.wl-clipboard-rs];
