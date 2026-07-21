@@ -7,8 +7,7 @@
     programs = {
       fzf = {
         enable = lib.mkDefault true;
-        # use fzf plugin instead
-        enableFishIntegration = false;
+        historyWidget.command = "";
       };
       fish.plugins = [
         {
