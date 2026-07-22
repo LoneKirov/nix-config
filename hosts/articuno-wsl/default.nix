@@ -4,7 +4,7 @@
       {
         imports = [
           ./kirov
-          ./wsl.nix
+          ./wsl
         ];
 
         networking.hostName = "articuno-wsl";

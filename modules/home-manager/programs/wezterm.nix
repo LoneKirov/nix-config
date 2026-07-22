@@ -151,7 +151,6 @@ in {
         # WSL
         (lib.mkIf isWSL {
           settings = {
-            default_domain = "WSL:NixOS";
             window_decorations = "RESIZE";
             window_background_opacity = 0.8;
           };
