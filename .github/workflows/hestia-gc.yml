@@ -1,4 +1,4 @@
-name: Cache GC
+name: Hestia Cache GC
 
 # GC handles concurrent pushes, but not a concurrent GC: a second run's
 # repack reads race the first run's post-commit pack deletes. Queue manual
