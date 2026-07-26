@@ -33,7 +33,6 @@ jobs:
           extra-conf: |
             extra-substituters = https://cache.kanto.casa
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs=
-      - uses: Mic92/hestia@v2
       - uses: DeterminateSystems/flake-checker-action@v13
       - name: Run `nix flake check`
         run: nix flake check --build-all
