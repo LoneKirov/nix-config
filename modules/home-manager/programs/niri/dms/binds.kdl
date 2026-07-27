@@ -3,4 +3,5 @@ binds {
     Mod+Space hotkey-overlay-title="Spotlight Bar: Toggle" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
     Mod+W hotkey-overlay-title="Wallpaper Carousel" { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
     Mod+B hotkey-overlay-title="Launch Brave" { spawn "brave"; }
+    Mod+Shift+T hotkey-overlay-title="Open a Termina: WezTerm unix domain" { spawn "wezterm" "connect" "unix"; }
 }

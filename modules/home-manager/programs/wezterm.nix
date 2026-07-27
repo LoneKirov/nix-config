@@ -121,14 +121,12 @@ in {
             unix_domains = [{name = "unix";}];
             ssh_domains = mkLuaInline ''
               (function ()
-                local domains = {};
+                local ssh_domains = {};
                 for _, dom in ipairs(wezterm.default_ssh_domains()) do
-                  if string.find(dom.remote_address, ".host") == nil then
-                    dom.assume_shell = 'Posix'
-                    table.insert(domains, dom)
-                  end
+                  dom.assume_shell = 'Posix'
+                  table.insert(ssh_domains, dom)
                 end
-                return domains;
+                return ssh_domains;
               end)()
             '';
           };
