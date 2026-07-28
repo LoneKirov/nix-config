@@ -12,8 +12,8 @@ in {
   users.users.${username} = {
     inherit hashedPasswordFile;
   };
-  home-manager.users.${username}.programs = {
-    steam-flatpak.enable = true;
-    bw.sshAgent = true;
+  home-manager.users.${username} = {
+    programs.steam-flatpak.enable = true;
+    services.rbw-agent.enable = true;
   };
 }

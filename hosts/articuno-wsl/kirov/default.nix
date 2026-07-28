@@ -12,7 +12,7 @@ in {
   users.users.${username} = {
     inherit hashedPasswordFile;
   };
-  home-manager.users.${username}.programs = {
-    bw.sshAgent = true;
+  home-manager.users.${username} = {
+    services.rbw-agent.enable = true;
   };
 }
