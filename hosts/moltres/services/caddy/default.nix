@@ -67,6 +67,7 @@
             config.virtualisation.quadlet.networks.arr.ref
             config.virtualisation.quadlet.networks.monarch-pl-bridge.ref
             config.virtualisation.quadlet.networks.esphome.ref
+            config.virtualisation.quadlet.networks.openwebui.ref
           ];
           userns = "auto";
           publishPorts = ["80:80" "443:443"];
