@@ -16,17 +16,17 @@
               email caddy@adammill.dev
       }
 
-      (cloudflare-tls) {
+      *.kanto.casa {
               tls {
                       dns cloudflare {$CLOUDFLARE_API_TOKEN}
                       propagation_timeout 60m
               }
+              abort
       }
 
       ${lib.concatStringsSep "\n" (
         lib.mapAttrsToList (domain: extraConfig: ''
           ${domain} {
-              import cloudflare-tls
               ${extraConfig}
           }
         '')
