@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # https://github.com/systemd/systemd/issues/38193
   system.replaceDependencies.replacements = with pkgs; [
     {

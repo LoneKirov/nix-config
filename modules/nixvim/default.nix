@@ -84,6 +84,8 @@ in {
       web-devicons.enable = true;
       transparent.enable = true;
       colorful-menu.enable = true;
+      which-key.enable = true;
+      marks.enable = true;
     };
     extraPlugins = lib.optionals jj [
       (pkgs.vimUtils.buildVimPlugin {
@@ -166,6 +168,11 @@ in {
         {
           action = "<cmd>Neogit<CR>";
           key = "<leader>gg";
+          mode = "n";
+        }
+        {
+          action = "<cmd>WhichKey<CR>";
+          key = "<leader>?";
           mode = "n";
         }
       ]
