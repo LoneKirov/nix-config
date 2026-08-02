@@ -70,7 +70,7 @@ in {
     };
 
     # initial login via biometric requires entering password later to unlock user keychain
-    security.pam.services.greetd = {
+    security.pam.services.login = {
       fprintAuth = false;
       howdy.enable = false;
     };
