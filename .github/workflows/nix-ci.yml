@@ -28,16 +28,16 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:ci
+      - uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-auth-sock: /tmp/nix_ssh_agent.sock
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
             extra-substituters = https://cache.kanto.casa
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs=
+            post-build-hook = ${{ github.workspace }}/.github/scripts/nix-cache-upload.sh
       - uses: DeterminateSystems/flake-checker-action@v13
       - name: Run `nix flake check`
         run: nix flake check --build-all
-      - uses: webfactory/ssh-agent@v0.10.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Push store to cache
-        run: NIX_SSHOPTS="-o StrictHostKeyChecking=accept-new" nix copy --all --substitute-on-destination --to ssh://nixremote@cache.kanto.casa
