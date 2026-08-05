@@ -48,7 +48,5 @@ in {
         home.stateVersion = config.system.stateVersion;
       };
     };
-
-    programs.zsh.enable = true;
   };
 }

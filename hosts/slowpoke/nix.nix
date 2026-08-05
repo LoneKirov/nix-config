@@ -1,4 +1,6 @@
 {config, ...}: {
+  nixremote.enablePrivateKey = true;
+
   nix = {
     buildMachines = [
       {

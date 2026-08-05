@@ -7,7 +7,7 @@
 }: let
   niri = osConfig.programs.niri.enable or false;
   dms-shell = osConfig.programs.dms-shell.enable or false;
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.services.xserver.enable or pkgs.stdenv.isDarwin;
   fish = config.programs.fish.enable or false;
   isWSL = config.wsl.enable;
 in {
@@ -15,7 +15,7 @@ in {
     home.packages = lib.optionals niri [pkgs.wl-clipboard-rs];
     programs.wezterm = let
       wezterm =
-        if xserver
+        if gui
         then pkgs.wezterm
         else pkgs.wezterm.headless;
       mkLuaInline = lib.generators.mkLuaInline;

@@ -5,5 +5,6 @@
     ./mew
     ./moltres
     ./slowpoke
+    ./vulpix
   ];
 }

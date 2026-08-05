@@ -12,24 +12,25 @@ in {
       enable = lib.mkDefault true;
       package = pkgs.yazi.override {_7zz = pkgs._7zz-rar;};
       plugins = {
-        inherit (pkgs.yaziPlugins) toggle-pane recycle-bin starship;
+        inherit (pkgs.yaziPlugins) toggle-pane starship;
       };
-      extraPackages = with pkgs; [
-        fd
-        ffmpeg
-        fzf
-        imagemagick
-        jq
-        poppler
-        resvg
-        ripgrep
-        trash-cli
-        starship
-        wl-clipboard-rs
-        zoxide
-      ];
+      extraPackages = with pkgs;
+        [
+          fd
+          ffmpeg
+          fzf
+          imagemagick
+          jq
+          poppler
+          resvg
+          ripgrep
+          starship
+          zoxide
+        ]
+        ++ lib.optionals dms-shell [
+          wl-clipboard-rs
+        ];
       initLua = ''
-        require("recycle-bin"):setup()
         require("starship"):setup()
       '';
       settings = {

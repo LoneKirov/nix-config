@@ -67,6 +67,11 @@
     };
     # wsl support
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    # darwin support
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

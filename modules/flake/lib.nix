@@ -3,10 +3,8 @@
     nixosSystem = {
       modules ? [],
       specialArgs ? {},
-    }: let
-      lib = inputs.nixpkgs.lib;
-    in
-      lib.nixosSystem {
+    }:
+      inputs.nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;} // specialArgs;
 
         modules =
