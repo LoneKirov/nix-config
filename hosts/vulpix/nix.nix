@@ -7,7 +7,6 @@
   imports = [
     inputs.determinate.darwinModules.default
     inputs.nix-index-database.darwinModules.default
-    ./nixremote.nix
   ];
 
   config = {
@@ -18,7 +17,7 @@
         # optimize the store on every build
         auto-optimise-store = true;
         extra-substituters = lib.mkAfter ["https://cache.kanto.casa"];
-        extra-trusted-public-keys = lib.mkAfter [(builtins.readFile ../../../keys/harmonia.pub)];
+        extra-trusted-public-keys = lib.mkAfter [(builtins.readFile ../../keys/harmonia.pub)];
       };
     };
     programs.nix-index-database.comma.enable = true;

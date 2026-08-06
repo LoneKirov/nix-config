@@ -5,9 +5,9 @@
     modules = [
       {
         imports = [
-          ./kirov
-          ./nix
+          ./nix.nix
           ./ssh.nix
+          ./users
         ];
 
         nixpkgs = {
