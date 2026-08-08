@@ -3,23 +3,26 @@
     host-uid = toString config.users.users.kirov.uid;
     container-uid = "1000";
     container-gid = "1000";
+    inherit (config.virtualisation.quadlet) containers networks;
   in {
     unitConfig = {
       Description = "Profilarr - Indexer management";
-      Requires = [
-        config.virtualisation.quadlet.containers.sonarr.ref
-        config.virtualisation.quadlet.containers.radarr.ref
+      Requires = with containers; [
+        sonarr.ref
+        radarr.ref
       ];
     };
     containerConfig = {
-      image = "docker.io/santiagosayshey/profilarr:latest";
+      image = "ghcr.io/dictionarry-hub/profilarr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.arr.ref];
+      networks = [networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";
         PUID = container-uid;
         PGID = container-gid;
+        AUTH = "off";
+        ORIGIN = "https://profilarr.kanto.casa";
       };
       volumes = [
         "/srv/arr/profilarr:/config:idmap=uids=@${host-uid}-${container-uid}-1"
