@@ -2,6 +2,9 @@
   services.beszel.hub = {
     enable = true;
     host = "0.0.0.0";
+    environment = {
+      DISABLE_PASSWORD_AUTH = "true";
+    };
   };
 
   services.caddy-podman.virtualHosts."beszel.kanto.casa" = ''

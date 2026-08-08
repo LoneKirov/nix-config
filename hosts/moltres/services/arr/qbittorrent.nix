@@ -29,6 +29,6 @@
   };
 
   services.caddy-podman.virtualHosts."torrents.kanto.casa" = ''
-    reverse_proxy gluetun:8080
+    import reverse_proxy_with_auth gluetun:8080
   '';
 }

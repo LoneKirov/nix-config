@@ -14,6 +14,6 @@
   };
 
   services.caddy-podman.virtualHosts."syncthing.moltres.kanto.casa" = ''
-    reverse_proxy host.containers.internal:8384
+    import reverse_proxy_with_auth host.containers.internal:8384
   '';
 }

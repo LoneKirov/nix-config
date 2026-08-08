@@ -3,19 +3,20 @@
     host-uid = toString config.users.users.kirov.uid;
     container-uid = "1000";
     container-gid = "1000";
+    inherit (config.virtualisation.quadlet) containers networks;
   in {
     unitConfig = {
       Description = "Prowlarr - Indexer management";
-      Wants = [
-        config.virtualisation.quadlet.containers.sonarr.ref
-        config.virtualisation.quadlet.containers.radarr.ref
-        config.virtualisation.quadlet.containers.flaresolverr.ref
+      Wants = with containers; [
+        sonarr.ref
+        radarr.ref
+        flaresolverr.ref
       ];
     };
     containerConfig = {
       image = "lscr.io/linuxserver/prowlarr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.arr.ref];
+      networks = [networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";
@@ -33,6 +34,6 @@
   };
 
   services.caddy-podman.virtualHosts."prowlarr.kanto.casa" = ''
-    reverse_proxy prowlarr:9696
+    import reverse_proxy_with_auth prowlarr:9696
   '';
 }

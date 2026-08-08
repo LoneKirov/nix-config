@@ -35,6 +35,6 @@
   };
 
   services.caddy-podman.virtualHosts."profilarr.kanto.casa" = ''
-    reverse_proxy profilarr:6868
+    import reverse_proxy_with_auth profilarr:6868
   '';
 }

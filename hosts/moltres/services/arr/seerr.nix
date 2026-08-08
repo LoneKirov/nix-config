@@ -2,18 +2,19 @@
   virtualisation.quadlet.containers.seerr = let
     host-uid = toString config.users.users.kirov.uid;
     container-uid = "1000";
+    inherit (config.virtualisation.quadlet) containers networks;
   in {
     unitConfig = {
       Description = "Seerr - Media Library Manager";
-      Requires = [
-        config.virtualisation.quadlet.containers.sonarr.ref
-        config.virtualisation.quadlet.containers.radarr.ref
+      Requires = with containers; [
+        sonarr.ref
+        radarr.ref
       ];
     };
     containerConfig = {
       image = "ghcr.io/seerr-team/seerr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.arr.ref];
+      networks = [networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";

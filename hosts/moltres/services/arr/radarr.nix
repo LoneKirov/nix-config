@@ -3,18 +3,19 @@
     host-uid = toString config.users.users.kirov.uid;
     container-uid = "1000";
     container-gid = "1000";
+    inherit (config.virtualisation.quadlet) containers networks;
   in {
     unitConfig = {
       Description = "Radarr - Movies";
-      Requires = [
-        config.virtualisation.quadlet.containers.qbittorrent.ref
-        config.virtualisation.quadlet.containers.sabnzbd.ref
+      Requires = with containers; [
+        qbittorrent.ref
+        sabnzbd.ref
       ];
     };
     containerConfig = {
       image = "lscr.io/linuxserver/radarr:latest";
       autoUpdate = "registry";
-      networks = [config.virtualisation.quadlet.networks.arr.ref];
+      networks = [networks.arr.ref];
       userns = "auto";
       environments = {
         TZ = "America/Los_Angeles";
@@ -33,6 +34,6 @@
   };
 
   services.caddy-podman.virtualHosts."radarr.kanto.casa" = ''
-    reverse_proxy radarr:7878
+    import reverse_proxy_with_auth radarr:7878
   '';
 }

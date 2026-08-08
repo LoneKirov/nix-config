@@ -37,7 +37,7 @@
       };
     };
     services.caddy-podman.virtualHosts."esphome.kanto.casa" = ''
-      reverse_proxy esphome:6052
+      import reverse_proxy_with_auth esphome:6052
     '';
   };
 }

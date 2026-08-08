@@ -10,7 +10,9 @@
     sha256 = "sha256-vP73Kix5ML9hbSCuUh/0bLRbWU6421ZNYbUMzpgNPQs=";
   };
 in {
-  virtualisation.quadlet = {
+  virtualisation.quadlet = let
+    inherit (config.virtualisation.quadlet) builds networks;
+  in {
     networks.monarch-pl-bridge = {
       unitConfig = {
         Description = "Network for Monarch-ProjectionLab-Bridge";
@@ -40,8 +42,8 @@ in {
         Description = "Monarch-ProjectionLab-Bridge service";
       };
       containerConfig = {
-        image = config.virtualisation.quadlet.builds."monarch-pl-bridge".ref;
-        networks = [config.virtualisation.quadlet.networks.monarch-pl-bridge.ref];
+        image = builds."monarch-pl-bridge".ref;
+        networks = [networks.monarch-pl-bridge.ref];
         userns = "auto";
       };
     };
