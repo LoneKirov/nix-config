@@ -24,6 +24,9 @@
             TRUST_PROXY = "false";
             MAXMIND_LICENSE_KEY = "";
           };
+          volumes = [
+            "${config.virtualisation.quadlet.volumes.pocket-id.ref}:/app/data:idmap"
+          ];
           healthCmd = "/app/pocket-id healthcheck";
           healthInterval = "1m30s";
           healthTimeout = "5s";
