@@ -13,6 +13,7 @@
           # ./howdy.nix
           ./kirov
           ./lanzaboote.nix
+          ./nix.nix
           ./nvidia.nix
           ./services
           # mediatek: Add MT6639 (MT7927) Bluetooth firmware

@@ -8,6 +8,7 @@
           ./framework-amd-ai-300-series
           ./hardware-configuration.nix
           ./kirov
+          ./nix.nix
           ./services
         ];
 

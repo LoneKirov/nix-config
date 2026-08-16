@@ -4,6 +4,7 @@
       {
         imports = [
           ./kirov
+          ./nix.nix
           ./wsl
         ];
 

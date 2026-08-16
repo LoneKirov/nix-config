@@ -10,7 +10,9 @@
     ./nixremote.nix
   ];
 
-  config = {
+  config = let
+    flake = "github:LoneKirov/nix-config";
+  in {
     nix = {
       settings = {
         # Enable flakes
@@ -25,13 +27,22 @@
     };
     boot.loader.systemd-boot.configurationLimit = lib.mkDefault 10;
     system.autoUpgrade = {
-      flake = "github:LoneKirov/nix-config";
+      flake = lib.mkDefault flake;
       dates = "daily";
       allowReboot = true;
       randomizedDelaySec = "45min";
       runGarbageCollection = true;
     };
-    programs.nix-index-database.comma.enable = true;
-    environment.systemPackages = with pkgs; [dix nix-output-monitor];
+    programs = {
+      nix-index-database.comma.enable = true;
+      nh = {
+        enable = true;
+        flake = lib.mkDefault flake;
+      };
+    };
+    environment.systemPackages = with pkgs; [
+      dix
+      nix-output-monitor
+    ];
   };
 }
