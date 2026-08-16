@@ -352,27 +352,6 @@
         "url": "https://flakehub.com/f/DeterminateSystems/nix-src/%2A"
       }
     },
-    "nix-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1785389976,
-        "narHash": "sha256-0tLW8Ff5yt8AH97jw4ZpFJ0OCJ122zIlgWGDmOfU/VU=",
-        "owner": "nix-darwin",
-        "repo": "nix-darwin",
-        "rev": "15abb8c98f336cd8bd840d71059adebabe60bf04",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-darwin",
-        "ref": "master",
-        "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1767983141,
@@ -691,7 +670,6 @@
         "home-manager": "home-manager",
         "jj-starship": "jj-starship",
         "lanzaboote": "lanzaboote",
-        "nix-darwin": "nix-darwin",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",

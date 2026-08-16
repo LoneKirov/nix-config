@@ -7,7 +7,7 @@
 }: let
   niri = osConfig.programs.niri.enable or false;
   dms-shell = osConfig.programs.dms-shell.enable or false;
-  gui = osConfig.services.xserver.enable or pkgs.stdenv.isDarwin;
+  gui = osConfig.services.xserver.enable;
   fish = config.programs.fish.enable or false;
   isWSL = config.wsl.enable;
 in {
