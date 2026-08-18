@@ -24,9 +24,7 @@
       buildAliases = builtins.filter includeBuildAlias hosts;
       flake = osConfig.programs.nh.flake or "";
       mkBuildAlias = host: {
-        "${host}-rebuild" = ''
-          NIX_SSHOPTS="-o IdentityAgent=$SSH_AUTH_SOCK" nixos-rebuild --sudo --flake ${flake}#${host} --target-host nixremote@${host}
-        '';
+        "${host}-rebuild" = ''NIX_SSHOPTS="-o IdentityAgent=$SSH_AUTH_SOCK" nixos-rebuild --sudo --flake ${flake}#${host} --target-host nixremote@${host}'';
       };
       aliases =
         if config.nix.buildAliases.enable
