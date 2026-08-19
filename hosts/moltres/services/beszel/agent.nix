@@ -1,5 +1,5 @@
 {...}: {
   services.beszel.agent.environment.EXTRA_FILESYSTEMS = ''
-    /srv/root__main,/srv/storage__storage,/srv/backup__backup
+    /srv/root__main,/srv/storage__storage,/srv/backup__backup,/boot__boot
   '';
 }
