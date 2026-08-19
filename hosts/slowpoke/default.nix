@@ -20,6 +20,7 @@
         networking.hostName = "slowpoke";
         services.xserver.enable = false;
         networking.firewall.enable = false;
+        boot.loader.systemd-boot.configurationLimit = 4;
         system = {
           autoUpgrade = {
             enable = true;
