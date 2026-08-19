@@ -11,6 +11,7 @@
   };
   config = let
     cfg = config.services.caddy-podman.virtualHosts;
+    containerAddHosts = lib.mapAttrsToList (domain: extraConfig: "${domain}:127.0.0.1") cfg;
     trustLogins = lib.concatStringsSep "\n" (
       lib.mapAttrsToList (domain: extraConfig: ''
         trust login redirect uri domain exact ${domain} path prefix /
@@ -148,6 +149,7 @@
           ];
           userns = "auto";
           publishPorts = ["80:80" "443:443"];
+          addHosts = containerAddHosts;
           environmentFiles = [config.sops.secrets.caddy.path];
           environments = {
             HOSTNAME = "%H";
