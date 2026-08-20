@@ -119,6 +119,10 @@ in {
         (lib.mkIf (! isWSL) {
           settings = {
             unix_domains = [{name = "unix";}];
+          };
+        })
+        {
+          settings = {
             ssh_domains = mkLuaInline ''
               (function ()
                 local ssh_domains = {};
@@ -130,7 +134,7 @@ in {
               end)()
             '';
           };
-        })
+        }
         # DMS theme
         (lib.mkIf dms-shell {
           settings = {

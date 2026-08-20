@@ -5,7 +5,8 @@
 }: {
   imports = [
     inputs.nixos-wsl.nixosModules.default
-    ./sshfs.nix
+    ./rbw.nix
+    ./ssh.nix
     ./wezterm.nix
   ];
 
