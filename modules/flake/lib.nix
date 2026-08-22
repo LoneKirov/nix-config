@@ -43,5 +43,14 @@
           ]
           ++ modules;
       };
+
+    evalNixvim = {
+      system,
+      modules ? [],
+    }:
+      inputs.nixvim.lib.evalNixvim {
+        inherit system;
+        modules = [../nixvim] ++ modules;
+      };
   };
 }

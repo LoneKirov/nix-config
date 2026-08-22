@@ -1,14 +1,8 @@
 {
-  hmConfig,
   lib,
   pkgs,
   ...
-}: let
-  git = hmConfig.programs.git.enable;
-  jj = hmConfig.programs.jujutsu.enable;
-  fzf = hmConfig.programs.fzf.enable;
-  matugen = hmConfig.programs.matugen.enable;
-in {
+}: {
   imports = [./lsp];
 
   config = {
@@ -64,7 +58,7 @@ in {
       };
       telescope = {
         enable = true;
-        extensions.fzf-native.enable = fzf;
+        extensions.fzf-native.enable = true;
       };
       neo-tree = {
         enable = true;
@@ -80,14 +74,14 @@ in {
         };
       };
       diffview.enable = true;
-      neogit.enable = git;
+      neogit.enable = true;
       web-devicons.enable = true;
       transparent.enable = true;
       colorful-menu.enable = true;
       which-key.enable = true;
       marks.enable = true;
     };
-    extraPlugins = lib.optionals jj [
+    extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "jjui";
         src = pkgs.fetchFromGitHub {
@@ -96,92 +90,96 @@ in {
           rev = "e3ab2c482ed06b358dbd0d631b5579a4ae4c5d9b";
           sha256 = "DcFkJwT4lEOC7cW+mYxewFmhgtOTkVCS0mdbllNGPiA=";
         };
+        postPatch = ''
+          substituteInPlace lua/jjui.lua \
+            --replace-fail 'exec_jjui({ "jjui" })' 'exec_jjui({ "${lib.getExe pkgs.jjui}" })' \
+        '';
+      })
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "base46";
+        src = pkgs.fetchFromGitHub {
+          owner = "AvengeMedia";
+          repo = "base46";
+          rev = "83522e02c6c3b4ea901c4bffd9e0a5e0371c1fe6";
+          sha256 = "kwDMC6rYzJYECmGnwn8JiAbffUq7hAXcUH6gPSkk2uI=";
+        };
+        nvimRequireCheck = "base46";
       })
     ];
-    colorschemes.base16.enable = true;
     extraConfigLua = ''
       vim.opt.foldenable = false
-      ${lib.optionalString matugen ''
-        -- dankcolors is a lazy.nvim plugin but lazy doesn't play nice
-        -- with nixvim managed plugins so we just load the plugin manually
-        require('plugins/dankcolors')[1].config()
-      ''}
+      vim.opt.runtimepath:append(vim.fn.stdpath("config"))
+      require('base46')
       require('transparent').clear_prefix('NeoTree')
-      ${lib.optionalString jj ''
-        require('jjui')
-      ''}
+      require('jjui')
+      pcall(vim.cmd.colorscheme, 'dms')
     '';
     lsp = {
       inlayHints.enable = true;
     };
-    keymaps =
-      [
-        {
-          action = "<cmd>Neotree filesystem<CR>";
-          key = "<leader>ntf";
-          mode = "n";
-        }
+    keymaps = [
+      {
+        action = "<cmd>Neotree filesystem<CR>";
+        key = "<leader>ntf";
+        mode = "n";
+      }
 
-        {
-          action = "<cmd>Telescope find_files<CR>";
-          key = "<leader>tff";
-          mode = "n";
-        }
+      {
+        action = "<cmd>Telescope find_files<CR>";
+        key = "<leader>tff";
+        mode = "n";
+      }
 
-        {
-          action = "<cmd>Telescope grep_string<CR>";
-          key = "<leader>tg";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Telescope live_grep<CR>";
-          key = "<leader>tlg";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Telescope buffers<CR>";
-          key = "<leader>tb";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
-          key = "<leader>tbff";
-          mode = "n";
-        }
-      ]
-      ++ lib.optionals git [
-        {
-          action = "<cmd>Telescope git_files<CR>";
-          key = "<leader>tgf";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Telescope git_commits<CR>";
-          key = "<leader>tgc";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Telescope git_status<CR>";
-          key = "<leader>tgs";
-          mode = "n";
-        }
-        {
-          action = "<cmd>Neogit<CR>";
-          key = "<leader>gg";
-          mode = "n";
-        }
-        {
-          action = "<cmd>WhichKey<CR>";
-          key = "<leader>?";
-          mode = "n";
-        }
-      ]
-      ++ lib.optionals jj [
-        {
-          action = "<cmd>Jjui<CR>";
-          key = "<leader>jj";
-          mode = "n";
-        }
-      ];
+      {
+        action = "<cmd>Telescope grep_string<CR>";
+        key = "<leader>tg";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope live_grep<CR>";
+        key = "<leader>tlg";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope buffers<CR>";
+        key = "<leader>tb";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
+        key = "<leader>tbff";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope git_files<CR>";
+        key = "<leader>tgf";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope git_commits<CR>";
+        key = "<leader>tgc";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Telescope git_status<CR>";
+        key = "<leader>tgs";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Neogit<CR>";
+        key = "<leader>gg";
+        mode = "n";
+      }
+      {
+        action = "<cmd>WhichKey<CR>";
+        key = "<leader>?";
+        mode = "n";
+      }
+      {
+        action = "<cmd>Jjui<CR>";
+        key = "<leader>jj";
+        mode = "n";
+      }
+    ];
   };
 }
