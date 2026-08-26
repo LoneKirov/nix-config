@@ -17,7 +17,11 @@
         aliases = {
           pr = "pr";
         };
-        settings.nerdfonts = true;
+        settings = {
+          auto_merge = true;
+          auto_merge_method = "squash";
+          nerdfonts = true;
+        };
       };
     };
   };
