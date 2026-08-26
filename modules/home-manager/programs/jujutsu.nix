@@ -1,9 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
-  config = {
+  config = let
+    inherit (config.programs.jujutsu) enable;
+  in {
     programs = {
       jujutsu = {
         enable = lib.mkDefault config.programs.git.enable;
@@ -11,8 +14,8 @@
           user = config.programs.git.settings.user;
         };
       };
-      jjui.enable = config.programs.jujutsu.enable;
-      zsh.antidote.plugins = lib.mkIf config.programs.jujutsu.enable [
+      jjui.enable = enable;
+      zsh.antidote.plugins = lib.mkIf enable [
         "ohmyzsh/ohmyzsh path:plugins/jj"
       ];
     };

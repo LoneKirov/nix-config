@@ -14,6 +14,7 @@
     ./fish.nix
     ./flatpak.nix
     ./fzf.nix
+    ./gh.nix
     ./git.nix
     ./jq.nix
     ./jujutsu.nix
