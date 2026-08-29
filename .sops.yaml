@@ -5,7 +5,6 @@ keys:
   - &mew age12evvsyf2kt9x7j5wtn672jwztrp8k2mmhjwdrkggazgxxfzhtc4q294je2
   - &moltres age14eql5hfcrs2dkvfulckq6ntjyvhd6ytk2mpx2qlak8lvmv2zd48qgkcvve
   - &slowpoke age1y62zzjnt22sm4lvt4dlxwvezed4r0pp5unjxegtyl73qvwdtwdaqg88m6q
-  - &vulpix age1r5cvff2decfpjwkjqgxwkcsd3ja3r5xkj2s87ge2c37fj98cfuqs7gqdug
 creation_rules:
   - path_regex: articuno/.*\.sops\.(yaml|json|env|ini)$
     key_groups:
@@ -32,11 +31,6 @@ creation_rules:
     - age:
       - *kirov
       - *slowpoke
-  - path_regex: vulpix/.*\.sops\.(yaml|json|env|ini)$
-    key_groups:
-    - age:
-      - *kirov
-      - *vulpix
   - path_regex: \.sops\.(yaml|json|env|ini)$
     key_groups:
     - age:
