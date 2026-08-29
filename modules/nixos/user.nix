@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config.user) username;
@@ -33,6 +34,7 @@ in {
         "wheel" # sudo
         "dialout" # serial devices
       ];
+      shell = pkgs.fish;
     };
 
     home-manager = {
