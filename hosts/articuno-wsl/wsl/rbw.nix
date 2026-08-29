@@ -1,4 +1,4 @@
-{...}: {
+_: {
   config = {
     home-manager.users.kirov = {
       config,

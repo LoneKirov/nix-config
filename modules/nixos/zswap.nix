@@ -1,4 +1,4 @@
-{...}: {
+_: {
   boot = {
     kernelParams = [
       "zswap.enabled=1" # enable zswap

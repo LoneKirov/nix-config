@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  types = lib.types;
+  inherit (lib) types;
   persistentMountpoint = "/persistent";
   isWSL = config.wsl.enable or false;
 in {

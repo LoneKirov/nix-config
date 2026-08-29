@@ -79,7 +79,7 @@
     systems,
     ...
   }:
-    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
+    flake-parts.lib.mkFlake {inherit inputs;} (_: {
       systems = import systems;
       imports = [
         ./modules/flake

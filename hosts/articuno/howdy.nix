@@ -1,4 +1,4 @@
-{...}: {
+_: {
   services = {
     howdy = {
       enable = true;
