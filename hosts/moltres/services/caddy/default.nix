@@ -11,9 +11,9 @@
   };
   config = let
     cfg = config.services.caddy-podman.virtualHosts;
-    containerAddHosts = lib.mapAttrsToList (domain: extraConfig: "${domain}:127.0.0.1") cfg;
+    containerAddHosts = lib.mapAttrsToList (domain: _: "${domain}:127.0.0.1") cfg;
     trustLogins = lib.concatStringsSep "\n" (
-      lib.mapAttrsToList (domain: extraConfig: ''
+      lib.mapAttrsToList (domain: _: ''
         trust login redirect uri domain exact ${domain} path prefix /
       '')
       cfg

@@ -8,7 +8,7 @@
     enableDefaultConfig = false;
     settings = let
       nixosConfigurations = inputs.self.outputs.nixosConfigurations;
-      withSsh = lib.filterAttrs (name: value: value.config.services.openssh.enable) nixosConfigurations;
+      withSsh = lib.filterAttrs (_: value: value.config.services.openssh.enable) nixosConfigurations;
       names = builtins.attrNames withSsh;
       settings =
         map (host: {
