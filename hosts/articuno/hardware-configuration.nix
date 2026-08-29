@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -12,10 +11,14 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "ahci" "xhci_pci" "thunderbolt" "usbhid"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
+  boot = {
+    initrd = {
+      availableKernelModules = ["nvme" "ahci" "xhci_pci" "thunderbolt" "usbhid"];
+      kernelModules = [];
+    };
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
+  };
 
   swapDevices = [];
 

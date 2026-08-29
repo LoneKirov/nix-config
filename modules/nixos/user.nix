@@ -44,7 +44,7 @@ in {
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${username} = {...}: {
+      users.${username} = _: {
         imports = [../home-manager];
 
         home.stateVersion = config.system.stateVersion;

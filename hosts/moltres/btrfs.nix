@@ -2,23 +2,25 @@
   services = {
     btrbk = {
       instances.btrbk.settings = {
-        subvolume."${config.preservation.persistentMountpoint}" = {
-          target."/srv/backup/moltres/persistent" = {};
-        };
-        subvolume."/home" = {
-          target."/srv/backup/moltres/home" = {};
-        };
-        subvolume."/srv/plex" = {
-          snapshot_dir = "/srv/plex/.snapshots";
-          target."/srv/backup/moltres/plex" = {};
-        };
-        subvolume."/srv/arr" = {
-          snapshot_dir = "/srv/arr/.snapshots";
-          target."/srv/backup/moltres/arr" = {};
-        };
-        subvolume."/srv/syncthing" = {
-          snapshot_dir = "/srv/syncthing/.snapshots";
-          target."/srv/backup/moltres/syncthing" = {};
+        subvolume = {
+          "${config.preservation.persistentMountpoint}" = {
+            target."/srv/backup/moltres/persistent" = {};
+          };
+          "/home" = {
+            target."/srv/backup/moltres/home" = {};
+          };
+          "/srv/plex" = {
+            snapshot_dir = "/srv/plex/.snapshots";
+            target."/srv/backup/moltres/plex" = {};
+          };
+          "/srv/arr" = {
+            snapshot_dir = "/srv/arr/.snapshots";
+            target."/srv/backup/moltres/arr" = {};
+          };
+          "/srv/syncthing" = {
+            snapshot_dir = "/srv/syncthing/.snapshots";
+            target."/srv/backup/moltres/syncthing" = {};
+          };
         };
       };
       sshAccess = [
