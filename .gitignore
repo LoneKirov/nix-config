@@ -1,1 +1,14 @@
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+# using flake.lock as main lock
+devenv.lock
+
+# direnv
 .direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+result

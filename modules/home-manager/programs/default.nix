@@ -6,6 +6,7 @@
     ./bottom.nix
     ./brave.nix
     ./btop
+    ./devenv.nix
     ./direnv.nix
     ./discord.nix
     ./dms
