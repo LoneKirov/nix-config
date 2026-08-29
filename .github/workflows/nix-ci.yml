@@ -40,5 +40,5 @@ jobs:
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs=
             post-build-hook = ${{ github.workspace }}/.github/scripts/nix-cache-upload.sh
       - uses: DeterminateSystems/flake-checker-action@v13
-      - name: Run `nix flake check`
-        run: nix flake check --build-all
+      - name: Run devenv test
+        run: CI=true nix run nixpkgs#devenv -- test
