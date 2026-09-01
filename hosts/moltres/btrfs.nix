@@ -9,10 +9,6 @@
           "/home" = {
             target."/srv/backup/moltres/home" = {};
           };
-          "/srv/plex" = {
-            snapshot_dir = "/srv/plex/.snapshots";
-            target."/srv/backup/moltres/plex" = {};
-          };
           "/srv/arr" = {
             snapshot_dir = "/srv/arr/.snapshots";
             target."/srv/backup/moltres/arr" = {};
