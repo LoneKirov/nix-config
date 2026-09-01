@@ -36,7 +36,7 @@
       };
     };
     services.caddy-podman.virtualHosts."openwebui.kanto.casa" = ''
-      reverse_proxy openwebui:8080
+      reverse_proxy vulpix.lan:8080
     '';
   };
 }
