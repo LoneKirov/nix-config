@@ -36,8 +36,8 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: |
-            extra-substituters = https://cache.kanto.casa
-            extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs=
+            extra-substituters = https://cache.kanto.casa https://devenv.cachix.org
+            extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
             post-build-hook = ${{ github.workspace }}/.github/scripts/nix-cache-upload.sh
       - uses: DeterminateSystems/flake-checker-action@v13
       - name: Run devenv test
