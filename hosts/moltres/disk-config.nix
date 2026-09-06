@@ -179,11 +179,6 @@
                         mountpoint = "/srv/arr";
                       };
                       "/arr/.snapshots" = {};
-                      "/plex" = {
-                        mountOptions = ["compress=zstd"];
-                        mountpoint = "/srv/plex";
-                      };
-                      "/plex/.snapshots" = {};
                       "/syncthing" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/syncthing";
