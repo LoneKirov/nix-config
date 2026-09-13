@@ -15,5 +15,10 @@
    ],
    "tray": {
       "enabled": false
+   },
+   "theme": {
+      "light": {
+         "name": "matugen"
+      }
    }
 }

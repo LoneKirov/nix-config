@@ -1,11 +1,9 @@
 {
   config,
   lib,
-  pkgs,
   inputs,
   ...
 }: let
-  inherit (pkgs.stdenv.hostPlatform) system;
   inherit (config.user) username;
   home-manager = config.home-manager.users.${username};
   inherit (home-manager.home) homeDirectory;

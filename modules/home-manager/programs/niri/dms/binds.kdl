@@ -1,7 +1,8 @@
 binds {
     Mod+Ctrl+space hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
-    Mod+Space hotkey-overlay-title="Spotlight Bar: Toggle" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
+    Mod+P hotkey-overlay-title="Idle Inhibit: Toggle" { spawn "dms" "ipc" "call" "inhibit" "toggle"; }
     Mod+W hotkey-overlay-title="Wallpaper Carousel" { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
+    Mod+Space hotkey-overlay-title="Spotlight Bar: Toggle" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
     Mod+B hotkey-overlay-title="Launch Brave" { spawn "brave"; }
     Mod+Shift+T hotkey-overlay-title="Open a Termina: WezTerm unix domain" { spawn "wezterm" "connect" "unix"; }
 }
