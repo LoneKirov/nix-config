@@ -12,5 +12,8 @@
    "$schema": "https://vicinae.com/schemas/config.json",
    "imports": [
       "base-settings.json"
-   ]
+   ],
+   "tray": {
+      "enabled": false
+   }
 }

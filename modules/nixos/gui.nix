@@ -6,7 +6,6 @@
   ...
 }: let
   inherit (pkgs.stdenv.hostPlatform) system;
-  quickshell = inputs.quickshell.packages.${system}.quickshell;
   inherit (config.user) username;
   home-manager = config.home-manager.users.${username};
   inherit (home-manager.home) homeDirectory;
@@ -21,14 +20,12 @@ in {
 
       dms-shell = {
         enable = true;
-        quickshell.package = quickshell;
         systemd = {
           enable = true; # Systemd service for auto-start
           restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
         };
 
         # Core features
-        enableSystemMonitoring = true; # System monitoring widgets (dgop)
         enableDynamicTheming = true; # Wallpaper-based theming (matugen)
         enableAudioWavelength = true; # Audio visualizer (cava)
         enableCalendarEvents = true; # Calendar integration (khal)
@@ -58,7 +55,6 @@ in {
       displayManager = {
         dms-greeter = {
           enable = true;
-          quickshell.package = quickshell;
           compositor.name = config.programs.niri.package.pname;
           # Sync your user's DankMaterialShell theme with the greeter
           configHome = homeDirectory;
