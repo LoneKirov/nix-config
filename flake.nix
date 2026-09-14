@@ -7,14 +7,14 @@
     # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # determinate nix
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate.url = "github:determinateSystems/determinate/v3.22.3";
     # convenient flake for linux systems
     systems.url = "github:nix-systems/default-linux";
     # predefined hardware configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # declarative disk formatting and fstab generation
     disko = {
-      url = "github:nix-community/disko/latest";
+      url = "github:nix-community/disko/v1.13.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # impermanence alternative for persisting state
@@ -42,7 +42,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # declarative flatpak
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/v0.7.0";
     # nix-index with a regularly updated database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
