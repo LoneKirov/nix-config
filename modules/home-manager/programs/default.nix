@@ -36,7 +36,6 @@
     ./syncthing.nix
     ./trash-cli.nix
     ./tmux.nix
-    ./vicinae
     ./wezterm.nix
     ./yazi.nix
     ./zoxide.nix
