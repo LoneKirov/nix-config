@@ -10,6 +10,7 @@
   dmsAltTabConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/alttab.kdl";
   dmsBindsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/binds.kdl";
   dmsCursorConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/cursor.kdl";
+  dmsInputConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/input.kdl";
   dmsLayoutConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/layout.kdl";
   dmsOutputsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
   dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
@@ -22,6 +23,7 @@ in {
       "niri/dms/alttab.kdl".source = mkOutOfStoreSymlink dmsAltTabConfig;
       "niri/dms/binds.kdl".source = mkOutOfStoreSymlink dmsBindsConfig;
       "niri/dms/cursor.kdl".source = mkOutOfStoreSymlink dmsCursorConfig;
+      "niri/dms/input.kdl".source = mkOutOfStoreSymlink dmsInputConfig;
       "niri/dms/layout.kdl".source = mkOutOfStoreSymlink dmsLayoutConfig;
       "niri/dms/outputs.kdl".source = mkOutOfStoreSymlink dmsOutputsConfig;
       "niri/dms/wpblur.kdl".source = mkOutOfStoreSymlink dmsWpblurConfig;

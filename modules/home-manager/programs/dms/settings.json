@@ -2,6 +2,8 @@
   "currentThemeName": "dynamic",
   "currentThemeCategory": "dynamic",
   "cornerRadius": 12,
+  "touchpadNaturalScroll": false,
+  "keyboardNumlock": true,
   "useFahrenheit": true,
   "barElevationEnabled": false,
   "controlCenterWidgets": [
@@ -179,10 +181,21 @@
           "enabled": true
         },
         {
+          "id": "battery",
+          "enabled": true,
+          "showBatteryPercent": true,
+          "showBatteryPercentOnlyOnBattery": false,
+          "showBatteryTime": false,
+          "showBatteryTimeOnlyOnBattery": false,
+          "showBatteryPowerCharging": false,
+          "showBatteryPowerDischarging": false,
+          "batteryStyle": "icon"
+        },
+        {
           "id": "controlCenterButton",
           "enabled": true,
           "showIdleInhibitorIcon": true,
-          "showAudioIcon": false,
+          "showAudioIcon": true,
           "showAudioPercent": false,
           "showScreenSharingIcon": true,
           "showBatteryIcon": false,
@@ -241,11 +254,11 @@
         },
         {
           "id": "status",
-          "enabled": true
+          "enabled": false
         },
         {
           "id": "volume",
-          "enabled": true
+          "enabled": false
         },
         {
           "id": "brightness",

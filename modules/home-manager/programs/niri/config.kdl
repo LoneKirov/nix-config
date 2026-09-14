@@ -1,18 +1,4 @@
 input {
-    keyboard {
-        xkb {}
-
-        numlock
-    }
-
-    touchpad {
-        tap
-    }
-
-    mouse {}
-
-    trackpoint {}
-
     workspace-auto-back-and-forth
 }
 
@@ -292,7 +278,7 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
+    Mod+Shift+W { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
@@ -326,8 +312,6 @@ binds {
 }
 
 environment {
-  QT_QPA_PLATFORMTHEME "gtk3"
-  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
 }
 
 // DankMaterialShell overrides
@@ -339,3 +323,4 @@ include "dms/layout.kdl"
 include "dms/outputs.kdl"
 include "dms/wpblur.kdl"
 include "dms/windowrules.kdl"
+include "dms/input.kdl"
