@@ -33,9 +33,9 @@ in {
           catWidget.enable = true;
           dankLauncherKeys.enable = true;
           niriWindows.enable = true;
-          powerOptions.enable = true;
           wallpaperCarousel.enable = true;
           nixPackageRunner.enable = true;
+          fullscreenPowerMenu.enable = true;
         };
       };
 
