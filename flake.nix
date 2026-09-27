@@ -7,7 +7,7 @@
     # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # determinate nix
-    determinate.url = "github:determinateSystems/determinate/v3.22.4";
+    determinate.url = "github:determinateSystems/determinate/v3.22.5";
     # convenient flake for linux systems
     systems.url = "github:nix-systems/default-linux";
     # predefined hardware configurations
