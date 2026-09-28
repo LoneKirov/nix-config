@@ -9,7 +9,6 @@
         imports = [
           ./btrfs.nix
           ./disk-config.nix
-          ./hardware-configuration.nix
           ./kirov
           ./nix.nix
           ./raspberry-pi-3
@@ -29,6 +28,7 @@
           };
           stateVersion = "26.05";
         };
+        hardware.facter.reportPath = ./facter.json;
       }
     ];
   };

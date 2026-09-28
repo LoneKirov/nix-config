@@ -1,7 +1,8 @@
 {
   config,
-  lib,
   inputs,
+  lib,
+  pkgs,
   ...
 }: let
   inherit (config.user) username;
@@ -23,11 +24,6 @@ in {
           restartIfChanged = true; # Auto-restart dms.service when dms-shell changes
         };
 
-        # Core features
-        enableDynamicTheming = true; # Wallpaper-based theming (matugen)
-        enableAudioWavelength = true; # Audio visualizer (cava)
-        enableCalendarEvents = true; # Calendar integration (khal)
-
         plugins = {
           calculator.enable = true;
           catWidget.enable = true;
@@ -48,6 +44,8 @@ in {
         };
       };
     };
+
+    environment.systemPackages = with pkgs; [dankcalendar];
 
     services = {
       displayManager = {
