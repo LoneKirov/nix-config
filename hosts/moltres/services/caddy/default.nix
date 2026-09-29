@@ -143,7 +143,6 @@
           networks = with networks; [
             caddy.ref
             arr.ref
-            monarch-pl-bridge.ref
             esphome.ref
             openwebui.ref
           ];
