@@ -14,6 +14,7 @@
     ./nix
     ./pam.nix
     ./podman.nix
+    ./power-profile.nix
     ./preservation.nix
     ./sops.nix
     ./ssh.nix
