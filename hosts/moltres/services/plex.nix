@@ -1,40 +1,35 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.plex = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    host-gid = toString config.users.groups.video.gid;
-    container-uid = "1000";
-    container-gid = "1000";
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userBindRo containerUid containerGid;
+  host-gid = toString config.users.groups.video.gid;
+in {
+  virtualisation.quadlet.containers.plex = mkContainer {
     unitConfig = {
       Description = "Plex";
     };
     containerConfig = {
       image = "docker.io/plexinc/pms-docker:plexpass";
-      autoUpdate = "registry";
       networks = ["host"];
-      userns = "auto:gidmapping=${container-gid}:${host-gid}:1";
+      userns = "auto:gidmapping=${containerGid}:${host-gid}:1";
       environments = {
         TZ = config.time.timeZone;
         ALLOWED_NETWORKS = "10.0.1.0/24";
-        PLEX_UID = "${container-uid}";
-        PLEX_GID = "${container-gid}";
+        PLEX_UID = containerUid;
+        PLEX_GID = containerGid;
       };
       shmSize = "6G";
       devices = ["/dev/dri"];
       volumes = [
-        "/srv/arr/plex/config:/config:idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/plex/optimized:/optimized:idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/plex/media:/data/media.old:ro,idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/data/media:/data/media:ro,idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/syncthing/folders/Patreon:/data/patreon:ro,idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/plex/config" "/config")
+        (userBind "/srv/arr/plex/optimized" "/optimized")
+        (userBindRo "/srv/arr/plex/media" "/data/media.old")
+        (userBindRo "/srv/arr/data/media" "/data/media")
+        (userBindRo "/srv/syncthing/folders/Patreon" "/data/patreon")
       ];
       tmpfses = ["/transcode:size=10G"];
     };
     serviceConfig = {
       TimeoutStartSec = 900;
-      Restart = "on-failure";
     };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."plex.kanto.casa" = ''

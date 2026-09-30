@@ -1,20 +1,14 @@
 {config, ...}: {
-  virtualisation.quadlet.containers.flaresolverr = {
+  virtualisation.quadlet.containers.flaresolverr = config.lib.quadlet.mkContainer {
     unitConfig = {
       Description = "Flaresolverr - Bypass Cloudflare protection for Indexers";
     };
     containerConfig = {
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
-      autoUpdate = "registry";
       networks = [config.virtualisation.quadlet.networks.arr.ref];
-      userns = "auto";
       environments = {
         TZ = config.time.timeZone;
       };
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 }

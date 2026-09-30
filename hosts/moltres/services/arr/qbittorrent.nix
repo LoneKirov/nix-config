@@ -1,31 +1,19 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.qbittorrent = {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv;
+in {
+  virtualisation.quadlet.containers.qbittorrent = mkContainer {
     unitConfig = {
       Description = "qBittorrent";
     };
-    containerConfig = let
-      host-uid = toString config.users.users.${config.user.username}.uid;
-      container-uid = "1000";
-      container-gid = "1000";
-    in {
+    containerConfig = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
-      autoUpdate = "registry";
       networks = [config.virtualisation.quadlet.containers.gluetun.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-      };
+      environments = userEnv;
       volumes = [
-        "/srv/arr/qbittorrent:/config:idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/data:/data:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/qbittorrent" "/config")
+        (userBind "/srv/arr/data" "/data")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."torrents.kanto.casa" = ''

@@ -1,4 +1,4 @@
-_: {
+{config, ...}: {
   imports = [
     ./decluttarr
     ./flaresolverr.nix
@@ -12,18 +12,5 @@ _: {
     ./sonarr.nix
   ];
 
-  config.virtualisation.quadlet.networks.arr = {
-    unitConfig = {
-      Description = "Network for Arr";
-      Wants = ["network-online.target"];
-      After = ["network-online.target"];
-    };
-    networkConfig = {
-      ipv6 = true;
-      options = {
-        isolate = "strict";
-      };
-    };
-    autoStart = true;
-  };
+  config.virtualisation.quadlet.networks.arr = config.lib.quadlet.mkNetwork "Network for Arr";
 }

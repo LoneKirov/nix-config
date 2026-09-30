@@ -1,9 +1,8 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.seerr = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    inherit (config.virtualisation.quadlet) containers networks;
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind;
+  inherit (config.virtualisation.quadlet) containers networks;
+in {
+  virtualisation.quadlet.containers.seerr = mkContainer {
     unitConfig = {
       Description = "Seerr - Media Library Manager";
       Requires = with containers; [
@@ -13,14 +12,12 @@
     };
     containerConfig = {
       image = "ghcr.io/seerr-team/seerr:latest";
-      autoUpdate = "registry";
       networks = [networks.arr.ref];
-      userns = "auto";
       environments = {
         TZ = config.time.timeZone;
       };
       volumes = [
-        "/srv/arr/seerr:/app/config:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/seerr" "/app/config")
       ];
       healthCmd = "wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1";
       healthInterval = "15s";
@@ -28,10 +25,6 @@
       healthStartPeriod = "20s";
       healthRetries = 3;
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."seerr.kanto.casa" = ''

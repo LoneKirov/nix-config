@@ -4,15 +4,13 @@
     sopsFile = ./gluetun.sops.env;
     key = "";
   };
-  virtualisation.quadlet.containers.gluetun = {
+  virtualisation.quadlet.containers.gluetun = config.lib.quadlet.mkContainer {
     unitConfig = {
       Description = "Gluetun - VPN";
     };
     containerConfig = {
       image = "docker.io/qmcgaw/gluetun:latest";
-      autoUpdate = "registry";
       networks = [config.virtualisation.quadlet.networks.arr.ref];
-      userns = "auto";
       addCapabilities = ["NET_ADMIN" "NET_RAW"];
       devices = ["/dev/net/tun"];
       environmentFiles = [config.sops.secrets.gluetun.path];
@@ -23,9 +21,5 @@
       healthRetries = 3;
       notify = "healthy";
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 }

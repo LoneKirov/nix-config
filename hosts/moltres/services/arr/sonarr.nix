@@ -1,10 +1,8 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.sonarr = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    container-gid = "1000";
-    inherit (config.virtualisation.quadlet) containers networks;
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv;
+  inherit (config.virtualisation.quadlet) containers networks;
+in {
+  virtualisation.quadlet.containers.sonarr = mkContainer {
     unitConfig = {
       Description = "Sonarr - TV Shows";
       Requires = with containers; [
@@ -14,23 +12,13 @@
     };
     containerConfig = {
       image = "lscr.io/linuxserver/sonarr:latest";
-      autoUpdate = "registry";
       networks = [networks.arr.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-      };
+      environments = userEnv;
       volumes = [
-        "/srv/arr/sonarr:/config:idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/data:/data:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/sonarr" "/config")
+        (userBind "/srv/arr/data" "/data")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."sonarr.kanto.casa" = ''

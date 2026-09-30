@@ -1,31 +1,19 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.sabnzbd = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    container-gid = "1000";
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv;
+in {
+  virtualisation.quadlet.containers.sabnzbd = mkContainer {
     unitConfig = {
       Description = "Sabnbzd - Usenet";
     };
     containerConfig = {
       image = "lscr.io/linuxserver/sabnzbd:latest";
-      autoUpdate = "registry";
       networks = [config.virtualisation.quadlet.networks.arr.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-      };
+      environments = userEnv;
       volumes = [
-        "/srv/arr/sabnzbd:/config:idmap=uids=@${host-uid}-${container-uid}-1"
-        "/srv/arr/data:/data:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/sabnzbd" "/config")
+        (userBind "/srv/arr/data" "/data")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."sabnzbd.kanto.casa" = ''
