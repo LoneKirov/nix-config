@@ -14,6 +14,7 @@
       defaultEditor = true;
       imports = [../../nixvim];
       vimdiffAlias = true;
+      nixpkgs.source = inputs.nixpkgs;
     };
     home.sessionVariables = lib.mkIf enable {
       MANPAGER = "${lib.getExe build.package} -c 'Man!'";
