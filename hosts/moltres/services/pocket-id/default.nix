@@ -21,7 +21,7 @@
           environmentFiles = [config.sops.secrets.pocket-id.path];
           environments = {
             APP_URL = "https://pocket-id.kanto.casa";
-            TRUST_PROXY = "false";
+            TRUST_PROXY = "true";
             MAXMIND_LICENSE_KEY = "";
           };
           volumes = [
