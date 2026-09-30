@@ -1,7 +1,7 @@
-_: {
+{config, ...}: {
   services.syncthing = {
     enable = true;
-    user = "kirov";
+    user = config.user.username;
     group = "users";
     dataDir = "/srv/syncthing";
     overrideDevices = false;

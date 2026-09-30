@@ -1,6 +1,6 @@
 {config, ...}: {
   virtualisation.quadlet.containers.plex = let
-    host-uid = toString config.users.users.kirov.uid;
+    host-uid = toString config.users.users.${config.user.username}.uid;
     host-gid = toString config.users.groups.video.gid;
     container-uid = "1000";
     container-gid = "1000";

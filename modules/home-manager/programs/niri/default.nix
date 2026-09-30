@@ -5,16 +5,16 @@
   ...
 }: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
-  inherit (config.xdg) configHome;
-  niriConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/config.kdl";
-  dmsAltTabConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/alttab.kdl";
-  dmsBindsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/binds.kdl";
-  dmsCursorConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/cursor.kdl";
-  dmsInputConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/input.kdl";
-  dmsLayoutConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/layout.kdl";
-  dmsOutputsConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/outputs.kdl";
-  dmsWpblurConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/wpblur.kdl";
-  dmsWindowrulesConfig = "${configHome}/nix-config/modules/home-manager/programs/niri/dms/windowrules.kdl";
+  dir = "${osConfig.user.flakeCheckout}/modules/home-manager/programs/niri";
+  niriConfig = "${dir}/config.kdl";
+  dmsAltTabConfig = "${dir}/dms/alttab.kdl";
+  dmsBindsConfig = "${dir}/dms/binds.kdl";
+  dmsCursorConfig = "${dir}/dms/cursor.kdl";
+  dmsInputConfig = "${dir}/dms/input.kdl";
+  dmsLayoutConfig = "${dir}/dms/layout.kdl";
+  dmsOutputsConfig = "${dir}/dms/outputs.kdl";
+  dmsWpblurConfig = "${dir}/dms/wpblur.kdl";
+  dmsWindowrulesConfig = "${dir}/dms/windowrules.kdl";
   niri = osConfig.programs.niri.enable or false;
 in {
   config = lib.mkIf niri {

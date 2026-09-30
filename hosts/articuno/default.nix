@@ -4,9 +4,7 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     # ./howdy.nix
-    ./kirov
     ./lanzaboote.nix
-    ./nix.nix
     ./nvidia.nix
     ./services
     # mediatek: Add MT6639 (MT7927) Bluetooth firmware
@@ -27,4 +25,8 @@
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
   system.stateVersion = "26.05";
   hardware.ledger.enable = true;
+  user.hm = {
+    programs.steam-flatpak.enable = true;
+    services.rbw-agent.enable = true;
+  };
 }

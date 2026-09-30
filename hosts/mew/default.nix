@@ -3,8 +3,6 @@
     ./btrfs.nix
     ./disk-config.nix
     ./framework-amd-ai-300-series
-    ./kirov
-    ./nix.nix
     ./services
   ];
 
@@ -13,5 +11,9 @@
   hardware = {
     facter.reportPath = ./facter.json;
     ledger.enable = true;
+  };
+  user.hm = {
+    programs.steam-flatpak.enable = true;
+    services.rbw-agent.enable = true;
   };
 }
