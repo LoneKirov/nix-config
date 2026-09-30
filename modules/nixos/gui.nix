@@ -66,5 +66,9 @@ in {
     };
 
     location.provider = "geoclue2";
+
+    persist.directories = lib.mkIf config.services.displayManager.dms-greeter.enable [
+      "/var/lib/dms-greeter"
+    ];
   };
 }

@@ -8,4 +8,7 @@ _: {
     linux-enable-ir-emitter.enable = true;
   };
   security.pam.services.greetd.howdy.control = "sufficient";
+  persist.directories = [
+    "/var/lib/howdy" # howdy models
+  ];
 }

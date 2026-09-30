@@ -10,6 +10,9 @@ in {
     enable = lib.mkDefault (! isWSL);
     extraSetFlags = ["--operator=${config.user.username}"];
   };
+  persist.directories = lib.mkIf config.services.tailscale.enable [
+    "/var/lib/tailscale" # tailscale state
+  ];
   systemd.services."tailscale-restart-on-resume" = {
     description = "Restart Tailscale after resuming";
     after = ["suspend.target" "suspend-then-hibernate.target" "hibernate.target"];

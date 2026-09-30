@@ -1,7 +1,7 @@
 {config, ...}: {
   services = {
     btrbk.instances.btrbk.settings = {
-      subvolume."${config.preservation.persistentMountpoint}" = {
+      subvolume."${config.persist.mountpoint}" = {
         target."ssh://moltres/srv/backup/articuno/persistent" = {};
       };
       subvolume."/home" = {

@@ -6,6 +6,9 @@ _: {
       DISABLE_PASSWORD_AUTH = "true";
     };
   };
+  persist.directories = [
+    "/var/lib/private/beszel-hub" # DynamicUser state
+  ];
 
   services.caddy-podman.virtualHosts."beszel.kanto.casa" = ''
     request_body {

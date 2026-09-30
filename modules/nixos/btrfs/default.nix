@@ -25,8 +25,8 @@ in {
             subvolume."/home" = {
               snapshot_dir = "/home/.snapshots";
             };
-            subvolume."${config.preservation.persistentMountpoint}" = {
-              snapshot_dir = "${config.preservation.persistentMountpoint}/.snapshots";
+            subvolume."${config.persist.mountpoint}" = {
+              snapshot_dir = "${config.persist.mountpoint}/.snapshots";
             };
           };
         };
