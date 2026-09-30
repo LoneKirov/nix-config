@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  config = lib.mkIf (! config.services.xserver.enable) {
+  config = lib.mkIf (config.host.ssh && ! config.host.gui) {
     # enable sudo from ssh key if this is a headless system
     security.pam = {
       rssh = {

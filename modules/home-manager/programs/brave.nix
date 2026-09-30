@@ -3,11 +3,11 @@
   osConfig,
   ...
 }: let
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.host.gui or false;
 in {
   config = {
     programs.brave = {
-      enable = lib.mkDefault xserver;
+      enable = lib.mkDefault gui;
       extensions = [];
       commandLineArgs = [];
     };

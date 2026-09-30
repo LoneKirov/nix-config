@@ -9,6 +9,7 @@
     ./fwupd.nix
     ./gui.nix
     ./gvfs.nix
+    ./hosts.nix
     ./lanzaboote.nix
     ./networking
     ./nix
@@ -23,6 +24,7 @@
     ./system-packages.nix
     ./time.nix
     ./user.nix
+    ./wsl.nix
     ./zswap.nix
   ];
 }

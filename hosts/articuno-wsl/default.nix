@@ -1,17 +1,9 @@
-{config, ...}: {
-  flake.nixosConfigurations.articuno-wsl = config.flake.lib.nixosSystem {
-    modules = [
-      {
-        imports = [
-          ./kirov
-          ./nix.nix
-          ./wsl
-        ];
+{
+  imports = [
+    ./kirov
+    ./nix.nix
+    ./wsl
+  ];
 
-        networking.hostName = "articuno-wsl";
-
-        system.stateVersion = "26.05";
-      }
-    ];
-  };
+  system.stateVersion = "26.05";
 }

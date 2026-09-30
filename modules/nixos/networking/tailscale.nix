@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  isWSL = config.wsl.enable or false;
+  isWSL = config.host.wsl;
 in {
   services.tailscale = {
     enable = lib.mkDefault (! isWSL);

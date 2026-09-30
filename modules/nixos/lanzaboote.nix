@@ -6,7 +6,7 @@
   ...
 }: let
   lanzaboote = config.boot.lanzaboote.enable;
-  isWSL = config.wsl.enable or false;
+  isWSL = config.host.wsl;
 in {
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
