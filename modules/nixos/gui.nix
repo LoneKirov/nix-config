@@ -5,9 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.user) username;
-  home-manager = config.home-manager.users.${username};
-  inherit (home-manager.home) homeDirectory;
+  inherit (config.users.users.${config.user.username}) home;
 in {
   imports = [
     inputs.dms-plugin-registry.nixosModules.default
@@ -53,7 +51,7 @@ in {
           enable = true;
           compositor.name = config.programs.niri.package.pname;
           # Sync your user's DankMaterialShell theme with the greeter
-          configHome = homeDirectory;
+          configHome = home;
         };
       };
 

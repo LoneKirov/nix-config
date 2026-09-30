@@ -21,6 +21,7 @@ in {
         {
           networking.hostName = name;
           inherit hosts;
+          user.passwordSopsFile = ./${name}/password.sops.yaml;
         }
       ];
     })

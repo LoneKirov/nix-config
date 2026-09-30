@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -37,7 +38,11 @@
       nix-index-database.comma.enable = true;
       nh = {
         enable = true;
-        flake = lib.mkDefault flake;
+        flake = lib.mkDefault (
+          if config.user.flakeCheckout != null
+          then config.user.flakeCheckout
+          else flake
+        );
       };
     };
     environment.systemPackages = with pkgs; [

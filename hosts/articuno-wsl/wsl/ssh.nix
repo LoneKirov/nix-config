@@ -3,21 +3,25 @@
   environment.systemPackages = with pkgs; [
     sshfs
   ];
-  home-manager.users.kirov = {
+  user.hm = {
     config,
     lib,
     ...
   }: {
     home.activation.syncSSHConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      run cp -L -f ${config.home.homeDirectory}/.ssh/config /mnt/c/Users/kirov/.ssh/
+      if winhome=$(${config.windows.profile}) && winprofile=$(${config.windows.profile} -w); then
+        run cp -L -f ${config.home.homeDirectory}/.ssh/config "$winhome/.ssh/"
 
-      ${lib.optionalString config.services.rbw-agent.enable ''
-        cat << 'EOF' | run tee -a /mnt/c/Users/kirov/.ssh/config > /dev/null
+        ${lib.optionalString config.services.rbw-agent.enable ''
+        cat << EOF | run tee -a "$winhome/.ssh/config" > /dev/null
 
         Host *
-          IdentityAgent ${config.services.rbw-agent.windowsSocket.winPath}
+          IdentityAgent $winprofile\${lib.replaceStrings ["/"] ["\\"] config.services.rbw-agent.windowsSocket}
         EOF
       ''}
+      else
+        warnEcho "Couldn't find the Windows profile; skipping SSH config sync"
+      fi
     '';
   };
 }

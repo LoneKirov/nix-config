@@ -1,6 +1,6 @@
 {config, ...}: {
   virtualisation.quadlet.containers.sabnzbd = let
-    host-uid = toString config.users.users.kirov.uid;
+    host-uid = toString config.users.users.${config.user.username}.uid;
     container-uid = "1000";
     container-gid = "1000";
   in {

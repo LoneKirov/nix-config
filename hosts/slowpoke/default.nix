@@ -2,7 +2,6 @@
   imports = [
     ./btrfs.nix
     ./disk-config.nix
-    ./kirov
     ./nix.nix
     ./raspberry-pi-3
     ./services

@@ -99,7 +99,7 @@
       device = "/dev/disk/by-id/nvme-eui.0025384751a24e91-part3";
       fsType = "ntfs3";
       options = [
-        "uid=${toString config.users.users.kirov.uid}"
+        "uid=${toString config.users.users.${config.user.username}.uid}"
         "gid=${toString config.users.groups.users.gid}"
         "nofail"
       ];

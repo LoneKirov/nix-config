@@ -2,7 +2,6 @@
   imports = [
     ./btrfs.nix
     ./disk-config.nix
-    ./kirov
     ./lanzaboote.nix
     ./services
   ];
