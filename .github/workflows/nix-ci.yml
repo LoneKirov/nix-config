@@ -20,6 +20,8 @@ jobs:
     permissions:
       id-token: "write"
       contents: "read"
+    env:
+      CACHE_UPLOAD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v7
       - uses: wimpysworld/nothing-but-nix@v10
@@ -30,6 +32,7 @@ jobs:
           tags: tag:ci
           version: latest
       - uses: webfactory/ssh-agent@v0.10.0
+        if: env.CACHE_UPLOAD == 'true'
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: /tmp/nix_ssh_agent.sock
@@ -38,7 +41,7 @@ jobs:
           extra-conf: |
             extra-substituters = https://cache.kanto.casa https://devenv.cachix.org
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-            post-build-hook = ${{ github.workspace }}/.github/scripts/nix-cache-upload.sh
+            ${{ env.CACHE_UPLOAD == 'true' && format('post-build-hook = {0}/.github/scripts/nix-cache-upload.sh', github.workspace) || '' }}
       - uses: DeterminateSystems/flake-checker-action@v14
       - name: Run devenv test
-        run: CI=true nix run nixpkgs#devenv -- test
+        run: CI=true nix run --inputs-from . nixpkgs#devenv -- test
