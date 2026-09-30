@@ -14,7 +14,7 @@
       networks = ["host"];
       userns = "auto:gidmapping=${container-gid}:${host-gid}:1";
       environments = {
-        TZ = "America/Los_Angeles";
+        TZ = config.time.timeZone;
         ALLOWED_NETWORKS = "10.0.1.0/24";
         PLEX_UID = "${container-uid}";
         PLEX_GID = "${container-gid}";

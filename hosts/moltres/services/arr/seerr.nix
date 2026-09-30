@@ -17,7 +17,7 @@
       networks = [networks.arr.ref];
       userns = "auto";
       environments = {
-        TZ = "America/Los_Angeles";
+        TZ = config.time.timeZone;
       };
       volumes = [
         "/srv/arr/seerr:/app/config:idmap=uids=@${host-uid}-${container-uid}-1"
