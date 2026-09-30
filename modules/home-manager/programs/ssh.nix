@@ -1,25 +1,23 @@
 {
-  inputs,
   lib,
+  osConfig,
   ...
 }: {
   programs.ssh = {
     enable = lib.mkDefault true;
     enableDefaultConfig = false;
     settings = let
-      nixosConfigurations = inputs.self.outputs.nixosConfigurations;
-      withSsh = lib.filterAttrs (_: value: value.config.services.openssh.enable) nixosConfigurations;
-      names = builtins.attrNames withSsh;
+      withSsh = lib.filterAttrs (_: host: host.ssh) (osConfig.hosts or {});
       settings =
-        map (host: {
-          "${host}" = {
+        lib.mapAttrsToList (name: _: {
+          "${name}" = {
             forwardAgent = true;
           };
-          "${host}.lan" = {
+          "${name}.lan" = {
             forwardAgent = true;
           };
         })
-        names;
+        withSsh;
     in
       lib.mkMerge settings;
   };

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  isWSL = config.wsl.enable or false;
+  isWSL = config.host.wsl;
 in {
   services.beszel.agent = {
     enable = lib.mkDefault (! isWSL);

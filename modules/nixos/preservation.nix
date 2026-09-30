@@ -6,7 +6,7 @@
 }: let
   inherit (lib) types;
   persistentMountpoint = "/persistent";
-  isWSL = config.wsl.enable or false;
+  isWSL = config.host.wsl;
 in {
   imports = [
     inputs.preservation.nixosModules.preservation
@@ -89,7 +89,7 @@ in {
             ++ lib.optionals config.services.beszel.hub.enable [
               "/var/lib/private/beszel-hub" # beszel hub
             ]
-            ++ lib.optionals config.services.xserver.enable [
+            ++ lib.optionals config.services.accounts-daemon.enable [
               "/var/lib/AccountsService"
             ]
             ++ lib.optionals config.services.displayManager.dms-greeter.enable [

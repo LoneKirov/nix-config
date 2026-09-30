@@ -3,21 +3,23 @@
   lib,
   ...
 }: let
-  isWSL = config.wsl.enable or false;
+  isWSL = config.host.wsl;
 in {
-  config = lib.mkIf (! isWSL) {
-    services = {
-      openssh = {
-        # enable ssh if this is a headless system
-        enable = lib.mkDefault (! config.services.xserver.enable);
-        settings = {
+  config = lib.mkMerge [
+    {
+      # normal priority so a conflicting host definition errors instead of drifting from the inventory
+      services.openssh.enable = config.host.ssh;
+    }
+    (lib.mkIf (! isWSL) {
+      services = {
+        openssh.settings = {
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
           PermitRootLogin = "no";
         };
+        # make it easier to use other agents
+        gnome.gcr-ssh-agent.enable = lib.mkDefault false;
       };
-      # make it easier to use other agents
-      gnome.gcr-ssh-agent.enable = lib.mkDefault false;
-    };
-  };
+    })
+  ];
 }

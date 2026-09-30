@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.host.gui or false;
 in {
   config.programs.starship = let
     jujutsu = config.programs.jujutsu.enable;
@@ -19,7 +19,7 @@ in {
       {
         "$schema" = "https://starship.rs/config-schema.json";
         direnv.disabled = false;
-        hostname.ssh_only = xserver;
+        hostname.ssh_only = gui;
       }
       (lib.mkIf jujutsu {
         custom.jj = {

@@ -32,7 +32,7 @@ in {
 
   config = lib.mkMerge [
     {
-      nixremote.user.enable = lib.mkDefault (! config.services.xserver.enable);
+      nixremote.user.enable = lib.mkDefault (config.host.ssh && ! config.host.gui);
     }
     (lib.mkIf cfg.user.enable {
       users = {

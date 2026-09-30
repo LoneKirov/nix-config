@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.host.gui or false;
   rbw = config.programs.rbw;
   rbw-agent = config.services.rbw-agent;
 in {
@@ -23,7 +23,7 @@ in {
             name = "rbw-wrapped";
             paths = let
               pinentry =
-                if xserver
+                if gui
                 then lib.getExe pkgs.pinentry-gnome3
                 else lib.getExe pkgs.pinentry-curses;
             in [

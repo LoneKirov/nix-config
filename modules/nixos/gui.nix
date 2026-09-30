@@ -13,7 +13,7 @@ in {
     inputs.dms-plugin-registry.nixosModules.default
   ];
 
-  config = lib.mkIf config.services.xserver.enable {
+  config = lib.mkIf config.host.gui {
     programs = {
       niri.enable = true;
 

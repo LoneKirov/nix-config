@@ -3,7 +3,7 @@
   osConfig,
   ...
 }: let
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.host.gui or false;
 in {
-  programs.mpv.enable = lib.mkDefault xserver;
+  programs.mpv.enable = lib.mkDefault gui;
 }

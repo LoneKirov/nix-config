@@ -5,12 +5,12 @@
   pkgs,
   ...
 }: let
-  xserver = osConfig.services.xserver.enable or false;
+  gui = osConfig.host.gui or false;
 in {
   config = {
     programs = {
       tmux = {
-        enable = lib.mkDefault (!xserver);
+        enable = lib.mkDefault (!gui);
         prefix = "C-a";
         keyMode = "vi";
         sensibleOnTop = true;
