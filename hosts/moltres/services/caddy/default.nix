@@ -100,21 +100,9 @@
     };
     virtualisation.quadlet = let
       inherit (config.virtualisation.quadlet) builds networks volumes;
+      inherit (config.lib.quadlet) mkContainer mkNetwork;
     in {
-      networks.caddy = {
-        unitConfig = {
-          Description = "Network for Caddy";
-          Wants = ["network-online.target"];
-          After = ["network-online.target"];
-        };
-        networkConfig = {
-          ipv6 = true;
-          options = {
-            isolate = "strict";
-          };
-        };
-        autoStart = true;
-      };
+      networks.caddy = mkNetwork "Network for Caddy";
       volumes.caddy = {};
       builds.caddy = {
         unitConfig = {
@@ -134,19 +122,20 @@
           ''}";
         };
       };
-      containers.caddy = {
+      containers.caddy = mkContainer {
         unitConfig = {
           Description = "Caddy services reverse proxy";
         };
         containerConfig = {
           image = builds.caddy.ref;
+          # mkContainer defaults to registry
+          autoUpdate = null;
           networks = with networks; [
             caddy.ref
             arr.ref
             esphome.ref
             openwebui.ref
           ];
-          userns = "auto";
           publishPorts = ["80:80" "443:443"];
           addHosts = containerAddHosts;
           environmentFiles = [config.sops.secrets.caddy.path];
@@ -158,10 +147,6 @@
             "${caddyFileFormatted}:/etc/caddy/Caddyfile:ro,idmap"
           ];
         };
-        serviceConfig = {
-          Restart = "on-failure";
-        };
-        autoStart = true;
       };
     };
   };

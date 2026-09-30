@@ -1,10 +1,8 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.profilarr = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    container-gid = "1000";
-    inherit (config.virtualisation.quadlet) containers networks;
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv;
+  inherit (config.virtualisation.quadlet) containers networks;
+in {
+  virtualisation.quadlet.containers.profilarr = mkContainer {
     unitConfig = {
       Description = "Profilarr - Indexer management";
       Requires = with containers; [
@@ -14,24 +12,17 @@
     };
     containerConfig = {
       image = "ghcr.io/dictionarry-hub/profilarr:latest";
-      autoUpdate = "registry";
       networks = [networks.arr.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-        AUTH = "off";
-        ORIGIN = "https://profilarr.kanto.casa";
-      };
+      environments =
+        userEnv
+        // {
+          AUTH = "off";
+          ORIGIN = "https://profilarr.kanto.casa";
+        };
       volumes = [
-        "/srv/arr/profilarr:/config:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/profilarr" "/config")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."profilarr.kanto.casa" = ''

@@ -1,15 +1,13 @@
-{config, ...}: {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv containerUid;
+  inherit (config.virtualisation.quadlet) containers networks;
+in {
   sops.secrets.decluttarr = {
     format = "dotenv";
     sopsFile = ./decluttarr.sops.env;
     key = "";
   };
-  virtualisation.quadlet.containers.decluttarr = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    container-gid = "1000";
-    inherit (config.virtualisation.quadlet) containers networks;
-  in {
+  virtualisation.quadlet.containers.decluttarr = mkContainer {
     unitConfig = {
       Description = "Decluttar - Automatic cleanup";
       Requires = with containers; [
@@ -20,23 +18,14 @@
     };
     containerConfig = {
       image = "ghcr.io/manimatter/decluttarr:latest";
-      autoUpdate = "registry";
       networks = [networks.arr.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-      };
+      environments = userEnv;
       environmentFiles = [config.sops.secrets.decluttarr.path];
       volumes = [
-        "${./config.yaml}:/app/config/config.yaml:ro,idmap=uids=@0-${container-uid}-1"
-        "/srv/arr/data:/data:idmap=uids=@${host-uid}-${container-uid}-1"
+        # store paths are owned by root
+        "${./config.yaml}:/app/config/config.yaml:ro,idmap=uids=@0-${containerUid}-1"
+        (userBind "/srv/arr/data" "/data")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 }

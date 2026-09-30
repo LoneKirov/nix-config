@@ -9,15 +9,13 @@
       inherit (config.virtualisation.quadlet) networks;
     in {
       volumes.pocket-id = {};
-      containers.pocket-id = {
+      containers.pocket-id = config.lib.quadlet.mkContainer {
         unitConfig = {
           Description = "Pocket ID OIDC Provider";
         };
         containerConfig = {
           image = "ghcr.io/pocket-id/pocket-id:v2";
-          autoUpdate = "registry";
           networks = with networks; [caddy.ref];
-          userns = "auto";
           environmentFiles = [config.sops.secrets.pocket-id.path];
           environments = {
             APP_URL = "https://pocket-id.kanto.casa";
@@ -33,10 +31,6 @@
           healthStartPeriod = "10s";
           healthRetries = 2;
         };
-        serviceConfig = {
-          Restart = "on-failure";
-        };
-        autoStart = true;
       };
     };
     services.caddy-podman.virtualHosts."pocket-id.kanto.casa" = ''

@@ -1,10 +1,8 @@
-{config, ...}: {
-  virtualisation.quadlet.containers.prowlarr = let
-    host-uid = toString config.users.users.${config.user.username}.uid;
-    container-uid = "1000";
-    container-gid = "1000";
-    inherit (config.virtualisation.quadlet) containers networks;
-  in {
+{config, ...}: let
+  inherit (config.lib.quadlet) mkContainer userBind userEnv;
+  inherit (config.virtualisation.quadlet) containers networks;
+in {
+  virtualisation.quadlet.containers.prowlarr = mkContainer {
     unitConfig = {
       Description = "Prowlarr - Indexer management";
       Wants = with containers; [
@@ -15,22 +13,12 @@
     };
     containerConfig = {
       image = "lscr.io/linuxserver/prowlarr:latest";
-      autoUpdate = "registry";
       networks = [networks.arr.ref];
-      userns = "auto";
-      environments = {
-        TZ = config.time.timeZone;
-        PUID = container-uid;
-        PGID = container-gid;
-      };
+      environments = userEnv;
       volumes = [
-        "/srv/arr/prowlarr:/config:idmap=uids=@${host-uid}-${container-uid}-1"
+        (userBind "/srv/arr/prowlarr" "/config")
       ];
     };
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-    autoStart = true;
   };
 
   services.caddy-podman.virtualHosts."prowlarr.kanto.casa" = ''
