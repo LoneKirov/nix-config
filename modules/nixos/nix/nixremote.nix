@@ -41,7 +41,6 @@ in {
           home = "/var/lib/${nixremote}";
           createHome = true;
           group = nixremote;
-          extraGroups = ["wheel"];
           shell = "${lib.getExe pkgs.bash}";
 
           openssh.authorizedKeys.keys = user.openssh.authorizedKeys.keys ++ [cfg.sshKey];
