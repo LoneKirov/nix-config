@@ -19,7 +19,7 @@ _: {
 
     home.activation = lib.mkIf config.programs.wezterm.enable {
       syncWindowsWezterm = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD cp -L -f ${config.xdg.configHome}/wezterm/wezterm.lua /mnt/c/Users/kirov/.wezterm.lua
+        run cp -L -f ${config.xdg.configHome}/wezterm/wezterm.lua /mnt/c/Users/kirov/.wezterm.lua
       '';
     };
   };
