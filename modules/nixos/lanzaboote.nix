@@ -60,6 +60,17 @@ in {
         tpm2-tools
         tpm2-tss
       ];
+
+      persist.directories =
+        [
+          "/var/lib/sbctl" # secureboot keys managed by sbctl
+        ]
+        ++ lib.optionals config.boot.lanzaboote.measuredBoot.enable [
+          {
+            directory = "/var/lib/pcrlock.d";
+            inInitrd = true;
+          }
+        ];
     })
   ];
 }

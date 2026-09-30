@@ -9,5 +9,10 @@ in {
     ./tailscale.nix
   ];
 
-  config.networking.networkmanager.enable = lib.mkDefault (! isWSL);
+  config = {
+    networking.networkmanager.enable = lib.mkDefault (! isWSL);
+    persist.directories = lib.mkIf config.networking.networkmanager.enable [
+      "/etc/NetworkManager/system-connections" # NM connections
+    ];
+  };
 }

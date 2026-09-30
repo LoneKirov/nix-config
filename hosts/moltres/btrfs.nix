@@ -3,7 +3,7 @@
     btrbk = {
       instances.btrbk.settings = {
         subvolume = {
-          "${config.preservation.persistentMountpoint}" = {
+          "${config.persist.mountpoint}" = {
             target."/srv/backup/moltres/persistent" = {};
           };
           "/home" = {

@@ -57,6 +57,10 @@ in {
       podman.autoPrune.enable = true;
     };
 
+    persist.directories = lib.mkIf config.virtualisation.quadlet.enable [
+      "/var/lib/containers" # podman storage
+    ];
+
     users.users.containers = {
       isSystemUser = true;
       autoSubUidGidRange = true;
