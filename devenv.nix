@@ -10,6 +10,7 @@
     with pkgs; [
       age
       alejandra
+      claude-code
       kirov-neovim.config.build.package
       nom
       nurl
@@ -18,6 +19,8 @@
     ];
 
   languages.nix.enable = true;
+
+  claude.code.enable = true;
 
   tasks = {
     "test:all-systems".exec = "nix flake check --build-all --all-systems";
