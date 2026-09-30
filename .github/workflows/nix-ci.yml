@@ -23,25 +23,25 @@ jobs:
     env:
       CACHE_UPLOAD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: wimpysworld/nothing-but-nix@v10
-      - uses: tailscale/github-action@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+      - uses: tailscale/github-action@d1b6cd204f8dceda5b3eaad7f1f767be390056cd # v4.2.0
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:ci
           version: latest
-      - uses: webfactory/ssh-agent@v0.10.0
+      - uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         if: env.CACHE_UPLOAD == 'true'
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-auth-sock: /tmp/nix_ssh_agent.sock
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
         with:
           extra-conf: |
             extra-substituters = https://cache.kanto.casa https://devenv.cachix.org
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
             ${{ env.CACHE_UPLOAD == 'true' && format('post-build-hook = {0}/.github/scripts/nix-cache-upload.sh', github.workspace) || '' }}
-      - uses: DeterminateSystems/flake-checker-action@v14
+      - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
       - name: Run devenv test
         run: CI=true nix run --inputs-from . nixpkgs#devenv -- test
