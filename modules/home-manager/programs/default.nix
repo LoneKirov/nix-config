@@ -24,7 +24,6 @@
     ./mpv.nix
     ./neovim.nix
     ./niri
-    ./nix.nix
     ./nx.nix
     ./parallel.nix
     ./pay-respects.nix
