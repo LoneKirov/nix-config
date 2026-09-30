@@ -13,11 +13,9 @@
       settings =
         map (host: {
           "${host}" = {
-            inherit host;
             forwardAgent = true;
           };
           "${host}.lan" = {
-            inherit host;
             forwardAgent = true;
           };
         })
