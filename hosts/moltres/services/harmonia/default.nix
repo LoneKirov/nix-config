@@ -26,8 +26,8 @@
     }
   '';
   system.autoUpgrade.runGarbageCollection = lib.mkForce false;
-  nix.extraOptions = ''
-    min-free = ${toString (100 * 1024 * 1024 * 1024)}
-    max-free = ${toString (200 * 1024 * 1024 * 1024)}
-  '';
+  nix.settings = {
+    min-free = 100 * 1024 * 1024 * 1024;
+    max-free = 200 * 1024 * 1024 * 1024;
+  };
 }
