@@ -11,4 +11,9 @@ devenv.lock
 # pre-commit
 .pre-commit-config.yaml
 
+# nix
 result
+
+# claude
+.claude
+.mcp.json
