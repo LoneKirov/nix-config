@@ -8,7 +8,6 @@
   imports = [
     inputs.determinate.nixosModules.default
     inputs.nix-index-database.nixosModules.default
-    ./nixremote.nix
   ];
 
   config = let
