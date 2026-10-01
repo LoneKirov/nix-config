@@ -12,7 +12,7 @@
   isWSL = osConfig.host.wsl or false;
 in {
   config = {
-    home.packages = lib.optionals niri [pkgs.wl-clipboard-rs];
+    home.packages = lib.mkIf (niri && config.programs.wezterm.enable) [pkgs.wl-clipboard-rs];
     programs.wezterm = let
       wezterm =
         if gui

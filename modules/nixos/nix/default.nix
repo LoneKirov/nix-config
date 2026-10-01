@@ -29,10 +29,10 @@
     boot.loader.systemd-boot.configurationLimit = lib.mkDefault 10;
     system.autoUpgrade = {
       flake = lib.mkDefault flake;
-      dates = "daily";
+      dates = lib.mkDefault "daily";
       allowReboot = true;
       randomizedDelaySec = "45min";
-      runGarbageCollection = true;
+      runGarbageCollection = lib.mkDefault true;
     };
     programs = {
       nix-index-database.comma.enable = true;

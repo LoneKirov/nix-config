@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -9,7 +10,7 @@
         enable = lib.mkDefault true;
         historyWidget.command = "";
       };
-      fish.plugins = [
+      fish.plugins = lib.mkIf config.programs.fzf.enable [
         {
           name = "fzf";
           inherit (pkgs.fishPlugins.fzf-fish) src;

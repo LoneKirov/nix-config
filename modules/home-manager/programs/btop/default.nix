@@ -8,7 +8,7 @@
 in {
   programs = {
     btop.enable = lib.mkDefault true;
-    matugen.config.templates.btop = {
+    matugen.config.templates.btop = lib.mkIf config.programs.btop.enable {
       input_path = ./btop.theme.toml;
       output_path = "${configHome}/btop/themes/matugen.theme";
       post_hook = pkgs.writeShellScript "matugen-btop.sh" ''

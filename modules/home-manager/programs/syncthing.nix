@@ -3,10 +3,10 @@
   osConfig,
   ...
 }: let
-  dms-shell = osConfig.programs.dms-shell.enable or false;
+  gui = osConfig.host.gui or false;
 in {
   services.syncthing = {
-    enable = lib.mkDefault dms-shell;
+    enable = lib.mkDefault gui;
     overrideDevices = false;
     overrideFolders = false;
     settings.options.alwaysLocalNets = [

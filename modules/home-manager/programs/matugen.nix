@@ -11,7 +11,7 @@
   matugen = config.programs.matugen.enable;
 in {
   options.programs.matugen = {
-    enable = lib.mkEnableOption "matugen";
+    enable = lib.mkEnableOption "matugen" // {default = dms-shell;};
     config = lib.mkOption {
       inherit (tomlFormat) type;
       default = {};
@@ -21,11 +21,7 @@ in {
     };
   };
 
-  config = {
-    programs.matugen.enable = lib.mkDefault dms-shell;
-
-    xdg.configFile = lib.mkIf matugen {
-      "matugen/config.toml".source = tomlFormat.generate "matugen-config" matugenConfig;
-    };
+  config.xdg.configFile = lib.mkIf matugen {
+    "matugen/config.toml".source = tomlFormat.generate "matugen-config" matugenConfig;
   };
 }
