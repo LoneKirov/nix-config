@@ -13,8 +13,9 @@
       enable = lib.mkDefault true;
       defaultEditor = true;
       imports = [../../nixvim];
+      # nixvim's home-manager wrapper doesn't take specialArgs
+      _module.args = {inherit inputs;};
       vimdiffAlias = true;
-      nixpkgs.source = inputs.nixpkgs;
     };
     home.sessionVariables = lib.mkIf enable {
       MANPAGER = "${lib.getExe build.package} -c 'Man!'";

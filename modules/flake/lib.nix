@@ -47,9 +47,13 @@
     evalNixvim = {
       system,
       modules ? [],
+      extraSpecialArgs ? {},
     }:
       inputs.nixvim.lib.evalNixvim {
+        extraSpecialArgs = {inherit inputs;} // extraSpecialArgs;
+
         inherit system;
+
         modules = [../nixvim] ++ modules;
       };
   };

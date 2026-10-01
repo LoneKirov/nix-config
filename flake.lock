@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "base46": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784785285,
+        "narHash": "sha256-kwDMC6rYzJYECmGnwn8JiAbffUq7hAXcUH6gPSkk2uI=",
+        "owner": "AvengeMedia",
+        "repo": "base46",
+        "rev": "83522e02c6c3b4ea901c4bffd9e0a5e0371c1fe6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "base46",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1788465171,
@@ -362,6 +378,22 @@
         "type": "github"
       }
     },
+    "jjui-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782752796,
+        "narHash": "sha256-DcFkJwT4lEOC7cW+mYxewFmhgtOTkVCS0mdbllNGPiA=",
+        "owner": "xdagiz",
+        "repo": "jjui.nvim",
+        "rev": "e3ab2c482ed06b358dbd0d631b5579a4ae4c5d9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xdagiz",
+        "repo": "jjui.nvim",
+        "type": "github"
+      }
+    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane_2",
@@ -670,6 +702,7 @@
     },
     "root": {
       "inputs": {
+        "base46": "base46",
         "determinate": "determinate",
         "disko": "disko",
         "dms-plugin-registry": "dms-plugin-registry",
@@ -677,6 +710,7 @@
         "home-manager": "home-manager",
         "jj-gh": "jj-gh",
         "jj-starship": "jj-starship",
+        "jjui-nvim": "jjui-nvim",
         "lanzaboote": "lanzaboote",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",

@@ -38,6 +38,15 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    # neovim plugins not in nixpkgs
+    jjui-nvim = {
+      url = "github:xdagiz/jjui.nvim";
+      flake = false;
+    };
+    base46 = {
+      url = "github:AvengeMedia/base46";
+      flake = false;
+    };
     dms-plugin-registry = {
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
