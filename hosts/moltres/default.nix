@@ -7,7 +7,9 @@
   ];
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
-  networking.firewall.enable = false;
+  # tailnet access is governed by Tailscale ACLs
+  networking.firewall.trustedInterfaces = ["tailscale0"];
+  services.tailscale.openFirewall = true;
   system = {
     autoUpgrade.enable = true;
     stateVersion = "26.05";

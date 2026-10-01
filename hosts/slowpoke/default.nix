@@ -8,7 +8,6 @@ _: {
     ./tailscale.nix
   ];
 
-  networking.firewall.enable = false;
   boot.loader.systemd-boot.configurationLimit = 4;
   system = {
     autoUpgrade = {

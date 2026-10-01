@@ -61,6 +61,12 @@ in {
       "/var/lib/containers" # podman storage
     ];
 
+    # nixpkgs only opens aardvark-dns on podman0; quadlet networks get their own bridges
+    networking.firewall.interfaces."podman+" = lib.mkIf config.virtualisation.quadlet.enable {
+      allowedTCPPorts = [53];
+      allowedUDPPorts = [53];
+    };
+
     users.users.containers = {
       isSystemUser = true;
       autoSubUidGidRange = true;
