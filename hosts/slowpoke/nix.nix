@@ -1,28 +1,8 @@
-{config, ...}: {
-  nixremote.enablePrivateKey = true;
-
-  nix = {
-    buildMachines = [
-      {
-        hostName = "moltres";
-        systems = ["x86_64-linux" "aarch64-linux"];
-        protocol = "ssh-ng";
-        sshUser = "nixremote";
-        sshKey = config.sops.secrets.nixremote_ssh_key.path;
-        maxJobs = 6;
-        speedFactor = 2;
-        supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
-        mandatoryFeatures = [];
-      }
-    ];
-    distributedBuilds = true;
-    settings = {
-      max-jobs = 0;
-      min-free = 1024 * 1024 * 1024;
-      max-free = 4096 * 1024 * 1024;
-    };
+_: {
+  nix.settings = {
+    # never build locally; CI builds slowpoke and uploads it to cache.kanto.casa
+    max-jobs = 0;
+    min-free = 1024 * 1024 * 1024;
+    max-free = 4096 * 1024 * 1024;
   };
-  systemd.tmpfiles.rules = [
-    "f /root/.ssh/config 0700 root root - StrictHostKeyChecking=accept-new"
-  ];
 }
