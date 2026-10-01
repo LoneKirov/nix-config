@@ -5,13 +5,12 @@
 }: {
   packages = let
     system = pkgs.stdenv.hostPlatform.system;
-    kirov-neovim = inputs.kirov.lib.evalNixvim {inherit system;};
   in
     with pkgs; [
       age
       alejandra
       claude-code
-      kirov-neovim.config.build.package
+      inputs.kirov.packages.${system}.nvim
       nom
       nurl
       sops
