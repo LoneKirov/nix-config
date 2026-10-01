@@ -20,4 +20,5 @@ _: {
         }
     }
   '';
+  networking.firewall.interfaces."podman+".allowedTCPPorts = [8090];
 }

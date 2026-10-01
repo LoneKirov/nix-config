@@ -35,4 +35,8 @@ in {
   services.caddy-podman.virtualHosts."plex.kanto.casa" = ''
     reverse_proxy host.containers.internal:32400
   '';
+  networking.firewall = {
+    allowedTCPPorts = [32400];
+    allowedUDPPorts = [32410 32412 32413 32414]; # GDM discovery
+  };
 }
