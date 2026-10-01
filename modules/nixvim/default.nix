@@ -81,6 +81,7 @@
       which-key.enable = true;
       marks.enable = true;
     };
+    colorschemes.catppuccin.enable = true;
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "jjui";
