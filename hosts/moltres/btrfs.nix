@@ -19,17 +19,6 @@
           };
         };
       };
-      sshAccess = [
-        {
-          key = builtins.readFile ../../keys/btrbk.pub;
-          roles = [
-            "target"
-            "info"
-            "receive"
-            "delete"
-          ];
-        }
-      ];
     };
     beesd.filesystems = {
       root = {
