@@ -4,15 +4,11 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit (config.plugins.jjui) enable;
-in {
-  options.plugins.jjui.enable = lib.mkEnableOption "jjui.nvim";
+}: {
+  options.plugins.jjui.enable = lib.mkEnableOption "jjui.nvim" // {default = true;};
 
-  config = {
-    plugins.jjui.enable = lib.mkDefault true;
-
-    extraPlugins = lib.mkIf enable [
+  config = lib.mkIf config.plugins.jjui.enable {
+    extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "jjui";
         src = inputs.jjui-nvim;
@@ -23,11 +19,11 @@ in {
       })
     ];
 
-    extraConfigLua = lib.mkIf enable ''
+    extraConfigLua = ''
       require('jjui')
     '';
 
-    keymaps = lib.mkIf enable [
+    keymaps = [
       {
         action = "<cmd>Jjui<CR>";
         key = "<leader>jj";

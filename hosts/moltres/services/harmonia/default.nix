@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   sops.secrets.harmonia = {
     format = "yaml";
     sopsFile = ./harmonia.sops.yaml;
@@ -25,7 +21,7 @@
       }
     }
   '';
-  system.autoUpgrade.runGarbageCollection = lib.mkForce false;
+  system.autoUpgrade.runGarbageCollection = false;
   nix.settings = {
     min-free = 100 * 1024 * 1024 * 1024;
     max-free = 200 * 1024 * 1024 * 1024;

@@ -28,7 +28,7 @@
           };
         };
       };
-      jjui.enable = enable;
+      jjui.enable = lib.mkDefault enable;
       zsh.antidote.plugins = lib.mkIf enable [
         "ohmyzsh/ohmyzsh path:plugins/jj"
       ];

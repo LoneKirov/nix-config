@@ -22,14 +22,12 @@ in {
     })
     (lib.mkIf lanzaboote {
       boot = {
-        loader = {
-          efi.canTouchEfiVariables = true;
-          # lanzaboote measured boot required limiting to 8
-          systemd-boot.configurationLimit = lib.mkForce 8;
-        };
+        loader.efi.canTouchEfiVariables = true;
 
         # Setup Lanzaboote for SecureBoot
         lanzaboote = {
+          # lanzaboote measured boot required limiting to 8
+          configurationLimit = lib.mkDefault 8;
           # Using sbctl for key generation and management
           pkiBundle = "/var/lib/sbctl";
           autoGenerateKeys.enable = true;

@@ -14,7 +14,7 @@ in {
   in {
     nixremote = {
       user = {
-        enable = lib.mkEnableOption "nixremote user";
+        enable = lib.mkEnableOption "nixremote user" // {default = config.host.ssh && ! config.host.gui;};
         username = lib.mkOption {
           type = types.nonEmptyStr;
           default = "nixremote";
@@ -31,9 +31,6 @@ in {
   };
 
   config = lib.mkMerge [
-    {
-      nixremote.user.enable = lib.mkDefault (config.host.ssh && ! config.host.gui);
-    }
     (lib.mkIf cfg.user.enable {
       users = {
         users.${nixremote} = {
