@@ -17,5 +17,5 @@
   services.caddy-podman.virtualHosts."syncthing.moltres.kanto.casa" = ''
     import reverse_proxy_with_auth host.containers.internal:8384
   '';
-  networking.firewall.interfaces."podman+".allowedTCPPorts = [8384];
+  networking.firewall.interfaces.${config.lib.quadlet.bridgeInterfaces}.allowedTCPPorts = [8384];
 }

@@ -12,7 +12,7 @@
   services.caddy-podman.virtualHosts."cache.kanto.casa" = ''
     reverse_proxy host.containers.internal:5000
   '';
-  networking.firewall.interfaces."podman+".allowedTCPPorts = [5000];
+  networking.firewall.interfaces.${config.lib.quadlet.bridgeInterfaces}.allowedTCPPorts = [5000];
 
   # disable detnix automatic gc to make better use of store as cache
   environment.etc."determinate/config.json".text = ''
