@@ -1,4 +1,4 @@
-_: {
+{config, ...}: {
   services.beszel.hub = {
     enable = true;
     host = "0.0.0.0";
@@ -20,5 +20,5 @@ _: {
         }
     }
   '';
-  networking.firewall.interfaces."podman+".allowedTCPPorts = [8090];
+  networking.firewall.interfaces.${config.lib.quadlet.bridgeInterfaces}.allowedTCPPorts = [8090];
 }

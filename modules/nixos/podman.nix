@@ -7,12 +7,17 @@
   hostUid = toString config.users.users.${config.user.username}.uid;
   containerUid = "1000";
   containerGid = "1000";
+  # matches every podman bridge; iptables and nftables spell the wildcard differently
+  bridgeInterfaces =
+    if config.networking.nftables.enable
+    then "podman*"
+    else "podman+";
 in {
   imports = [inputs.quadlet-nix.nixosModules.quadlet];
 
   config = {
     lib.quadlet = {
-      inherit containerUid containerGid;
+      inherit bridgeInterfaces containerUid containerGid;
 
       mkContainer = container:
         lib.mkMerge [
@@ -62,7 +67,7 @@ in {
     ];
 
     # nixpkgs only opens aardvark-dns on podman0; quadlet networks get their own bridges
-    networking.firewall.interfaces."podman+" = lib.mkIf config.virtualisation.quadlet.enable {
+    networking.firewall.interfaces.${bridgeInterfaces} = lib.mkIf config.virtualisation.quadlet.enable {
       allowedTCPPorts = [53];
       allowedUDPPorts = [53];
     };
