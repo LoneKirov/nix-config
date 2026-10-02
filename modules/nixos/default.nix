@@ -2,7 +2,7 @@
   imports = [
     ./beszel-agent
     ./boot.nix
-    ./btrfs
+    ./btrfs.nix
     ./dbus.nix
     ./fish.nix
     ./flatpak.nix

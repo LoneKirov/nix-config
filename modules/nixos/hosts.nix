@@ -21,6 +21,18 @@
         default = ! config.gui && ! config.wsl;
         description = "Runs sshd; other hosts get ssh config for it.";
       };
+      backup = {
+        targets = mkOption {
+          type = types.listOf types.str;
+          default = [];
+          description = "Hosts this host sends its btrbk backups to; each must set `backup.receive`.";
+        };
+        receive = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          description = "Receives btrbk backups from hosts that list this one in `backup.targets`, each confined to `<receive>/<host>`.";
+        };
+      };
     };
   });
 in {

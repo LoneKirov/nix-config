@@ -1,23 +1,12 @@
 {
-  config,
   lib,
   pkgs,
   ...
 }: {
-  services = {
-    btrbk.instances.btrbk.settings = {
-      subvolume."${config.persist.mountpoint}" = {
-        target."ssh://moltres/srv/backup/mew/persistent" = {};
-      };
-      subvolume."/home" = {
-        target."ssh://moltres/srv/backup/mew/home" = {};
-      };
-    };
-    beesd.filesystems.root = {
-      spec = "/srv/root";
-      hashTableSizeMB = 2048;
-      extraOptions = ["--loadavg-target=4.0"];
-    };
+  services.beesd.filesystems.root = {
+    spec = "/srv/root";
+    hashTableSizeMB = 2048;
+    extraOptions = ["--loadavg-target=4.0"];
   };
   systemd.services."btrbk-btrbk".serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "btrbk-metered.sh" ''
     ${lib.getExe pkgs.btrbk} -c /etc/btrbk/btrbk.conf snapshot
