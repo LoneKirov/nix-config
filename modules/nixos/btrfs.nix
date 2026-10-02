@@ -53,8 +53,9 @@ in {
     (lib.mkIf (targets != []) {
       assertions =
         map (target: {
-          assertion = config.hosts ? ${target} && config.hosts.${target}.backup.receive != null;
-          message = "backup target ${target} of ${hostName} must be a host that sets backup.receive";
+          # ssh hosts get their host key pinned, which btrbk relies on since its known_hosts isn't persisted
+          assertion = config.hosts ? ${target} && config.hosts.${target}.ssh && config.hosts.${target}.backup.receive != null;
+          message = "backup target ${target} of ${hostName} must be an ssh host that sets backup.receive";
         })
         targets;
       services.btrbk.instances.btrbk.settings = {
@@ -68,10 +69,6 @@ in {
         key = "ssh_key";
         owner = config.users.users.btrbk.name;
       };
-      # btrbk's home isn't persisted, so pin the targets instead of relying on its known_hosts
-      programs.ssh.knownHosts = lib.genAttrs targets (target: {
-        publicKeyFile = ../../keys/${target}.pub;
-      });
     })
     (lib.mkIf (receive != null) {
       # one key per sending host, confined to that host's directory
