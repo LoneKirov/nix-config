@@ -29,9 +29,10 @@ in {
             settings = {
               ssh_user = "btrbk";
               snapshot_create = "onchange";
-              snapshot_preserve = "24h 14d 4w";
+              # local snapshots are for quick undo; longer history lives on the targets
+              snapshot_preserve = "24h 14d";
               snapshot_preserve_min = "1h";
-              target_preserve = "24h 14d 12w 6m";
+              target_preserve = "24h 14d 12w 12m";
               target_preserve_min = "1h";
               stream_compress = "lz4";
               subvolume."/home" = {
