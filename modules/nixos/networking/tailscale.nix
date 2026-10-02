@@ -11,7 +11,9 @@ in {
       services.tailscale.enable = lib.mkDefault (! isWSL);
     }
     (lib.mkIf config.services.tailscale.enable {
-      services.tailscale.extraSetFlags = ["--operator=${config.user.username}"];
+      # only desktops need to manage tailscale without sudo; an empty value
+      # clears the operator tailscaled has persisted
+      services.tailscale.extraSetFlags = ["--operator=${lib.optionalString config.host.gui config.user.username}"];
       persist.directories = [
         "/var/lib/tailscale" # tailscale state
       ];
