@@ -7,7 +7,7 @@
     # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # determinate nix
-    determinate.url = "github:determinateSystems/determinate/v3.22.5";
+    determinate.url = "github:determinateSystems/determinate/v3.23.0";
     # convenient flake for linux systems
     systems.url = "github:nix-systems/default-linux";
     # predefined hardware configurations
@@ -21,7 +21,7 @@
     preservation.url = "github:nix-community/preservation/main";
     # secureboot
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.1.0";
+      url = "github:nix-community/lanzaboote/v1.2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # declarative home directory
