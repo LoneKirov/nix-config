@@ -8,7 +8,6 @@ _: {
     ./tailscale.nix
   ];
 
-  boot.loader.systemd-boot.configurationLimit = 4;
   system = {
     autoUpgrade = {
       enable = true;
