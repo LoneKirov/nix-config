@@ -26,8 +26,8 @@ in {
 
         # Setup Lanzaboote for SecureBoot
         lanzaboote = {
-          # lanzaboote measured boot required limiting to 8
-          configurationLimit = lib.mkDefault 8;
+          # lanzaboote measured boot required limiting to 4
+          configurationLimit = lib.mkDefault 4;
           # Using sbctl for key generation and management
           pkiBundle = "/var/lib/sbctl";
           autoGenerateKeys.enable = true;
