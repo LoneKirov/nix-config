@@ -11,7 +11,7 @@
       alejandra
       claude-code
       inputs.kirov.packages.${system}.nvim
-      nom
+      nix-output-monitor
       nurl
       sops
       ssh-to-age
