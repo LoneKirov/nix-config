@@ -6,7 +6,7 @@
 }: {
   config = {
     # fallback for when dms hasn't generated a colorscheme
-    colorschemes.catppuccin.enable = lib.mkDefault true;
+    colorschemes.tokyonight.enable = lib.mkDefault true;
 
     # dms writes its colorscheme to ~/.config/nvim/colors/dms.lua
     impureRtp = true;
