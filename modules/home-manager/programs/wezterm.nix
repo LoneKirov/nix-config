@@ -7,9 +7,9 @@
 }: let
   niri = osConfig.programs.niri.enable or false;
   dms-shell = osConfig.programs.dms-shell.enable or false;
-  gui = osConfig.host.gui or false;
+  gui = config.host.gui;
   fish = config.programs.fish.enable or false;
-  isWSL = osConfig.host.wsl or false;
+  isWSL = config.host.wsl;
 in {
   config = {
     home.packages = lib.mkIf (niri && config.programs.wezterm.enable) [pkgs.wl-clipboard-rs];
