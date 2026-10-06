@@ -1,11 +1,10 @@
 {
   config,
   lib,
-  osConfig,
   pkgs,
   ...
 }: let
-  gui = osConfig.host.gui or false;
+  gui = config.host.gui;
   rbw = config.programs.rbw;
   rbw-agent = config.services.rbw-agent;
 in {

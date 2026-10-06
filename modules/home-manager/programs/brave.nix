@@ -1,9 +1,9 @@
 {
+  config,
   lib,
-  osConfig,
   ...
 }: let
-  gui = osConfig.host.gui or false;
+  gui = config.host.gui;
 in {
   config = {
     programs.brave = {

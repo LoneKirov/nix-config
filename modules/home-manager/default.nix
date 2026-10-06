@@ -1,6 +1,7 @@
 {
   imports = [
     ./fonts.nix
+    ./host.nix
     ./programs
     ./theme.nix
   ];
