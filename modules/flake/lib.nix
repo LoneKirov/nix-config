@@ -48,13 +48,15 @@
       system,
       modules ? [],
       extraSpecialArgs ? {},
+      # devenv passes its working tree's copy, so it watches it for changes
+      baseModule ? ../nixvim,
     }:
       inputs.nixvim.lib.evalNixvim {
         extraSpecialArgs = {inherit inputs;} // extraSpecialArgs;
 
         inherit system;
 
-        modules = [../nixvim] ++ modules;
+        modules = [baseModule] ++ modules;
       };
   };
 }
