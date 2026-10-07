@@ -6,6 +6,7 @@
     ./neo-tree.nix
     ./neogit.nix
     ./telescope.nix
+    ./toggleterm.nix
     ./transparent.nix
     ./treesitter.nix
     ./web-devicons.nix
