@@ -24,7 +24,7 @@ in {
             plugin = resurrect;
             extraConfig = ''
               set -g @resurrect-dir '${config.xdg.stateHome}/tmux/resurrect'
-              set -g @resurrect-processes 'bmon "dmesg -w" atop btop'
+              set -g @resurrect-processes 'bmon "dmesg -w" atop btm'
             '';
           }
           {

@@ -15,8 +15,6 @@
   in {
     nix = {
       settings = {
-        # Enable flakes
-        experimental-features = ["nix-command" "flakes"];
         # Have nix use xdg
         use-xdg-base-directories = true;
         # optimize the store on every build
@@ -31,7 +29,6 @@
       dates = lib.mkDefault "daily";
       allowReboot = true;
       randomizedDelaySec = "45min";
-      runGarbageCollection = lib.mkDefault true;
     };
     programs = {
       nix-index-database.comma.enable = true;
@@ -42,6 +39,12 @@
           then config.user.flakeCheckout
           else flake
         );
+        # deletes old generations, unlike a plain gc; --keep leaves something
+        # to roll back to even after weeks without a rebuild
+        clean = {
+          enable = lib.mkDefault true;
+          extraArgs = lib.mkDefault "--keep-since 14d --keep 5";
+        };
       };
     };
     environment.systemPackages = with pkgs; [

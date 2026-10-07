@@ -44,7 +44,9 @@
       }
     }
   '';
-  system.autoUpgrade.runGarbageCollection = false;
+  # delete old generations, but leave collection to min-free below so
+  # harmonia's cached paths aren't wiped weekly
+  programs.nh.clean.extraArgs = "--keep-since 14d --keep 5 --no-gc";
   nix.settings = {
     min-free = 100 * 1024 * 1024 * 1024;
     max-free = 200 * 1024 * 1024 * 1024;

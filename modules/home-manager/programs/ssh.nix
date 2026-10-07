@@ -7,7 +7,9 @@
     enable = lib.mkDefault true;
     enableDefaultConfig = false;
     settings = let
-      withSsh = lib.filterAttrs (_: host: host.ssh) (osConfig.hosts or {});
+      # headless hosts authenticate sudo against the forwarded agent (see
+      # modules/nixos/pam.nix); the rest have no use for it
+      withRssh = lib.filterAttrs (_: host: host.ssh && ! host.gui) (osConfig.hosts or {});
       settings =
         lib.mapAttrsToList (name: _: {
           "${name}" = {
@@ -17,7 +19,7 @@
             forwardAgent = true;
           };
         })
-        withSsh;
+        withRssh;
     in
       lib.mkMerge settings;
   };
