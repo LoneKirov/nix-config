@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }: {
   imports = [inputs.jj-gh.homeManagerModules.default];
@@ -14,6 +15,7 @@
       };
       jujutsu.gh = lib.mkIf config.programs.gh.enable {
         enable = lib.mkDefault config.programs.jujutsu.enable;
+        package = lib.mkDefault inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.jj-gh;
         aliases = {
           pr = "pr";
         };

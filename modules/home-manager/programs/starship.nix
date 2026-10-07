@@ -10,7 +10,7 @@ in {
   config.programs.starship = let
     jujutsu = config.programs.jujutsu.enable;
     system = pkgs.stdenv.hostPlatform.system;
-    jj-starship = "${lib.getExe inputs.jj-starship.packages.${system}.jj-starship}";
+    jj-starship = "${lib.getExe inputs.self.packages.${system}.jj-starship}";
   in {
     enable = lib.mkDefault true;
     presets = ["nerd-font-symbols"];
