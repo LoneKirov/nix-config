@@ -28,10 +28,10 @@ in {
 
     keymaps = lib.mkIf neo-tree.enable [
       {
-        action = "<cmd>Neotree filesystem<CR>";
-        key = "<leader>ntf";
+        action = "<cmd>Neotree toggle<CR>";
+        key = "<leader>e";
         mode = "n";
-        options.desc = "Neo-tree filesystem";
+        options.desc = "Toggle file explorer";
       }
     ];
   };

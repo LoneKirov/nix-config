@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ./keymaps.nix
     ./lsp
     ./plugins
     ./theme.nix
