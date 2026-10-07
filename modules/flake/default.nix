@@ -3,5 +3,6 @@ _: {
     ./formatter.nix
     ./lib.nix
     ./nixvim.nix
+    ./packages.nix
   ];
 }
