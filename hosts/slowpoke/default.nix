@@ -12,7 +12,7 @@ _: {
     autoUpgrade = {
       enable = true;
       # don't want to run at the same time as moltres
-      dates = "*-*-* 04:00:00";
+      dates = "*-*-* 05:00:00";
     };
     stateVersion = "26.05";
   };

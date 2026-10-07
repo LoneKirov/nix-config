@@ -109,6 +109,9 @@
           Description = "Image build for caddy";
         };
         buildConfig = {
+          # podman otherwise reuses the base images it has, so caddy and its
+          # plugins would never update
+          pull = "newer";
           file = "${pkgs.writeText "caddy.Containerfile" ''
             FROM docker.io/library/caddy:2-builder AS builder
 

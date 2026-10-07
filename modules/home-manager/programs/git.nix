@@ -14,7 +14,7 @@
               email = lib.mkDefault "github@adammill.dev";
             };
             push.default = "simple";
-            merge.conflictstyle = "diff3";
+            merge.conflictstyle = "zdiff3";
             pull.rebase = false;
           }
           (lib.mkIf config.programs.keybase.enable {
