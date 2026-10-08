@@ -7,6 +7,6 @@
 in {
   services.fwupd.enable = lib.mkDefault (! isWSL);
   persist.directories = lib.mkIf config.services.fwupd.enable [
-    "/var/lib/fwupd" # firmware update store
+    "/var/lib/fwupd"
   ];
 }

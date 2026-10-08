@@ -4,7 +4,7 @@
   ...
 }: {
   config = lib.mkIf (config.host.ssh && ! config.host.gui) {
-    # enable sudo from ssh key if this is a headless system
+    # sudo authenticates with a key from the forwarded ssh agent
     security.pam = {
       rssh = {
         enable = true;

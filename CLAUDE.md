@@ -12,6 +12,13 @@ NixOS and home-manager flake for the hosts listed in the [README](README.md), wh
 - Subject: lowercase, imperative, says what the change does, about 70 characters at most, no trailing period. For example: `limit nixremote to CI cache uploads on moltres`.
 - Put the reason in the body, as bullets when the change has several parts.
 
+## Code comments
+
+- Write for someone reading the file cold, without this conversation, the PR or the history. A comment explains why the code is this way when the code can't show it: an upstream bug, an interaction with another module, a constraint that isn't visible here.
+- Don't describe the change itself ("now uses", "instead of", "moved from", "as discussed", "fixed"). That goes in the commit message. If a comment would stop making sense once the change is merged, leave it out.
+- Don't restate what the code does. Most lines need no comment.
+- Link the upstream issue for a workaround, so it's clear when the workaround can go.
+
 ## Checking changes
 
 - `nix fmt .` formats with alejandra. Plain `nix fmt` passes no paths, so alejandra reads stdin and fails.

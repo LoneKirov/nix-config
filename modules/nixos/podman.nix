@@ -63,7 +63,7 @@ in {
     };
 
     persist.directories = lib.mkIf config.virtualisation.quadlet.enable [
-      "/var/lib/containers" # podman storage
+      "/var/lib/containers"
     ];
 
     # nixpkgs only opens aardvark-dns on podman0; quadlet networks get their own bridges

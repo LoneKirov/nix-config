@@ -15,7 +15,7 @@ in {
       # clears the operator tailscaled has persisted
       services.tailscale.extraSetFlags = ["--operator=${lib.optionalString config.host.gui config.user.username}"];
       persist.directories = [
-        "/var/lib/tailscale" # tailscale state
+        "/var/lib/tailscale"
       ];
       systemd.services."tailscale-restart-on-resume" = {
         description = "Restart Tailscale after resuming";

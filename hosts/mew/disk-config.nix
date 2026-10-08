@@ -15,7 +15,6 @@
         content = {
           type = "gpt";
           partitions = {
-            # boot partition
             ESP = {
               priority = 1;
               name = "ESP";
@@ -29,7 +28,6 @@
                 mountOptions = ["umask=0077"];
               };
             };
-            # encrypted root btrfs
             luks = {
               size = "100%";
               content = {
@@ -49,13 +47,11 @@
                   mountpoint = "/srv/root";
                   extraArgs = ["-f"];
                   subvolumes = {
-                    # subvolume for home directories
                     "/home" = {
                       mountOptions = ["compress=zstd"];
                       mountpoint = "/home";
                     };
                     "/home/.snapshots" = {};
-                    # subvolume for nix store
                     "/nix" = {
                       mountOptions = [
                         "compress=zstd"
@@ -63,7 +59,6 @@
                       ];
                       mountpoint = "/nix";
                     };
-                    # subvolume for data kept by preservation
                     "/persistent" = {
                       mountOptions = [
                         "compress=zstd"
@@ -71,7 +66,6 @@
                       mountpoint = config.persist.mountpoint;
                     };
                     "/persistent/.snapshots" = {};
-                    # subvolume for swapfile
                     "/swap" = {
                       mountpoint = "/.swap";
                       swap = {
@@ -87,7 +81,6 @@
       };
     };
     nodev = {
-      # ephemeral root
       "/" = {
         fsType = "tmpfs";
         mountOptions = ["defaults" "size=50%" "mode=755"];

@@ -2,15 +2,10 @@
   description = "Kirov's Nix flake";
 
   inputs = {
-    # modular flakes
     flake-parts.url = "github:hercules-ci/flake-parts";
-    # standard nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # determinate nix
     determinate.url = "github:determinateSystems/determinate/v3.23.0";
-    # convenient flake for linux systems
     systems.url = "github:nix-systems/default-linux";
-    # predefined hardware configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # declarative disk formatting and fstab generation
     disko = {
@@ -24,12 +19,10 @@
       url = "github:nix-community/lanzaboote/v1.2.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # declarative home directory
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # declarative neovim configuration
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs = {
@@ -37,6 +30,10 @@
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
+    };
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     # neovim plugins not in nixpkgs
     jjui-nvim = {
@@ -47,35 +44,24 @@
       url = "github:AvengeMedia/base46";
       flake = false;
     };
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # declarative flatpak
     nix-flatpak.url = "github:gmodena/nix-flatpak/v0.7.0";
-    # nix-index with a regularly updated database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # declarative quadlets
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
-    # secrets
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # starship jujutsu support
     jj-starship = {
       url = "github:dmmulroy/jj-starship";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # jujutsu github pr support
     jj-gh = {
       url = "github:mrjones2014/jj-gh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # wsl support
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -24,11 +24,9 @@ in {
       boot = {
         loader.efi.canTouchEfiVariables = true;
 
-        # Setup Lanzaboote for SecureBoot
         lanzaboote = {
           # lanzaboote measured boot required limiting to 4
           configurationLimit = lib.mkDefault 4;
-          # Using sbctl for key generation and management
           pkiBundle = "/var/lib/sbctl";
           autoGenerateKeys.enable = true;
           autoEnrollKeys = {
@@ -49,7 +47,6 @@ in {
           bootCounting.initialTries = 3;
         };
 
-        # Enable systemd within initrd
         initrd.systemd.enable = true;
       };
 
@@ -61,7 +58,7 @@ in {
 
       persist.directories =
         [
-          "/var/lib/sbctl" # secureboot keys managed by sbctl
+          "/var/lib/sbctl"
         ]
         ++ lib.optionals config.boot.lanzaboote.measuredBoot.enable [
           {
