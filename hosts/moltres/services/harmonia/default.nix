@@ -37,7 +37,12 @@
     };
     groups.cache-upload = {};
   };
-  nix.settings.trusted-public-keys = [(lib.trim (builtins.readFile ../../../../keys/ci-signing.pub))];
+  nix.settings.trusted-public-keys = [
+    (lib.trim (builtins.readFile ../../../../keys/ci-signing.pub))
+    # CI uploads whole closures, and devenv's own packages in them come from
+    # devenv.cachix.org with only devenv's signature
+    "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+  ];
 
   # disable detnix automatic gc to make better use of store as cache
   environment.etc."determinate/config.json".text = ''
