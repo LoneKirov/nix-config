@@ -20,21 +20,24 @@
   networking.firewall.interfaces.${config.lib.quadlet.bridgeInterfaces}.allowedTCPPorts = [5000];
 
   # CI pushes its builds into the store harmonia serves; the key can only
-  # speak the nix daemon protocol and only from the tailnet
+  # speak the nix daemon protocol and only from the tailnet. cache-upload isn't
+  # a trusted user (that would make the key root-equivalent), so the daemon
+  # only accepts paths CI signed with ci-signing.pub's secret key. Other hosts
+  # don't trust that key; harmonia signs what it serves with its own
   users = {
-    users.nixremote = {
+    users.cache-upload = {
       isSystemUser = true;
-      home = "/var/lib/nixremote";
+      home = "/var/lib/cache-upload";
       createHome = true;
-      group = "nixremote";
+      group = "cache-upload";
       shell = "${lib.getExe pkgs.bash}";
       openssh.authorizedKeys.keys = [
         ''restrict,command="${config.nix.package}/bin/nix-daemon --stdio",from="100.64.0.0/10,fd7a:115c:a1e0::/48" ${lib.trim (builtins.readFile ../../../../keys/github.pub)}''
       ];
     };
-    groups.nixremote = {};
+    groups.cache-upload = {};
   };
-  nix.settings.trusted-users = ["nixremote"];
+  nix.settings.trusted-public-keys = [(lib.trim (builtins.readFile ../../../../keys/ci-signing.pub))];
 
   # disable detnix automatic gc to make better use of store as cache
   environment.etc."determinate/config.json".text = ''
