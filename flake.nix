@@ -6,7 +6,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     determinate.url = "github:determinateSystems/determinate/v3.23.0";
     systems.url = "github:nix-systems/default-linux";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # declarative disk formatting and fstab generation
     disko = {
       url = "github:nix-community/disko/v1.13.0";
