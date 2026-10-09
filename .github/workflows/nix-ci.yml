@@ -35,13 +35,21 @@ jobs:
         if: env.CACHE_UPLOAD == 'true'
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-auth-sock: /tmp/nix_ssh_agent.sock
+          ssh-auth-sock: ${{ runner.temp }}/ssh-agent.sock
+      - name: Set up cache upload
+        if: env.CACHE_UPLOAD == 'true'
+        env:
+          CACHE_SIGNING_KEY: ${{ secrets.CACHE_SIGNING_KEY }}
+        run: |
+          (umask 077 && printf '%s\n' "$CACHE_SIGNING_KEY" > "$RUNNER_TEMP/nix-cache-signing-key")
+          install -m 755 .github/scripts/nix-cache-upload.sh "$RUNNER_TEMP/"
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
         with:
           extra-conf: |
             extra-substituters = https://cache.kanto.casa https://devenv.cachix.org
             extra-trusted-public-keys = cache.kanto.casa:GM3kG8olIePwNnq3/0DnyPFRPMtQ/DJbyMcO6QuIbOs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-            ${{ env.CACHE_UPLOAD == 'true' && format('post-build-hook = {0}/.github/scripts/nix-cache-upload.sh', github.workspace) || '' }}
+            ${{ env.CACHE_UPLOAD == 'true' && format('post-build-hook = {0}/nix-cache-upload.sh', runner.temp) || '' }}
+            ${{ env.CACHE_UPLOAD == 'true' && format('secret-key-files = {0}/nix-cache-signing-key', runner.temp) || '' }}
       - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
       - name: Run devenv test
         run: CI=true nix run --inputs-from . nixpkgs#devenv -- test
