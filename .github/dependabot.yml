@@ -12,6 +12,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # updates are auto-merged and run on main with the cache upload secrets;
+    # waiting a week gives a compromised release time to be caught and pulled
+    cooldown:
+      default-days: 7
     groups:
       actions-dependencies:
         patterns:
