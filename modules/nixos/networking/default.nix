@@ -15,7 +15,7 @@ in {
       nftables.enable = lib.mkDefault true;
     };
     persist.directories = lib.mkIf config.networking.networkmanager.enable [
-      "/etc/NetworkManager/system-connections" # NM connections
+      "/etc/NetworkManager/system-connections"
     ];
   };
 }

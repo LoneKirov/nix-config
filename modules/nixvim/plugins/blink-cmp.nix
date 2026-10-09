@@ -25,8 +25,7 @@ in {
           menu.draw = lib.mkIf colorful-menu.enable (lib.nixvim.mkRaw ''
             {
                 treesitter = { 'lsp' },
-                -- We don't need label_description now because label and label_description are already
-                -- combined together in label by colorful-menu.nvim.
+                -- no label_description column, since colorful-menu.nvim folds it into label
                 columns = { { "kind_icon" }, { "label", gap = 1 } },
                 components = {
                     label = {

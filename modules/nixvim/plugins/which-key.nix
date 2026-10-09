@@ -6,7 +6,6 @@
   config = {
     plugins.which-key = {
       enable = lib.mkDefault true;
-      # name the leader groups in the popup
       settings.spec = [
         {
           __unkeyed-1 = "<leader>f";

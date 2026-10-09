@@ -9,6 +9,6 @@ _: {
   };
   security.pam.services.greetd.howdy.control = "sufficient";
   persist.directories = [
-    "/var/lib/howdy" # howdy models
+    "/var/lib/howdy"
   ];
 }

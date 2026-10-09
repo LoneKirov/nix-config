@@ -16,7 +16,6 @@
           content = {
             type = "gpt"; # hybrid mbr/gpt
             partitions = {
-              # boot partition
               ESP = {
                 priority = 1;
                 name = "ESP";
@@ -37,13 +36,11 @@
                   extraArgs = ["-f"];
                   mountpoint = "/srv/root";
                   subvolumes = {
-                    # subvolume for home directories
                     "/home" = {
                       mountOptions = ["compress=zstd"];
                       mountpoint = "/home";
                     };
                     "/home/.snapshots" = {};
-                    # subvolume for nix store
                     "/nix" = {
                       mountOptions = [
                         "compress=zstd"
@@ -51,7 +48,6 @@
                       ];
                       mountpoint = "/nix";
                     };
-                    # subvolume for data kept by preservation
                     "/persistent" = {
                       mountOptions = [
                         "compress=zstd"
@@ -59,7 +55,6 @@
                       mountpoint = config.persist.mountpoint;
                     };
                     "/persistent/.snapshots" = {};
-                    # subvolume for swapfile
                     "/swap" = {
                       mountpoint = "/.swap";
                       swap = {
@@ -74,7 +69,6 @@
         };
       };
       nodev = {
-        # ephemeral root
         "/" = {
           fsType = "tmpfs";
           mountOptions = ["defaults" "size=25%" "mode=755"];

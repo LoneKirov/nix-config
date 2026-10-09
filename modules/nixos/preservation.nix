@@ -47,11 +47,11 @@ in {
               inInitrd = true; # make it available for nix in initrd
             }
             {
-              directory = "/var/lib/systemd"; # coredump store
+              directory = "/var/lib/systemd";
               inInitrd = true; # make it available for systemd in initrd
             }
             {
-              directory = "/var/log"; # system logs
+              directory = "/var/log";
               inInitrd = true; # make it available for journald in initrd
             }
             {
@@ -60,13 +60,13 @@ in {
             }
           ]
           ++ lib.optionals config.services.fprintd.enable [
-            "/var/lib/fprint" # fingerprint store
+            "/var/lib/fprint"
           ]
           ++ lib.optionals config.services.upower.enable [
-            "/var/lib/upower" # power statistics and history
+            "/var/lib/upower"
           ]
           ++ lib.optionals config.hardware.bluetooth.enable [
-            "/var/lib/bluetooth" # bluetooth store
+            "/var/lib/bluetooth"
           ]
           ++ lib.optionals config.services.accounts-daemon.enable [
             "/var/lib/AccountsService"
@@ -81,11 +81,10 @@ in {
       };
     }
     (lib.mkIf config.preservation.enable {
-      # Enable systemd within initrd
+      # preservation requires a systemd initrd
       boot.initrd.systemd.enable = true;
       # need /persistent available in initrd so preservation has access to it
       fileSystems.${persistentMountpoint}.neededForBoot = true;
-      # Setup preservation to maintain state between wipes of /
       preservation.preserveAt.${persistentMountpoint} = {
         inherit (config.persist) directories files;
       };

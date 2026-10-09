@@ -7,7 +7,6 @@ in {
   config.plugins.telescope = {
     enable = lib.mkDefault true;
     extensions.fzf-native.enable = true;
-    # grouped by task (find, search, git) rather than by plugin
     keymaps = {
       "<leader>ff" = picker "find_files" "Find files";
       "<leader>fb" = picker "buffers" "Find buffers";
