@@ -5,7 +5,7 @@ in {
     virtualisation.quadlet = {
       volumes.openwebui = {};
       networks.openwebui = mkNetwork "Network for OpenWebUI";
-      builds.openwebui.buildConfig.file = "${./openwebui.Containerfile}";
+      builds.openwebui.buildConfig.file = "${./Containerfile}";
       containers.openwebui = mkContainer {
         unitConfig = {
           Description = "OpenWebUI server";

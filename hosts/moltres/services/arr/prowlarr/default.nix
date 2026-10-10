@@ -2,7 +2,7 @@
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
   inherit (config.virtualisation.quadlet) builds containers networks;
 in {
-  virtualisation.quadlet.builds.prowlarr.buildConfig.file = "${./prowlarr.Containerfile}";
+  virtualisation.quadlet.builds.prowlarr.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.prowlarr = mkContainer {
     unitConfig = {
       Description = "Prowlarr - Indexer management";

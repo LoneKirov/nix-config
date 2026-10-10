@@ -1,7 +1,7 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
 in {
-  virtualisation.quadlet.builds.qbittorrent.buildConfig.file = "${./qbittorrent.Containerfile}";
+  virtualisation.quadlet.builds.qbittorrent.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.qbittorrent = mkContainer {
     unitConfig = {
       Description = "qBittorrent";

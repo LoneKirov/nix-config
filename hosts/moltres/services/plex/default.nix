@@ -2,7 +2,7 @@
   inherit (config.lib.quadlet) mkContainer userBind userBindRo containerUid containerGid;
   host-gid = toString config.users.groups.video.gid;
 in {
-  virtualisation.quadlet.builds.plex.buildConfig.file = "${./plex.Containerfile}";
+  virtualisation.quadlet.builds.plex.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.plex = mkContainer {
     unitConfig = {
       Description = "Plex";

@@ -2,7 +2,7 @@
   inherit (config.lib.quadlet) mkContainer userBind;
   inherit (config.virtualisation.quadlet) builds containers networks;
 in {
-  virtualisation.quadlet.builds.seerr.buildConfig.file = "${./seerr.Containerfile}";
+  virtualisation.quadlet.builds.seerr.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.seerr = mkContainer {
     unitConfig = {
       Description = "Seerr - Media Library Manager";

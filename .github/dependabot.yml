@@ -22,7 +22,6 @@ updates:
           - "*"
   - package-ecosystem: "docker"
     directories:
-      - "/hosts/moltres/services"
       - "/hosts/moltres/services/**/*"
     schedule:
       interval: "weekly"

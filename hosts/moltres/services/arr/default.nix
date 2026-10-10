@@ -1,15 +1,15 @@
 {config, ...}: {
   imports = [
     ./decluttarr
-    ./flaresolverr.nix
+    ./flaresolverr
     ./gluetun
-    ./profilarr.nix
-    ./prowlarr.nix
-    ./qbittorrent.nix
-    ./radarr.nix
-    ./sabnzbd.nix
-    ./seerr.nix
-    ./sonarr.nix
+    ./profilarr
+    ./prowlarr
+    ./qbittorrent
+    ./radarr
+    ./sabnzbd
+    ./seerr
+    ./sonarr
   ];
 
   config.virtualisation.quadlet.networks.arr = config.lib.quadlet.mkNetwork "Network for Arr";

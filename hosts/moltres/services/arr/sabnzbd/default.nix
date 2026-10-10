@@ -1,7 +1,7 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
 in {
-  virtualisation.quadlet.builds.sabnzbd.buildConfig.file = "${./sabnzbd.Containerfile}";
+  virtualisation.quadlet.builds.sabnzbd.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.sabnzbd = mkContainer {
     unitConfig = {
       Description = "Sabnbzd - Usenet";
