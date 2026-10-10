@@ -1,5 +1,5 @@
 {config, ...}: {
-  virtualisation.quadlet.builds.flaresolverr.buildConfig.file = "${./flaresolverr.Containerfile}";
+  virtualisation.quadlet.builds.flaresolverr.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.flaresolverr = config.lib.quadlet.mkContainer {
     unitConfig = {
       Description = "Flaresolverr - Bypass Cloudflare protection for Indexers";

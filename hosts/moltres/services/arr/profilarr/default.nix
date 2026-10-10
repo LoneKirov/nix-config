@@ -2,7 +2,7 @@
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
   inherit (config.virtualisation.quadlet) builds containers networks;
 in {
-  virtualisation.quadlet.builds.profilarr.buildConfig.file = "${./profilarr.Containerfile}";
+  virtualisation.quadlet.builds.profilarr.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.profilarr = mkContainer {
     unitConfig = {
       Description = "Profilarr - Indexer management";

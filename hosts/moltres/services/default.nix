@@ -3,10 +3,10 @@ _: {
     ./arr
     ./beszel
     ./caddy
-    ./esphome.nix
+    ./esphome
     ./harmonia
-    ./openwebui.nix
-    ./plex.nix
+    ./openwebui
+    ./plex
     ./pocket-id
     ./syncthing.nix
   ];

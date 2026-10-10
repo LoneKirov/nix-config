@@ -5,7 +5,7 @@ in {
     virtualisation.quadlet = {
       volumes.esphome = {};
       networks.esphome = mkNetwork "Network for ESPHome";
-      builds.esphome.buildConfig.file = "${./esphome.Containerfile}";
+      builds.esphome.buildConfig.file = "${./Containerfile}";
       containers.esphome = mkContainer {
         unitConfig = {
           Description = "ESPHome remote builder";
