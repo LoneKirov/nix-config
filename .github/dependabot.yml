@@ -20,3 +20,22 @@ updates:
       actions-dependencies:
         patterns:
           - "*"
+  - package-ecosystem: "docker"
+    directories:
+      - "/hosts/moltres/services"
+      - "/hosts/moltres/services/**/*"
+    schedule:
+      interval: "weekly"
+    # updates are auto-merged and moltres upgrades from main nightly; waiting a
+    # week gives a compromised image time to be caught and pulled
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: "library/caddy"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "pocketid/pocket-id"
+        update-types: ["version-update:semver-major"]
+    groups:
+      container-images:
+        patterns:
+          - "*"

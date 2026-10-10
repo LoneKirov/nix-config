@@ -2,12 +2,13 @@
   inherit (config.lib.quadlet) mkContainer userBind userBindRo containerUid containerGid;
   host-gid = toString config.users.groups.video.gid;
 in {
+  virtualisation.quadlet.builds.plex.buildConfig.file = "${./plex.Containerfile}";
   virtualisation.quadlet.containers.plex = mkContainer {
     unitConfig = {
       Description = "Plex";
     };
     containerConfig = {
-      image = "docker.io/plexinc/pms-docker:plexpass";
+      image = config.virtualisation.quadlet.builds.plex.ref;
       networks = ["host"];
       userns = "auto:gidmapping=${containerGid}:${host-gid}:1";
       environments = {

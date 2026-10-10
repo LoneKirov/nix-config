@@ -1,0 +1,1 @@
+FROM ghcr.io/manimatter/decluttarr:latest@sha256:fd3dc206c17df32190cda1bed2ef3ee1cb9726bd108aa7e97e83e47cb3e72d78

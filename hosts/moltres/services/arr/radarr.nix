@@ -1,7 +1,8 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
-  inherit (config.virtualisation.quadlet) containers networks;
+  inherit (config.virtualisation.quadlet) builds containers networks;
 in {
+  virtualisation.quadlet.builds.radarr.buildConfig.file = "${./radarr.Containerfile}";
   virtualisation.quadlet.containers.radarr = mkContainer {
     unitConfig = {
       Description = "Radarr - Movies";
@@ -11,7 +12,7 @@ in {
       ];
     };
     containerConfig = {
-      image = "lscr.io/linuxserver/radarr:latest";
+      image = builds.radarr.ref;
       networks = [networks.arr.ref];
       environments = userEnv;
       volumes = [

@@ -5,12 +5,13 @@ in {
     virtualisation.quadlet = {
       volumes.esphome = {};
       networks.esphome = mkNetwork "Network for ESPHome";
+      builds.esphome.buildConfig.file = "${./esphome.Containerfile}";
       containers.esphome = mkContainer {
         unitConfig = {
           Description = "ESPHome remote builder";
         };
         containerConfig = {
-          image = "ghcr.io/esphome/esphome";
+          image = config.virtualisation.quadlet.builds.esphome.ref;
           networks = [config.virtualisation.quadlet.networks.esphome.ref];
           publishPorts = ["6055:6055"];
           volumes = [

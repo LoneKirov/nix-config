@@ -1,0 +1,1 @@
+FROM docker.io/linuxserver/sonarr:version-4.0.20.3014@sha256:dffc730adcb8b4f4342792fbb27fcad9c62fb8660523f2aeb082416980d7fe0c

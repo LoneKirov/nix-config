@@ -5,12 +5,13 @@ in {
     virtualisation.quadlet = {
       volumes.openwebui = {};
       networks.openwebui = mkNetwork "Network for OpenWebUI";
+      builds.openwebui.buildConfig.file = "${./openwebui.Containerfile}";
       containers.openwebui = mkContainer {
         unitConfig = {
           Description = "OpenWebUI server";
         };
         containerConfig = {
-          image = "ghcr.io/open-webui/open-webui:main";
+          image = config.virtualisation.quadlet.builds.openwebui.ref;
           networks = [config.virtualisation.quadlet.networks.openwebui.ref];
           volumes = [
             "${config.virtualisation.quadlet.volumes.openwebui.ref}:/app/backend/data:idmap"

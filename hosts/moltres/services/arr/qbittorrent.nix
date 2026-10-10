@@ -1,12 +1,13 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
 in {
+  virtualisation.quadlet.builds.qbittorrent.buildConfig.file = "${./qbittorrent.Containerfile}";
   virtualisation.quadlet.containers.qbittorrent = mkContainer {
     unitConfig = {
       Description = "qBittorrent";
     };
     containerConfig = {
-      image = "lscr.io/linuxserver/qbittorrent:latest";
+      image = config.virtualisation.quadlet.builds.qbittorrent.ref;
       networks = [config.virtualisation.quadlet.containers.gluetun.ref];
       environments = userEnv;
       volumes = [

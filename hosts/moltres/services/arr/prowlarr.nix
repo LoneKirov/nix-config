@@ -1,7 +1,8 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
-  inherit (config.virtualisation.quadlet) containers networks;
+  inherit (config.virtualisation.quadlet) builds containers networks;
 in {
+  virtualisation.quadlet.builds.prowlarr.buildConfig.file = "${./prowlarr.Containerfile}";
   virtualisation.quadlet.containers.prowlarr = mkContainer {
     unitConfig = {
       Description = "Prowlarr - Indexer management";
@@ -12,7 +13,7 @@ in {
       ];
     };
     containerConfig = {
-      image = "lscr.io/linuxserver/prowlarr:latest";
+      image = builds.prowlarr.ref;
       networks = [networks.arr.ref];
       environments = userEnv;
       volumes = [

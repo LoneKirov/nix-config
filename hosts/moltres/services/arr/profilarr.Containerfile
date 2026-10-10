@@ -1,0 +1,1 @@
+FROM ghcr.io/dictionarry-hub/profilarr:latest@sha256:ddcdd0f340043c2ec0a85ca74b9a6be9be42b1c0288c75fc36a26a43f695860b

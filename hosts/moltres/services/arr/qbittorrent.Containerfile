@@ -1,0 +1,1 @@
+FROM docker.io/linuxserver/qbittorrent:5.2.4@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983

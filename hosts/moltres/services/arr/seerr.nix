@@ -1,7 +1,8 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind;
-  inherit (config.virtualisation.quadlet) containers networks;
+  inherit (config.virtualisation.quadlet) builds containers networks;
 in {
+  virtualisation.quadlet.builds.seerr.buildConfig.file = "${./seerr.Containerfile}";
   virtualisation.quadlet.containers.seerr = mkContainer {
     unitConfig = {
       Description = "Seerr - Media Library Manager";
@@ -11,7 +12,7 @@ in {
       ];
     };
     containerConfig = {
-      image = "ghcr.io/seerr-team/seerr:latest";
+      image = builds.seerr.ref;
       networks = [networks.arr.ref];
       environments = {
         TZ = config.time.timeZone;

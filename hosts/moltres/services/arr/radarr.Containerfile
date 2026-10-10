@@ -1,0 +1,1 @@
+FROM docker.io/linuxserver/radarr:version-6.4.4.10685@sha256:7dfd049e79c00b16fbc29c3f5d96a9e7b9e73a23930b4c5b3c4541d60b366814
