@@ -1,12 +1,13 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
 in {
+  virtualisation.quadlet.builds.sabnzbd.buildConfig.file = "${./sabnzbd.Containerfile}";
   virtualisation.quadlet.containers.sabnzbd = mkContainer {
     unitConfig = {
       Description = "Sabnbzd - Usenet";
     };
     containerConfig = {
-      image = "lscr.io/linuxserver/sabnzbd:latest";
+      image = config.virtualisation.quadlet.builds.sabnzbd.ref;
       networks = [config.virtualisation.quadlet.networks.arr.ref];
       environments = userEnv;
       volumes = [

@@ -22,10 +22,7 @@ in {
       mkContainer = container:
         lib.mkMerge [
           {
-            containerConfig = {
-              autoUpdate = lib.mkDefault "registry";
-              userns = lib.mkDefault "auto";
-            };
+            containerConfig.userns = lib.mkDefault "auto";
             # quadlet-nix defaults to Restart=always
             serviceConfig.Restart = lib.mkDefault "on-failure";
           }
@@ -55,12 +52,23 @@ in {
     };
 
     virtualisation = {
-      quadlet = {
-        enable = true;
-        autoUpdate.enable = true;
-      };
+      quadlet.enable = true;
       podman.autoPrune.enable = true;
     };
+
+    # Containers build their images from Containerfiles beside their modules,
+    # where Dependabot can update the pinned base images. A container names its
+    # image by build unit, so its own unit doesn't change with the Containerfile;
+    # restarting it reruns the build, which it requires.
+    systemd.services = let
+      inherit (config.virtualisation.quadlet) builds containers;
+    in
+      lib.mapAttrs (_: container: {
+        restartTriggers = lib.mapAttrsToList (_: build: build.buildConfig.file) (
+          lib.filterAttrs (_: build: build.ref == container.containerConfig.image) builds
+        );
+      })
+      containers;
 
     persist.directories = lib.mkIf config.virtualisation.quadlet.enable [
       "/var/lib/containers"

@@ -1,0 +1,1 @@
+FROM docker.io/esphome/esphome:2026.9.1@sha256:4ad55931c0186d2910dc128526237acabb422a662697a4e8bb356d390a1332a1

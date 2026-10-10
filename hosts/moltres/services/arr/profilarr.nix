@@ -1,7 +1,8 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
-  inherit (config.virtualisation.quadlet) containers networks;
+  inherit (config.virtualisation.quadlet) builds containers networks;
 in {
+  virtualisation.quadlet.builds.profilarr.buildConfig.file = "${./profilarr.Containerfile}";
   virtualisation.quadlet.containers.profilarr = mkContainer {
     unitConfig = {
       Description = "Profilarr - Indexer management";
@@ -11,7 +12,7 @@ in {
       ];
     };
     containerConfig = {
-      image = "ghcr.io/dictionarry-hub/profilarr:latest";
+      image = builds.profilarr.ref;
       networks = [networks.arr.ref];
       environments =
         userEnv

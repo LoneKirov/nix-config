@@ -6,15 +6,16 @@
       key = "";
     };
     virtualisation.quadlet = let
-      inherit (config.virtualisation.quadlet) networks;
+      inherit (config.virtualisation.quadlet) builds networks;
     in {
       volumes.pocket-id = {};
+      builds.pocket-id.buildConfig.file = "${./Containerfile}";
       containers.pocket-id = config.lib.quadlet.mkContainer {
         unitConfig = {
           Description = "Pocket ID OIDC Provider";
         };
         containerConfig = {
-          image = "ghcr.io/pocket-id/pocket-id:v2";
+          image = builds.pocket-id.ref;
           networks = with networks; [caddy.ref];
           environmentFiles = [config.sops.secrets.pocket-id.path];
           environments = {

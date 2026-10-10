@@ -4,12 +4,13 @@
     sopsFile = ./gluetun.sops.env;
     key = "";
   };
+  virtualisation.quadlet.builds.gluetun.buildConfig.file = "${./Containerfile}";
   virtualisation.quadlet.containers.gluetun = config.lib.quadlet.mkContainer {
     unitConfig = {
       Description = "Gluetun - VPN";
     };
     containerConfig = {
-      image = "docker.io/qmcgaw/gluetun:latest";
+      image = config.virtualisation.quadlet.builds.gluetun.ref;
       networks = [config.virtualisation.quadlet.networks.arr.ref];
       addCapabilities = ["NET_ADMIN" "NET_RAW"];
       devices = ["/dev/net/tun"];

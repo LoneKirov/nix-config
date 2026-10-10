@@ -1,7 +1,8 @@
 {config, ...}: let
   inherit (config.lib.quadlet) mkContainer userBind userEnv;
-  inherit (config.virtualisation.quadlet) containers networks;
+  inherit (config.virtualisation.quadlet) builds containers networks;
 in {
+  virtualisation.quadlet.builds.sonarr.buildConfig.file = "${./sonarr.Containerfile}";
   virtualisation.quadlet.containers.sonarr = mkContainer {
     unitConfig = {
       Description = "Sonarr - TV Shows";
@@ -11,7 +12,7 @@ in {
       ];
     };
     containerConfig = {
-      image = "lscr.io/linuxserver/sonarr:latest";
+      image = builds.sonarr.ref;
       networks = [networks.arr.ref];
       environments = userEnv;
       volumes = [

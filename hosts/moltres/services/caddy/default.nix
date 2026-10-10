@@ -108,22 +108,7 @@
         unitConfig = {
           Description = "Image build for caddy";
         };
-        buildConfig = {
-          # podman otherwise reuses the base images it has, so caddy and its
-          # plugins would never update
-          pull = "newer";
-          file = "${pkgs.writeText "caddy.Containerfile" ''
-            FROM docker.io/library/caddy:2-builder AS builder
-
-            RUN xcaddy build \
-                --with github.com/caddy-dns/cloudflare \
-                --with github.com/greenpau/caddy-security
-
-            FROM docker.io/library/caddy:2
-
-            COPY --from=builder /usr/bin/caddy /usr/bin/caddy
-          ''}";
-        };
+        buildConfig.file = "${./Containerfile}";
       };
       containers.caddy = mkContainer {
         unitConfig = {
@@ -131,8 +116,6 @@
         };
         containerConfig = {
           image = builds.caddy.ref;
-          # mkContainer defaults to registry
-          autoUpdate = null;
           networks = with networks; [
             caddy.ref
             arr.ref
