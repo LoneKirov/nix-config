@@ -30,6 +30,14 @@
     };
     programs = {
       nix-index-database.comma.enable = true;
+      # https://github.com/nix-community/nix-index-database/issues/179
+      # the command-not-found hook searches the full database on every
+      # mistyped command, which takes over a second
+      nix-index = {
+        enableBashIntegration = lib.mkDefault false;
+        enableFishIntegration = lib.mkDefault false;
+        enableZshIntegration = lib.mkDefault false;
+      };
       nh = {
         enable = true;
         flake = lib.mkDefault (
