@@ -3,6 +3,7 @@
     ./beszel-agent
     ./boot.nix
     ./btrfs.nix
+    ./comma.nix
     ./dbus.nix
     ./fish.nix
     ./flatpak.nix

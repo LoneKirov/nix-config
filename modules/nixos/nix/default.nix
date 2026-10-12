@@ -7,7 +7,6 @@
 }: {
   imports = [
     inputs.determinate.nixosModules.default
-    inputs.nix-index-database.nixosModules.default
   ];
 
   config = let
@@ -29,15 +28,6 @@
       randomizedDelaySec = "45min";
     };
     programs = {
-      nix-index-database.comma.enable = true;
-      # https://github.com/nix-community/nix-index-database/issues/179
-      # the command-not-found hook searches the full database on every
-      # mistyped command, which takes over a second
-      nix-index = {
-        enableBashIntegration = lib.mkDefault false;
-        enableFishIntegration = lib.mkDefault false;
-        enableZshIntegration = lib.mkDefault false;
-      };
       nh = {
         enable = true;
         flake = lib.mkDefault (
@@ -54,8 +44,6 @@
       };
     };
     environment.systemPackages = with pkgs; [
-      # takes priority over the ,.fish comma ships, which it sources
-      (lib.hiPrio inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.comma-fish-completion)
       dix
       nix-output-monitor
     ];
