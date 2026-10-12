@@ -46,6 +46,8 @@
       };
     };
     environment.systemPackages = with pkgs; [
+      # takes priority over the ,.fish comma ships, which it sources
+      (lib.hiPrio inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.comma-fish-completion)
       dix
       nix-output-monitor
     ];

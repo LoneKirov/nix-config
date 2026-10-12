@@ -5,6 +5,7 @@
     ./bitwarden.nix
     ./bottom.nix
     ./brave.nix
+    ./comma.nix
     ./devenv.nix
     ./direnv.nix
     ./discord.nix
