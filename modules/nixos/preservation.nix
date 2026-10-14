@@ -51,13 +51,10 @@ in {
               inInitrd = true; # make it available for systemd in initrd
             }
             {
-              directory = "/var/log";
-              inInitrd = true; # make it available for journald in initrd
-            }
-            {
               directory = "/etc/ssh"; # ssh host keys
               inInitrd = true; # make it available for sops in initrd
             }
+            "/var/log"
           ]
           ++ lib.optionals config.services.fprintd.enable [
             "/var/lib/fprint"
