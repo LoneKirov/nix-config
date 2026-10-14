@@ -1,0 +1,19 @@
+--- a/libfprint/drivers/goodixmoc/goodix.c
++++ b/libfprint/drivers/goodixmoc/goodix.c
+@@ -1086,6 +1086,16 @@
+ {
+   if (error)
+     {
++      /* Only a protocol failure points at the corrupted storage described in
++       * GOODIX_INIT_TEMPLATE_LIST. A transport error, such as the device
++       * dropping off the bus while resuming from hibernation, says nothing
++       * about the stored prints, so fail the open instead of wiping them. */
++      if (!g_error_matches (error, FP_DEVICE_ERROR, FP_DEVICE_ERROR_PROTO))
++        {
++          fpi_ssm_mark_failed (self->task_ssm, error);
++          return;
++        }
++
+       fp_warn ("Template storage appears to have been corrupted! Error was: %s", error->message);
+       fp_warn ("A known reason for this to happen is a firmware bug triggered by another storage area being initialized.");
+       fpi_ssm_jump_to_state (self->task_ssm, GOODIX_INIT_RESET_DEVICE);
