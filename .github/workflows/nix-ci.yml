@@ -20,6 +20,7 @@ jobs:
     permissions:
       id-token: "write"
       contents: "read"
+      statuses: "write"
     env:
       CACHE_UPLOAD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
@@ -54,3 +55,16 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
       - name: Run devenv test
         run: CI=true nix run --inputs-from . nixpkgs#devenv -- test
+      # slowpoke upgrades to the path recorded here rather than evaluating the
+      # flake itself; by now the test has uploaded it to cache.kanto.casa
+      - name: Record slowpoke's system on the commit
+        if: env.CACHE_UPLOAD == 'true' && matrix.system == 'aarch64-linux'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          path=$(nix eval --raw .#nixosConfigurations.slowpoke.config.system.build.toplevel.outPath)
+          nix run --inputs-from . nixpkgs#gh -- api "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
+            -f state=success \
+            -f context=system/slowpoke \
+            -f description="$path" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
