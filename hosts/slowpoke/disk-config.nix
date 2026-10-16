@@ -55,12 +55,6 @@
                       mountpoint = config.persist.mountpoint;
                     };
                     "/persistent/.snapshots" = {};
-                    "/swap" = {
-                      mountpoint = "/.swap";
-                      swap = {
-                        swapfile.size = "2G";
-                      };
-                    };
                   };
                 };
               };
