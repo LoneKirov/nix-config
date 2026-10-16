@@ -1,6 +1,5 @@
 _: {
   imports = [
-    ./btrfs.nix
     ./disk-config.nix
     ./nix.nix
     ./raspberry-pi-3
