@@ -1,6 +1,7 @@
 _: {
   services.tailscale = {
     useRoutingFeatures = "server";
+    extraSetFlags = ["--advertise-exit-node"];
     openFirewall = true;
   };
   # tailnet access is governed by Tailscale ACLs
