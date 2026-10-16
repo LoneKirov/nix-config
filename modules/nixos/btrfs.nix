@@ -48,6 +48,16 @@ in {
       systemd.services.btrbk-btrbk = {
         wants = ["network-online.target"];
         after = ["network-online.target"];
+        # the timer catches up right after resume, before DNS is back (see
+        # tailscale-restart-on-resume), so retry rather than wait an hour. A
+        # run whose target fails skips snapshot cleanup, so retrying until the
+        # target is back would pile up snapshots while offline
+        serviceConfig = {
+          Restart = "on-failure";
+          RestartSec = "2min";
+        };
+        startLimitBurst = 3;
+        startLimitIntervalSec = 15 * 60;
       };
     }
     (lib.mkIf (targets != []) {
