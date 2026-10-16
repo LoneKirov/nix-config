@@ -22,8 +22,8 @@ in {
       volumes = [
         (userBind "/srv/arr/plex/config" "/config")
         (userBind "/srv/arr/plex/optimized" "/optimized")
-        (userBindRo "/srv/arr/plex/media" "/data/media.old")
         (userBindRo "/srv/arr/data/media" "/data/media")
+        (userBindRo "/srv/arr/data/media.old" "/data/media.old")
         (userBindRo "/srv/syncthing/folders/Patreon" "/data/patreon")
       ];
       tmpfses = ["/transcode:size=10G"];

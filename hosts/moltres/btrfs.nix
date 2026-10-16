@@ -11,10 +11,16 @@
           };
           "/srv/arr" = {
             snapshot_dir = "/srv/arr/.snapshots";
-            # in-progress downloads churn constantly and can't be split into their
-            # own subvolume without breaking the *arr hardlinks
+            target."/srv/backup/moltres/arr" = {};
+          };
+          # nested inside /srv/arr, so /srv/arr's snapshots stop at it. Downloads
+          # and media share it to keep the *arr hardlinks; downloads churn
+          # constantly and the arr apps can fetch media again, so it keeps less
+          # history than their state
+          "/srv/arr/data" = {
+            snapshot_dir = "/srv/arr/.snapshots";
             snapshot_preserve = "24h 7d";
-            target."/srv/backup/moltres/arr".target_preserve = "24h 14d 8w";
+            target."/srv/backup/moltres/arr-data".target_preserve = "14d";
           };
           "/srv/syncthing" = {
             snapshot_dir = "/srv/syncthing/.snapshots";
