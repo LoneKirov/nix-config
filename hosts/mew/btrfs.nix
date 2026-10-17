@@ -5,7 +5,7 @@
 }: {
   services.beesd.filesystems.root = {
     spec = "/srv/root";
-    hashTableSizeMB = 2048;
+    hashTableSizeMB = 128;
     extraOptions = ["--loadavg-target=4.0"];
   };
   systemd.services."btrbk-btrbk".serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "btrbk-metered.sh" ''

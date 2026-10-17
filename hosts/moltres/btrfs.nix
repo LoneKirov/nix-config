@@ -26,17 +26,17 @@
     beesd.filesystems = {
       root = {
         spec = "/srv/root";
-        hashTableSizeMB = 1024;
+        hashTableSizeMB = 256;
         extraOptions = ["--loadavg-target=4.0"];
       };
       storage = {
         spec = "/srv/storage";
-        hashTableSizeMB = 7168;
+        hashTableSizeMB = 1024;
         extraOptions = ["--loadavg-target=4.0"];
       };
       backup = {
         spec = "/srv/backup";
-        hashTableSizeMB = 7168;
+        hashTableSizeMB = 3584;
         extraOptions = ["--loadavg-target=4.0"];
       };
     };
