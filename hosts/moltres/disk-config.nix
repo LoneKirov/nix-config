@@ -173,6 +173,7 @@
                         mountpoint = "/srv/arr";
                       };
                       "/arr/.snapshots" = {};
+                      "/arr/data" = {};
                       "/syncthing" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/syncthing";
