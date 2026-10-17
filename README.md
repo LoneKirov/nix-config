@@ -40,4 +40,4 @@ nh os switch --target-host moltres --build-host moltres    # a server
 ```
 
 - Remote deploys build on the target, since only CI may push unsigned paths into another host's store.
-- slowpoke only installs what's already in the cache. After CI finishes on `main`, let it upgrade on its own or run `systemctl start nixos-upgrade` on it.
+- slowpoke doesn't evaluate the flake. CI records slowpoke's system on each commit to `main` once it's in the cache, and slowpoke upgrades to the one on `main`'s newest commit. After CI finishes on `main`, let it upgrade on its own or run `systemctl start nixos-upgrade` on it.
