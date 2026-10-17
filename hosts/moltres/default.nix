@@ -3,6 +3,7 @@
     ./btrfs.nix
     ./disk-config.nix
     ./lanzaboote.nix
+    ./restic
     ./services
   ];
 
