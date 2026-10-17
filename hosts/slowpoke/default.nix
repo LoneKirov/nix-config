@@ -10,4 +10,6 @@ _: {
 
   system.stateVersion = "26.05";
   hardware.facter.reportPath = ./facter.json;
+  # swap in compressed RAM rather than on the SD card
+  zramSwap.enable = true;
 }
