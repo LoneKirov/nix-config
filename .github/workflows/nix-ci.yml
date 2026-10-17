@@ -43,6 +43,7 @@ jobs:
         run: |
           (umask 077 && printf '%s\n' "$CACHE_SIGNING_KEY" > "$RUNNER_TEMP/nix-cache-signing-key")
           install -m 755 .github/scripts/nix-cache-upload.sh "$RUNNER_TEMP/"
+          sed 's/^/cache.kanto.casa /' keys/moltres.pub > "$RUNNER_TEMP/known_hosts"
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
         with:
           extra-conf: |
