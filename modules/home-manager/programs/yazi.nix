@@ -61,11 +61,6 @@ in {
             run = "plugin toggle-pane max-preview";
             desc = "Maximize or restore the preview pane";
           }
-          {
-            on = ["R" "b"];
-            run = "plugin recycle-bin";
-            desc = "Open Recycle Bin menu";
-          }
         ];
       };
     }
