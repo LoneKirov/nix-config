@@ -5,7 +5,9 @@
   ...
 }: let
   inherit (config.networking) hostName;
-  nixos-rebuild = "${config.system.build.nixos-rebuild}/bin/nixos-rebuild";
+  # otherwise boot and switch first build a newer nixos-rebuild from
+  # <nixpkgs/nixos>, evaluating NixOS even with --store-path
+  nixos-rebuild = "${config.system.build.nixos-rebuild}/bin/nixos-rebuild --no-reexec";
 in {
   system.autoUpgrade = {
     enable = true;
