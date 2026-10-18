@@ -15,11 +15,29 @@
   staging = "${receive}/.restic-proton";
   state = "/var/lib/restic-backups-proton";
 
+  # When one block of a file fails to upload, Proton-API-Bridge leaves the
+  # file's other block uploads holding their slots of a shared limit forever.
+  # A few of Proton's 502s use them all up and every upload then waits, which
+  # restic can't time out because its stuck request timeout skips rclone.
+  # https://github.com/rclone/Proton-API-Bridge/pull/8
+  rclone = pkgs.rclone.overrideAttrs (old: {
+    postConfigure =
+      old.postConfigure
+      + ''
+        chmod -R u+w vendor/github.com/rclone/Proton-API-Bridge
+        patch -p1 -d vendor/github.com/rclone/Proton-API-Bridge < ${pkgs.fetchpatch {
+          url = "https://github.com/rclone/Proton-API-Bridge/commit/1d2e00d26fc41607186dde67be2cbc021334012e.patch";
+          includes = ["file_upload.go"];
+          hash = "sha256-8JgbgagCGyq3Eo1v0rJhOXKDKOT9/CBtcmHJSF7JMMg=";
+        }}
+      '';
+  });
+
   # Proton keeps deleted files in the trash, where they count against storage.
   # Emptying at most weekly keeps recently pruned packs there to restore
   emptyTrash = pkgs.writeShellApplication {
     name = "restic-proton-empty-trash";
-    runtimeInputs = [pkgs.findutils pkgs.rclone];
+    runtimeInputs = [pkgs.findutils rclone];
     text = ''
       stamp=${state}/trash-emptied
       if [[ -n $(find "$stamp" -mtime -7 2>/dev/null) ]]; then
@@ -90,6 +108,7 @@ in {
     # rclone saves its Proton session here, so restic's later commands and
     # runs reuse it instead of logging in again
     rcloneConfigFile = "${state}/rclone.conf";
+    extraOptions = ["rclone.program=${lib.getExe rclone}"];
     initialize = true;
     # restic only reports progress to a terminal unless this is set; once a
     # minute shows how a multi-day upload is going without flooding the journal
