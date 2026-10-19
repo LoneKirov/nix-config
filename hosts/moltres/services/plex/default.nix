@@ -24,7 +24,8 @@ in {
         (userBind "/srv/arr/plex/optimized" "/optimized")
         (userBindRo "/srv/arr/data/media" "/data/media")
         (userBindRo "/srv/arr/data/media.old" "/data/media.old")
-        (userBindRo "/srv/syncthing/folders/Patreon" "/data/patreon")
+        # syncthing owns these files, not the user the bind helpers map
+        "/srv/syncthing/folders/Patreon:/data/patreon:ro,idmap=uids=@${toString config.ids.uids.syncthing}-${containerUid}-1"
       ];
       tmpfses = ["/transcode:size=10G"];
     };
