@@ -14,10 +14,12 @@
     ./lanzaboote.nix
     ./networking
     ./nix
+    ./notify
     ./pam.nix
     ./podman.nix
     ./power-profile.nix
     ./preservation.nix
+    ./smartd.nix
     ./sops.nix
     ./ssh.nix
     ./steam.nix
