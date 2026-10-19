@@ -13,6 +13,17 @@
 in {
   config = {
     home.packages = lib.mkIf (niri && config.programs.wezterm.enable) [pkgs.wl-clipboard-rs];
+    # wezterm.default_ssh_domains() makes an SSHMUX domain for every Host in
+    # ~/.ssh/config. These entries let the DMS launcher attach to one, and
+    # matching against the inventory leaves out the .lan aliases.
+    xdg.desktopEntries = lib.mkIf (gui && config.programs.wezterm.enable) (lib.mapAttrs' (name: _:
+      lib.nameValuePair "wezterm-sshmux-${name}" {
+        name = "SSHMUX ${name}";
+        genericName = "WezTerm mux on ${name}";
+        exec = "${lib.getExe config.programs.wezterm.package} connect SSHMUX:${name}";
+        icon = "org.wezfurlong.wezterm";
+      })
+    (lib.filterAttrs (name: _: config.programs.ssh.settings ? ${name}) (osConfig.hosts or {})));
     programs.wezterm = let
       wezterm =
         if gui
