@@ -45,20 +45,43 @@ in {
           };
         };
       };
-      systemd.services.btrbk-btrbk = {
-        wants = ["network-online.target"];
-        after = ["network-online.target"];
-        # the timer catches up right after resume, before DNS is back (see
-        # tailscale-restart-on-resume), so retry rather than wait an hour. A
-        # run whose target fails skips snapshot cleanup, so retrying until the
-        # target is back would pile up snapshots while offline
-        serviceConfig = {
-          Restart = "on-failure";
-          RestartSec = "2min";
+      systemd = {
+        services.btrbk-btrbk = {
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
+          # the timer catches up right after resume, before DNS is back (see
+          # tailscale-restart-on-resume), so retry rather than wait an hour. A
+          # run whose target fails skips snapshot cleanup, so retrying until the
+          # target is back would pile up snapshots while offline
+          serviceConfig = {
+            Restart = "on-failure";
+            RestartSec = "2min";
+          };
+          startLimitBurst = 3;
+          startLimitIntervalSec = 15 * 60;
         };
-        startLimitBurst = 3;
-        startLimitIntervalSec = 15 * 60;
+
+        # raid1 rewrites a bad copy from the good one without failing anything,
+        # and scrub only fails on errors it couldn't repair, so these counters
+        # can be the only sign of a failing disk. They persist across reboots,
+        # so this keeps failing until they're cleared with `btrfs device stats -z`
+        services.btrfs-device-stats = {
+          description = "Check btrfs device error counters";
+          path = [pkgs.btrfs-progs pkgs.util-linux];
+          script = ''
+            status=0
+            # one mount per filesystem, since its subvolume mounts share a UUID
+            for mountpoint in $(findmnt -t btrfs -nro UUID,TARGET | sort -u -k1,1 | cut -d' ' -f2); do
+              btrfs device stats --check "$mountpoint" || status=1
+            done
+            exit $status
+          '';
+          serviceConfig.Type = "oneshot";
+          startAt = "daily";
+        };
+        timers.btrfs-device-stats.timerConfig.Persistent = true;
       };
+      notify.healthchecks.btrbk-btrbk = "btrbk";
     }
     (lib.mkIf (targets != []) {
       assertions =

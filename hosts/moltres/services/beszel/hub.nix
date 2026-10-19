@@ -1,8 +1,11 @@
-{config, ...}: {
+{config, ...}: let
+  domain = "beszel.kanto.casa";
+in {
   services.beszel.hub = {
     enable = true;
     host = "0.0.0.0";
     environment = {
+      APP_URL = "https://${domain}";
       DISABLE_PASSWORD_AUTH = "true";
     };
   };
@@ -10,7 +13,7 @@
     "/var/lib/private/beszel-hub" # DynamicUser state
   ];
 
-  services.caddy-podman.virtualHosts."beszel.kanto.casa" = ''
+  services.caddy-podman.virtualHosts.${domain} = ''
     request_body {
         max_size 10MB
     }

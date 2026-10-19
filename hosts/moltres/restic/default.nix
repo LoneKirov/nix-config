@@ -145,6 +145,10 @@ in {
     };
   };
 
+  # a hung upload never fails the unit (see rclone above), so only a missing
+  # ping shows it
+  notify.healthchecks.restic-backups-proton = "restic";
+
   persist.directories = [
     "/var/cache/restic-backups-proton"
     state
