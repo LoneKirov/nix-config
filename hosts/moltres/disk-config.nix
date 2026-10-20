@@ -174,6 +174,11 @@
                       };
                       "/arr/.snapshots" = {};
                       "/arr/data" = {};
+                      "/immich" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/srv/immich";
+                      };
+                      "/immich/.snapshots" = {};
                       "/syncthing" = {
                         mountOptions = ["compress=zstd"];
                         mountpoint = "/srv/syncthing";

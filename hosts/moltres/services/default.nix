@@ -5,6 +5,7 @@ _: {
     ./caddy
     ./esphome
     ./harmonia
+    ./immich
     ./openwebui
     ./plex
     ./pocket-id

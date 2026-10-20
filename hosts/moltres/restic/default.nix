@@ -11,7 +11,7 @@
   sources =
     lib.concatMap (host: ["${host}/home" "${host}/persistent"])
     (lib.attrNames (lib.filterAttrs (_: host: lib.elem "moltres" host.backup.targets) config.hosts))
-    ++ map (subvolume: "moltres/${subvolume}") ["home" "persistent" "arr" "syncthing"];
+    ++ map (subvolume: "moltres/${subvolume}") ["home" "persistent" "arr" "immich" "syncthing"];
   staging = "${receive}/.restic-proton";
   state = "/var/lib/restic-backups-proton";
 
