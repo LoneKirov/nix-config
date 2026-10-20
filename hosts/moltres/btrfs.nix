@@ -22,6 +22,10 @@
             snapshot_preserve = "24h 7d";
             target."/srv/backup/moltres/arr-data".target_preserve = "14d";
           };
+          "/srv/immich" = {
+            snapshot_dir = "/srv/immich/.snapshots";
+            target."/srv/backup/moltres/immich" = {};
+          };
           "/srv/syncthing" = {
             snapshot_dir = "/srv/syncthing/.snapshots";
             target."/srv/backup/moltres/syncthing" = {};

@@ -67,6 +67,9 @@ in {
           ]
           ++ lib.optionals config.services.accounts-daemon.enable [
             "/var/lib/AccountsService"
+          ]
+          ++ lib.optionals config.services.postgresql.enable [
+            "/var/lib/postgresql"
           ];
         files = [
           {
