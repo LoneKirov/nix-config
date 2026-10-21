@@ -18,6 +18,9 @@
         auto-optimise-store = true;
         substituters = ["https://cache.kanto.casa"];
         trusted-public-keys = [(builtins.readFile ../../../keys/harmonia.pub)];
+        # a cgroup per build, so systemd-cgtop shows each build's memory and I/O
+        extra-experimental-features = ["cgroups"];
+        use-cgroups = lib.mkDefault true;
       };
     };
     boot.loader.systemd-boot.configurationLimit = lib.mkDefault 10;
