@@ -23,6 +23,7 @@ NixOS and home-manager flake for the hosts listed in the [README](README.md), wh
 
 - `nix fmt .` formats with alejandra. Plain `nix fmt` passes no paths, so alejandra reads stdin and fails.
 - `devenv test` runs `nix flake check --build-all`, the same as CI.
+- Build a single check from the git flake, as in `nix build .#checks.x86_64-linux.lint`. A `path:.` flake also copies in the gitignored `.devenv/`, and the lint check then fails on devenv's own Nix files.
 - To confirm a refactor changes no host, compare every host's system derivation against the parent revision:
 
   ```sh
