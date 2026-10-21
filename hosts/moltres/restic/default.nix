@@ -114,6 +114,21 @@ in {
     # minute shows how a multi-day upload is going without flooding the journal
     progressFps = 1.0 / 60;
     paths = map (src: "${staging}/${src}") sources;
+    extraBackupArgs = [
+      # restic otherwise only takes a snapshot with exactly these paths as the
+      # parent, so adding or removing a source would read every file again
+      "--group-by host"
+      # Reading a file on its host updates its atime, which btrbk's next send
+      # carries here, and btrfs receive gives the copy a new ctime as it applies
+      # it. restic would read every file read on any host since the last run
+      "--ignore-ctime"
+    ];
+    # after the 03:00 auto-upgrade and its 45-minute random delay, so a run has
+    # nearly a day to finish before the next upgrade can reboot moltres
+    timerConfig = {
+      OnCalendar = "04:00";
+      Persistent = true;
+    };
     backupPrepareCommand = lib.getExe stage;
     backupCleanupCommand = lib.getExe unstage;
     pruneOpts = [

@@ -15,7 +15,8 @@
     autoUpgrade = {
       enable = true;
       # late enough to rarely cut off plex, and done well before slowpoke's
-      # 05:00 upgrade pulls from the cache this host serves
+      # 05:00 upgrade pulls from the cache this host serves and the offsite
+      # backup starts at 04:00 (./restic)
       dates = "*-*-* 03:00:00";
     };
     stateVersion = "26.05";
