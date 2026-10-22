@@ -74,9 +74,19 @@ in {
     ];
   };
 
+  # owned as the units' StateDirectory= and CacheDirectory= leave them: a
+  # switch reapplies these tmpfiles rules but doesn't restart the services, so
+  # root-owned defaults lock them out of their own directories
   persist.directories = [
-    "/var/lib/redis-immich"
-    "/var/cache/immich" # downloaded models, so a reboot doesn't fetch them again
+    {
+      directory = "/var/lib/redis-immich";
+      inherit (config.services.redis.servers.immich) user group;
+      mode = "0700";
+    }
+    {
+      directory = "/var/cache/immich"; # downloaded models, so a reboot doesn't fetch them again
+      inherit (cfg) user group;
+    }
   ];
 
   networking.firewall.interfaces.${config.lib.quadlet.bridgeInterfaces}.allowedTCPPorts = [cfg.port];
