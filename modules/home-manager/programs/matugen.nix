@@ -7,11 +7,11 @@
 }: let
   tomlFormat = pkgs.formats.toml {};
   matugenConfig = {config = {};} // config.programs.matugen.config;
-  dms-shell = osConfig.programs.dms-shell.enable or false;
+  dux-shell = osConfig.programs.dux-shell.enable or false;
   matugen = config.programs.matugen.enable;
 in {
   options.programs.matugen = {
-    enable = lib.mkEnableOption "matugen" // {default = dms-shell;};
+    enable = lib.mkEnableOption "matugen" // {default = dux-shell;};
     config = lib.mkOption {
       inherit (tomlFormat) type;
       default = {};

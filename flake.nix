@@ -36,8 +36,8 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
+    dux-plugin-registry = {
+      url = "github:duxlabs-dev/dux-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # neovim plugins not in nixpkgs

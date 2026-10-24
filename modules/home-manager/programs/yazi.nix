@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  dms-shell = osConfig.programs.dms-shell.enable or false;
+  dux-shell = osConfig.programs.dux-shell.enable or false;
   gvfs = osConfig.services.gvfs.enable or false;
 in {
   programs.yazi = lib.mkMerge [
@@ -27,7 +27,7 @@ in {
           starship
           zoxide
         ]
-        ++ lib.optionals dms-shell [
+        ++ lib.optionals dux-shell [
           wl-clipboard-rs
         ];
       initLua = ''
@@ -40,14 +40,14 @@ in {
           max_width = 4000;
           max_height = 4000;
         };
-        opener.set-wallpaper = lib.optionals dms-shell [
+        opener.set-wallpaper = lib.optionals dux-shell [
           {
             run = "dms ipc call wallpaper set %s1";
             for = "linux";
             desc = "Set as wallpaper";
           }
         ];
-        open.prepend_rules = lib.optionals dms-shell [
+        open.prepend_rules = lib.optionals dux-shell [
           {
             mime = "image/*";
             use = ["open" "reveal" "set-wallpaper"];

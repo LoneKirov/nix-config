@@ -6,7 +6,7 @@
   ...
 }: let
   niri = osConfig.programs.niri.enable or false;
-  dms-shell = osConfig.programs.dms-shell.enable or false;
+  dux-shell = osConfig.programs.dux-shell.enable or false;
   gui = config.host.gui;
   fish = config.programs.fish.enable or false;
   isWSL = config.host.wsl;
@@ -147,7 +147,7 @@ in {
           };
         }
         # DMS theme
-        (lib.mkIf dms-shell {
+        (lib.mkIf dux-shell {
           settings = {
             window_background_opacity = 0.7;
             color_scheme = "dank-theme";

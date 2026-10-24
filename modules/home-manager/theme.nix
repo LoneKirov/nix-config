@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  dms-shell = osConfig.programs.dms-shell.enable or false;
+  dux-shell = osConfig.programs.dux-shell.enable or false;
 in {
-  config = lib.mkIf dms-shell {
+  config = lib.mkIf dux-shell {
     gtk = {
       enable = true;
       theme = {

@@ -6,34 +6,33 @@
   ...
 }: let
   inherit (config.users.users.${config.user.username}) home;
+  registry = inputs.dux-plugin-registry.packages.${pkgs.stdenv.hostPlatform.system};
 in {
-  imports = [
-    inputs.dms-plugin-registry.nixosModules.default
-  ];
-
   config = lib.mkIf config.host.gui {
     programs = {
       niri.enable = true;
 
-      dms-shell = {
+      dux-shell = {
         enable = true;
         systemd = {
           enable = true;
           restartIfChanged = true;
         };
 
-        plugins = {
-          calculator.enable = true;
-          catWidget.enable = true;
-          dankLauncherKeys.enable = true;
-          niriWindows.enable = true;
-          wallpaperCarousel.enable = true;
-          nixPackageRunner.enable = true;
-          fullscreenPowerMenu.enable = true;
-        };
+        # the registry's nixosModule only fills in src under the old
+        # programs.dms-shell name, which is now an alias without suboptions
+        plugins = lib.genAttrs [
+          "calculator"
+          "catWidget"
+          "dankLauncherKeys"
+          "niriWindows"
+          "wallpaperCarousel"
+          "nixPackageRunner"
+          "fullscreenPowerMenu"
+        ] (name: {src = registry.${name};});
       };
 
-      dsearch = {
+      dux-search = {
         enable = true;
 
         systemd = {
@@ -43,14 +42,14 @@ in {
       };
     };
 
-    environment.systemPackages = with pkgs; [dankcalendar];
+    environment.systemPackages = with pkgs; [dux-calendar];
 
     services = {
       displayManager = {
-        dms-greeter = {
+        dux-greeter = {
           enable = true;
           compositor.name = config.programs.niri.package.pname;
-          # Sync your user's DankMaterialShell theme with the greeter
+          # Sync your user's Dux Shell theme with the greeter
           configHome = home;
         };
       };
@@ -67,7 +66,7 @@ in {
 
     location.provider = "geoclue2";
 
-    persist.directories = lib.mkIf config.services.displayManager.dms-greeter.enable [
+    persist.directories = lib.mkIf config.services.displayManager.dux-greeter.enable [
       "/var/lib/dms-greeter"
     ];
   };
