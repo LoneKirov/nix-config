@@ -50,10 +50,6 @@ in {
               directory = "/var/lib/systemd";
               inInitrd = true; # make it available for systemd in initrd
             }
-            {
-              directory = "/etc/ssh"; # ssh host keys
-              inInitrd = true; # make it available for sops in initrd
-            }
             "/var/log"
           ]
           ++ lib.optionals config.services.fprintd.enable [
@@ -81,8 +77,6 @@ in {
       };
     }
     (lib.mkIf config.preservation.enable {
-      # preservation requires a systemd initrd
-      boot.initrd.systemd.enable = true;
       # need /persistent available in initrd so preservation has access to it
       fileSystems.${persistentMountpoint}.neededForBoot = true;
       preservation.preserveAt.${persistentMountpoint} = {
@@ -99,6 +93,21 @@ in {
       systemd.services.systemd-machine-id-commit.unitConfig.ConditionFirstBoot = true;
       # user mutations won't persist across reboots
       users.mutableUsers = false;
+      # sops needs the host key during activation, which runs in the initrd, to
+      # decrypt the user password. Persisting /etc/ssh would mean mounting it
+      # before activation, which mixes activation's links into persistent state,
+      # or after, which hides them, so the keys live in persistent storage instead.
+      services.openssh.hostKeys = lib.mkDefault [
+        {
+          type = "rsa";
+          bits = 4096;
+          path = "${persistentMountpoint}/etc/ssh/ssh_host_rsa_key";
+        }
+        {
+          type = "ed25519";
+          path = "${persistentMountpoint}/etc/ssh/ssh_host_ed25519_key";
+        }
+      ];
     })
   ];
 }

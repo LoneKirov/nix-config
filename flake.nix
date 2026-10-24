@@ -16,7 +16,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # impermanence alternative for persisting state
-    preservation.url = "github:nix-community/preservation/main";
+    # pinned to https://github.com/nix-community/preservation/pull/36, which drops
+    # its assertion on boot.initrd.systemd.enable now that nixpkgs removed the option
+    preservation.url = "github:nix-community/preservation/ed8dbeaac0ad240341259c814cade7163a53fc1f";
     # secureboot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.2.0";

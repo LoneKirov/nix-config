@@ -46,8 +46,6 @@ in {
           };
           bootCounting.initialTries = 3;
         };
-
-        initrd.systemd.enable = true;
       };
 
       environment.systemPackages = with pkgs; [
@@ -61,11 +59,17 @@ in {
           "/var/lib/sbctl"
         ]
         ++ lib.optionals config.boot.lanzaboote.measuredBoot.enable [
-          {
-            directory = "/var/lib/pcrlock.d";
-            inInitrd = true;
-          }
+          "/var/lib/pcrlock.d"
         ];
+    })
+    (lib.mkIf (lanzaboote && config.boot.lanzaboote.measuredBoot.enable) {
+      # The upstream units only order themselves after var.mount, not after
+      # whatever mounts the persisted directories they write to. systemd applies
+      # a drop-in for a name truncated after a dash to every unit with that prefix.
+      systemd.services."systemd-pcrlock-" = {
+        overrideStrategy = "asDropin";
+        unitConfig.RequiresMountsFor = with config.boot.lanzaboote.measuredBoot; [pcrlockDirectory pcrlockPolicy];
+      };
     })
   ];
 }
