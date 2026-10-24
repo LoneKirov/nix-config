@@ -23,12 +23,18 @@ in {
       host = "0.0.0.0";
       mediaLocation = "/srv/immich";
       accelerationDevices = ["/dev/dri/renderD128"];
+      # the same weights in immich's newer exports; its machine learning service
+      # treats the default `main` ones as legacy
+      machine-learning.environment.MACHINE_LEARNING_MODEL_REVISION = "v2";
       # immich's admin settings page is read-only while these are set
       settings = {
         server.externalDomain = "https://${domain}";
         # moltres's UHD 630 only gets Quick Sync through Intel's discontinued
         # Media SDK
         ffmpeg.accel = "vaapi";
+        # the best search recall for its speed in immich's CLIP benchmarks; the
+        # larger models cost 4-10x the CPU time for about a point more
+        machineLearning.clip.modelName = "ViT-B-16-SigLIP2__webli";
         oauth = {
           enabled = true;
           issuerUrl = "https://pocket-id.kanto.casa";
