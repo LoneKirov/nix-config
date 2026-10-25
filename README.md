@@ -15,9 +15,9 @@
 
 | | Host | Role |
 |---|---|---|
-| ❄️ | **articuno** | Workstation: NVIDIA, niri + DankMaterialShell |
+| ❄️ | **articuno** | Workstation: NVIDIA, niri + Dux Shell |
 | 🪟 | **articuno-wsl** | NixOS on WSL |
-| 🧬 | **mew** | Framework laptop: niri + DankMaterialShell |
+| 🧬 | **mew** | Framework laptop: niri + Dux Shell |
 | 🔥 | **moltres** | Home server: media, SSO, binary cache, backups |
 | 💤 | **slowpoke** | Raspberry Pi 3: Tailscale exit node |
 
