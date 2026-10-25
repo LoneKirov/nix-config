@@ -10,6 +10,27 @@
     useWindowsDriver = true;
   };
 
+  environment.sessionVariables = {
+    # mesa dlopens libd3d12.so and libdxcore.so by bare name, and nix's glibc
+    # doesn't read /etc/ld.so.cache, so without this it falls back to llvmpipe.
+    # /usr/lib/wsl/lib holds only the windows host's libraries, unlike
+    # /run/opengl-driver/lib, which also has mesa's
+    # https://github.com/nix-community/NixOS-WSL/issues/454
+    LD_LIBRARY_PATH = ["/usr/lib/wsl/lib"];
+
+    # mesa's d3d12 driver prefers an integrated gpu over the nvidia card, and
+    # falls back to llvmpipe when d3d12 fails on it
+    MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
+  };
+
+  # nvidia-smi from the windows driver is a generic linux binary that loads
+  # libnvidia-ml.so.1 at runtime
+  # https://github.com/nix-community/NixOS-WSL/issues/947
+  programs.nix-ld = {
+    enable = true;
+    libraries = [config.wsl.wslLib];
+  };
+
   nixpkgs.hostPlatform = "x86_64-linux";
 
   user.hm = {
