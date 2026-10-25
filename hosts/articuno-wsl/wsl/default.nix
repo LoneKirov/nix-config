@@ -5,7 +5,10 @@
     ./wezterm.nix
   ];
 
-  wsl.defaultUser = config.user.username;
+  wsl = {
+    defaultUser = config.user.username;
+    useWindowsDriver = true;
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
