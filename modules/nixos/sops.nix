@@ -1,7 +1,7 @@
 {inputs, ...}: {
   imports = [inputs.sops-nix.nixosModules.sops];
 
-  config.sops = {
-    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-  };
+  # sops-nix decrypts with the ed25519 key in services.openssh.hostKeys, but only
+  # looks there when sshd is enabled or host keys are generated without it
+  services.openssh.generateHostKeys = true;
 }
