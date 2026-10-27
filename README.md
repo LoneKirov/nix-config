@@ -27,6 +27,7 @@ Hosts and their roles are declared in [`hosts/default.nix`](hosts/default.nix); 
 flowchart LR
   main[(GitHub main)] --> ci[Nix CI]
   ci -- "push builds" --> moltres[🔥 moltres]
+  ci -- "push packages" --> cachix[(lonekirov.cachix.org)]
   moltres -- "cache.kanto.casa" --> slowpoke[💤 slowpoke] & articuno[❄️ articuno] & mew[🧬 mew]
   main -. "daily auto-upgrade" .-> moltres & slowpoke
   articuno & mew & slowpoke -- "btrbk" --> moltres
@@ -41,3 +42,11 @@ nh os switch --target-host moltres --build-host moltres    # a server
 
 - Remote deploys build on the target, since only CI may push unsigned paths into another host's store.
 - slowpoke doesn't evaluate the flake. CI records slowpoke's system on each commit to `main` once it's in the cache, and slowpoke upgrades to the one on `main`'s newest commit. After CI finishes on `main`, let it upgrade on its own or run `systemctl start nixos-upgrade` on it.
+
+## 📦 Packages
+
+CI pushes the flake's packages to a public cache, so flakes building on this one can use them without access to cache.kanto.casa:
+
+```sh
+cachix use lonekirov
+```
