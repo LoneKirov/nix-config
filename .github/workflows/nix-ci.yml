@@ -52,6 +52,12 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
       - name: Run devenv test
         run: CI=true nix run --inputs-from . nixpkgs#devenv -- test
+      # pushes what the post-build hook couldn't, also after a failed test so
+      # a rerun finds what did build
+      - name: Push leftover paths to cache.kanto.casa
+        if: ${{ !cancelled() && env.CACHE_UPLOAD == 'true' }}
+        run: |
+          "$RUNNER_TEMP/nix-cache-upload.sh"
       # the public cache gets only the flake's packages and the parts of their
       # closures cache.nixos.org lacks; host closures include unfree packages,
       # so they stay in cache.kanto.casa
@@ -64,7 +70,7 @@ jobs:
             | xargs nix build --no-link --print-out-paths \
             | nix run --inputs-from . nixpkgs#cachix -- push lonekirov
       # slowpoke upgrades to the path recorded here rather than evaluating the
-      # flake itself; by now the test has uploaded it to cache.kanto.casa
+      # flake itself; by now it's in cache.kanto.casa
       - name: Record slowpoke's system on the commit
         if: env.CACHE_UPLOAD == 'true' && matrix.system == 'aarch64-linux'
         env:
