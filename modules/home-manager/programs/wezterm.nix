@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   osConfig,
   pkgs,
@@ -25,10 +26,13 @@ in {
       })
     (lib.filterAttrs (name: _: config.programs.ssh.settings ? ${name}) (osConfig.hosts or {})));
     programs.wezterm = let
+      # standalone home-manager gets pkgs from the flake using it, whose
+      # nixpkgs may differ, so the headless build comes from this flake's
+      # packages to match the copy in lonekirov.cachix.org
       wezterm =
         if gui
         then pkgs.wezterm
-        else pkgs.wezterm.headless;
+        else inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.wezterm-headless;
       mkLuaInline = lib.generators.mkLuaInline;
     in
       lib.mkMerge [
