@@ -1,5 +1,6 @@
 {
   imports = [
+    ./attic.nix
     ./atuin.nix
     ./bat.nix
     ./bitwarden.nix
