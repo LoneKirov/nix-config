@@ -290,7 +290,7 @@
         }
       ],
       "spacing": 4,
-      "innerPadding": 4,
+      "innerPadding": 2,
       "bottomGap": 0,
       "transparency": 0.6,
       "widgetTransparency": 0.6,
@@ -322,7 +322,7 @@
       "useOverlayLayer": false,
       "islandFloating": false,
       "islandUseOverlayLayer": false,
-      "islandHomeCompactTight": false,
+      "islandHomeCompactTight": true,
       "islandHomeLayout": [
         {
           "id": "media",
@@ -378,7 +378,7 @@
       "widgetPadding": 8,
       "barInsetPadding": -1,
       "islandReserveThickness": 34,
-      "islandCompactThickness": 26,
+      "islandCompactThickness": 38,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "islandOuterGap": 4,

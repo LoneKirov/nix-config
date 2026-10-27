@@ -28,7 +28,6 @@ in {
           "niriWindows"
           "wallpaperCarousel"
           "nixPackageRunner"
-          "fullscreenPowerMenu"
         ] (name: {src = registry.${name};});
       };
 
