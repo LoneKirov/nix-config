@@ -1,10 +1,10 @@
 _: {
   imports = [
     ./arr
+    ./attic
     ./beszel
     ./caddy
     ./esphome
-    ./harmonia
     ./immich
     ./openwebui
     ./plex
