@@ -1,5 +1,7 @@
 {
+  config,
   inputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -27,6 +29,12 @@
   languages.nix.enable = true;
 
   claude.code.enable = true;
+
+  # devenv test starts every process, and CI and local test runs shouldn't
+  # push to the cache
+  processes = lib.mkIf (!config.devenv.isTesting) {
+    attic-watch-store.exec = "${lib.getExe pkgs.attic-client} watch-store kanto";
+  };
 
   tasks = {
     "test:all-systems".exec = "nix flake check --build-all --all-systems";
