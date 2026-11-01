@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "saturday"
+      time: "14:00"
     groups:
       flake-dependencies:
         patterns:
@@ -12,10 +14,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    # updates are auto-merged and run on main with the cache upload secrets;
-    # waiting a week gives a compromised release time to be caught and pulled
-    cooldown:
-      default-days: 7
+      day: "monday"
+      time: "14:00"
     groups:
       actions-dependencies:
         patterns:
@@ -25,10 +25,8 @@ updates:
       - "/hosts/moltres/services/**/*"
     schedule:
       interval: "weekly"
-    # updates are auto-merged and moltres upgrades from main nightly; waiting a
-    # week gives a compromised image time to be caught and pulled
-    cooldown:
-      default-days: 7
+      day: "sunday"
+      time: "14:00"
     ignore:
       - dependency-name: "library/caddy"
         update-types: ["version-update:semver-major"]
