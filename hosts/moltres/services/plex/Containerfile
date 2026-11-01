@@ -1,1 +1,1 @@
-FROM docker.io/plexinc/pms-docker:latest@sha256:e0ab27395614a8e1a4fdf84c6bc60ac664915cfdde70c52d030c7728a1c48e14
+FROM docker.io/plexinc/pms-docker:latest@sha256:6d778d41daae68f89115aa87a44ae14a96b23e71a2093da173b5a9aac4091336
