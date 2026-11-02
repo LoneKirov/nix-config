@@ -126,7 +126,6 @@
             caddy.ref
             arr.ref
             esphome.ref
-            openwebui.ref
           ];
           publishPorts = ["80:80" "443:443"];
           addHosts = containerAddHosts;
