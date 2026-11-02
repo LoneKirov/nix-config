@@ -6,7 +6,7 @@ _: {
     ./caddy
     ./esphome
     ./immich
-    ./openwebui
+    ./openwebui.nix
     ./plex
     ./pocket-id
     ./syncthing.nix
