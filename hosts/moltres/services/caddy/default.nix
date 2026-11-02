@@ -33,6 +33,11 @@
         security {
           oauth identity provider generic {
             delay_start 3
+            # Discovery goes through this Caddy and only runs at startup. Once the
+            # attempts run out, logins fail with "OAuth provider is not ready" until
+            # Caddy restarts, so keep trying for an hour.
+            retry_attempts 720
+            retry_interval 5
             realm generic
             driver generic
             client_id {$POCKET_ID_CLIENT_ID}
@@ -99,7 +104,7 @@
       key = "";
     };
     virtualisation.quadlet = let
-      inherit (config.virtualisation.quadlet) builds networks volumes;
+      inherit (config.virtualisation.quadlet) builds containers networks volumes;
       inherit (config.lib.quadlet) mkContainer mkNetwork;
     in {
       networks.caddy = mkNetwork "Network for Caddy";
@@ -113,6 +118,7 @@
       containers.caddy = mkContainer {
         unitConfig = {
           Description = "Caddy services reverse proxy";
+          After = [containers.pocket-id.ref];
         };
         containerConfig = {
           image = builds.caddy.ref;

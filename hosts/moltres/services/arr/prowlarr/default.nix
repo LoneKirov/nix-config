@@ -19,6 +19,11 @@ in {
       volumes = [
         (userBind "/srv/arr/prowlarr" "/config")
       ];
+      healthCmd = "curl -fsS -o /dev/null http://localhost:9696/ping || exit 1";
+      healthInterval = "1m";
+      healthTimeout = "5s";
+      healthStartPeriod = "1m";
+      healthRetries = 3;
     };
   };
 

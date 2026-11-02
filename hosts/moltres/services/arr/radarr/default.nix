@@ -19,6 +19,11 @@ in {
         (userBind "/srv/arr/radarr" "/config")
         (userBind "/srv/arr/data" "/data")
       ];
+      healthCmd = "curl -fsS -o /dev/null http://localhost:7878/ping || exit 1";
+      healthInterval = "1m";
+      healthTimeout = "5s";
+      healthStartPeriod = "1m";
+      healthRetries = 3;
     };
   };
 
