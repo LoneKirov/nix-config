@@ -68,6 +68,8 @@ in {
       plugins = {
         inherit (pkgs.yaziPlugins) gvfs;
       };
+      # the plugin shells out to gio, which glib provides
+      extraPackages = [pkgs.glib];
       initLua = ''
         require("gvfs"):setup()
       '';
