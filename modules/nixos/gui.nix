@@ -6,8 +6,9 @@
   ...
 }: let
   inherit (config.users.users.${config.user.username}) home;
-  registry = inputs.dux-plugin-registry.packages.${pkgs.stdenv.hostPlatform.system};
 in {
+  imports = [inputs.dux-plugin-registry.nixosModules.default];
+
   config = lib.mkIf config.host.gui {
     programs = {
       niri.enable = true;
@@ -19,8 +20,6 @@ in {
           restartIfChanged = true;
         };
 
-        # the registry's nixosModule only fills in src under the old
-        # programs.dms-shell name, which is now an alias without suboptions
         plugins = lib.genAttrs [
           "calculator"
           "catWidget"
@@ -28,7 +27,7 @@ in {
           "niriWindows"
           "wallpaperCarousel"
           "nixPackageRunner"
-        ] (name: {src = registry.${name};});
+        ] (_: {enable = true;});
       };
 
       dux-search = {
