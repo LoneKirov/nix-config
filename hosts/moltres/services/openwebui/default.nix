@@ -16,6 +16,11 @@ in {
           volumes = [
             "${config.virtualisation.quadlet.volumes.openwebui.ref}:/app/backend/data:idmap"
           ];
+          healthCmd = "curl -fsS -o /dev/null http://localhost:8080/health || exit 1";
+          healthInterval = "1m";
+          healthTimeout = "5s";
+          healthStartPeriod = "1m";
+          healthRetries = 3;
         };
       };
     };

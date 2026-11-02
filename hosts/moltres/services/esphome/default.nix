@@ -17,6 +17,11 @@ in {
           volumes = [
             "${config.virtualisation.quadlet.volumes.esphome.ref}:/config:idmap"
           ];
+          healthCmd = "curl -fsS -A HealthCheck -o /dev/null http://localhost:6052/version || exit 1";
+          healthInterval = "1m";
+          healthTimeout = "5s";
+          healthStartPeriod = "1m";
+          healthRetries = 3;
         };
       };
     };

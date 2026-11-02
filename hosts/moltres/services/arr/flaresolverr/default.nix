@@ -10,6 +10,11 @@
       environments = {
         TZ = config.time.timeZone;
       };
+      healthCmd = "curl -fsS -o /dev/null http://localhost:8191/health || exit 1";
+      healthInterval = "1m";
+      healthTimeout = "5s";
+      healthStartPeriod = "1m";
+      healthRetries = 3;
     };
   };
 }

@@ -23,6 +23,11 @@ in {
       volumes = [
         (userBind "/srv/arr/profilarr" "/config")
       ];
+      healthCmd = "curl -fsS -o /dev/null http://localhost:6868/api/v1/health || exit 1";
+      healthInterval = "1m";
+      healthTimeout = "5s";
+      healthStartPeriod = "1m";
+      healthRetries = 3;
     };
   };
 

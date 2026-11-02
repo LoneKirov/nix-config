@@ -14,6 +14,11 @@ in {
         (userBind "/srv/arr/qbittorrent" "/config")
         (userBind "/srv/arr/data" "/data")
       ];
+      healthCmd = "curl -fsS -o /dev/null http://localhost:8080/ || exit 1";
+      healthInterval = "1m";
+      healthTimeout = "5s";
+      healthStartPeriod = "1m";
+      healthRetries = 3;
     };
   };
 
