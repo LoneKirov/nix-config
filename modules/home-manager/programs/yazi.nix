@@ -1,10 +1,13 @@
 {
+  config,
   lib,
   osConfig,
   pkgs,
   ...
 }: let
   dux-shell = osConfig.programs.dux-shell.enable or false;
+  gui = config.host.gui;
+  wezterm = config.programs.wezterm.enable;
 in {
   programs.yazi = lib.mkMerge [
     {
@@ -28,6 +31,9 @@ in {
         ]
         ++ lib.optionals dux-shell [
           wl-clipboard-rs
+        ]
+        ++ lib.optionals gui [
+          swayimg
         ];
       initLua = ''
         require("starship"):setup()
@@ -39,17 +45,44 @@ in {
           max_width = 4000;
           max_height = 4000;
         };
-        opener.set-wallpaper = lib.optionals dux-shell [
-          {
-            run = "dms ipc call wallpaper set %s1";
-            for = "linux";
-            desc = "Set as wallpaper";
-          }
-        ];
-        open.prepend_rules = lib.optionals dux-shell [
+        opener = {
+          # yazi's previewer shows only a GIF's first frame
+          # (https://github.com/sxyazi/yazi/issues/51), while wezterm
+          # animates the GIFs that imgcat sends it
+          imgcat = lib.optionals wezterm [
+            {
+              run = "clear; wezterm imgcat --hold %s1";
+              block = true;
+              for = "linux";
+              desc = "Show in terminal";
+            }
+          ];
+          swayimg = lib.optionals gui [
+            {
+              run = "swayimg %s";
+              orphan = true;
+              for = "linux";
+              desc = "swayimg";
+            }
+          ];
+          set-wallpaper = lib.optionals dux-shell [
+            {
+              run = "dms ipc call wallpaper set %s1";
+              for = "linux";
+              desc = "Set as wallpaper";
+            }
+          ];
+        };
+        open.prepend_rules = [
           {
             mime = "image/*";
-            use = ["open" "reveal" "set-wallpaper"];
+            # swayimg needs a Wayland session, so imgcat stays as the
+            # fallback for yazi run over ssh on a gui host
+            use =
+              lib.optionals gui ["swayimg"]
+              ++ lib.optionals wezterm ["imgcat"]
+              ++ ["open" "reveal"]
+              ++ lib.optionals dux-shell ["set-wallpaper"];
           }
         ];
       };
