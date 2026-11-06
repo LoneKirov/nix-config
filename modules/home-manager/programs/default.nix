@@ -8,6 +8,7 @@
     ./brave.nix
     ./comma.nix
     ./devenv.nix
+    ./dgop.nix
     ./direnv.nix
     ./discord.nix
     ./dms
