@@ -33,6 +33,7 @@
     ./ssh.nix
     ./starship.nix
     ./steam.nix
+    ./swayimg.nix
     ./syncthing.nix
     ./trash-cli.nix
     ./tmux.nix

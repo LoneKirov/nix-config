@@ -6,7 +6,7 @@
   ...
 }: let
   dux-shell = osConfig.programs.dux-shell.enable or false;
-  gui = config.host.gui;
+  swayimg = config.programs.swayimg.enable;
   wezterm = config.programs.wezterm.enable;
 in {
   programs.yazi = lib.mkMerge [
@@ -31,9 +31,6 @@ in {
         ]
         ++ lib.optionals dux-shell [
           wl-clipboard-rs
-        ]
-        ++ lib.optionals gui [
-          swayimg
         ];
       initLua = ''
         require("starship"):setup()
@@ -57,7 +54,7 @@ in {
               desc = "Show in terminal";
             }
           ];
-          swayimg = lib.optionals gui [
+          swayimg = lib.optionals swayimg [
             {
               run = "swayimg %s";
               orphan = true;
@@ -73,18 +70,27 @@ in {
             }
           ];
         };
-        open.prepend_rules = [
-          {
-            mime = "image/*";
-            # swayimg needs a Wayland session, so imgcat stays as the
-            # fallback for yazi run over ssh on a gui host
-            use =
-              lib.optionals gui ["swayimg"]
-              ++ lib.optionals wezterm ["imgcat"]
-              ++ ["open" "reveal"]
-              ++ lib.optionals dux-shell ["set-wallpaper"];
-          }
-        ];
+        open.prepend_rules =
+          [
+            {
+              mime = "image/*";
+              # swayimg needs a Wayland session, so imgcat stays as the
+              # fallback for yazi run over ssh on a gui host
+              use =
+                lib.optionals swayimg ["swayimg"]
+                ++ lib.optionals wezterm ["imgcat"]
+                ++ ["open" "reveal"]
+                ++ lib.optionals dux-shell ["set-wallpaper"];
+            }
+          ]
+          ++ lib.optionals swayimg [
+            {
+              mime = "folder/*";
+              # yazi's default folder openers; edit stays first because
+              # <Enter> on a folder runs the first one
+              use = ["edit" "swayimg" "open" "reveal"];
+            }
+          ];
       };
       keymap = {
         mgr.prepend_keymap = [
