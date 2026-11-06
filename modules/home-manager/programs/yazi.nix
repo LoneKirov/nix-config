@@ -5,6 +5,7 @@
   pkgs,
   ...
 }: let
+  dux-files = osConfig.programs.dux-files.enable or false;
   dux-shell = osConfig.programs.dux-shell.enable or false;
   swayimg = config.programs.swayimg.enable;
   wezterm = config.programs.wezterm.enable;
@@ -69,6 +70,14 @@ in {
               desc = "Set as wallpaper";
             }
           ];
+          dux-files = lib.optionals dux-files [
+            {
+              run = "dfiles open %s";
+              orphan = true;
+              for = "linux";
+              desc = "dux-files";
+            }
+          ];
         };
         open.prepend_rules =
           [
@@ -83,12 +92,15 @@ in {
                 ++ lib.optionals dux-shell ["set-wallpaper"];
             }
           ]
-          ++ lib.optionals swayimg [
+          ++ lib.optionals (dux-files || swayimg) [
             {
               mime = "folder/*";
-              # yazi's default folder openers; edit stays first because
-              # <Enter> on a folder runs the first one
-              use = ["edit" "swayimg" "open" "reveal"];
+              # <Enter> on a folder runs the first opener
+              use =
+                lib.optionals dux-files ["dux-files"]
+                ++ ["edit"]
+                ++ lib.optionals swayimg ["swayimg"]
+                ++ ["open" "reveal"];
             }
           ];
       };

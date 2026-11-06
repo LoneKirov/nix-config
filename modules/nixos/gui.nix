@@ -38,6 +38,8 @@ in {
           target = "graphical-session.target";
         };
       };
+
+      dux-files.enable = true;
     };
 
     environment.systemPackages = with pkgs; [dux-calendar];
