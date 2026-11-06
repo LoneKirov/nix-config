@@ -60,6 +60,16 @@ in {
             run = "plugin toggle-pane max-preview";
             desc = "Maximize or restore the preview pane";
           }
+          {
+            on = ["F" "f"];
+            run = "search_do --via=fd --args='--type=f'";
+            desc = "List all files recursively";
+          }
+          {
+            on = ["F" "a"];
+            run = "search_do --via=fd --args='--type=f --no-ignore'";
+            desc = "List all files recursively, including ignored ones";
+          }
         ];
       };
     }
