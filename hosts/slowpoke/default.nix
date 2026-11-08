@@ -6,6 +6,7 @@ _: {
     ./services
     ./tailscale.nix
     ./upgrade.nix
+    ./watchdog.nix
   ];
 
   system.stateVersion = "26.05";
