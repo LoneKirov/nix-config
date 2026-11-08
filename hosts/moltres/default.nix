@@ -5,6 +5,7 @@
     ./lanzaboote.nix
     ./restic
     ./services
+    ./watchdog.nix
   ];
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
