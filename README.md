@@ -21,7 +21,7 @@
 | 🔥 | **moltres** | Home server: media, SSO, binary cache, backups |
 | 💤 | **slowpoke** | Raspberry Pi 3: Tailscale exit node |
 
-Hosts and their roles are declared in [`hosts/default.nix`](hosts/default.nix); the shared modules in [`modules/`](modules) turn those roles into config.
+Hosts and their roles are declared in [`hosts/default.nix`](hosts/default.nix); the shared modules in [`modules/`](modules) turn those roles into config. Kinds of machine, like a Raspberry Pi model, live in [`profiles/`](profiles) for host directories to import.
 
 ```mermaid
 flowchart LR
