@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   ...
 }: {
   imports = [
@@ -35,27 +36,30 @@
                   type = "btrfs";
                   extraArgs = ["-f"];
                   mountpoint = "/srv/root";
-                  subvolumes = {
-                    "/home" = {
-                      mountOptions = ["compress=zstd"];
-                      mountpoint = "/home";
+                  subvolumes =
+                    {
+                      "/home" = {
+                        mountOptions = ["compress=zstd"];
+                        mountpoint = "/home";
+                      };
+                      "/nix" = {
+                        mountOptions = [
+                          "compress=zstd"
+                          "noatime"
+                        ];
+                        mountpoint = "/nix";
+                      };
+                      "/persistent" = {
+                        mountOptions = [
+                          "compress=zstd"
+                        ];
+                        mountpoint = config.persist.mountpoint;
+                      };
+                    }
+                    // lib.optionalAttrs config.btrbk.enable {
+                      "/home/.snapshots" = {};
+                      "/persistent/.snapshots" = {};
                     };
-                    "/home/.snapshots" = {};
-                    "/nix" = {
-                      mountOptions = [
-                        "compress=zstd"
-                        "noatime"
-                      ];
-                      mountpoint = "/nix";
-                    };
-                    "/persistent" = {
-                      mountOptions = [
-                        "compress=zstd"
-                      ];
-                      mountpoint = config.persist.mountpoint;
-                    };
-                    "/persistent/.snapshots" = {};
-                  };
                 };
               };
             };

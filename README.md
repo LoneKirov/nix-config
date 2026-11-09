@@ -30,7 +30,7 @@ flowchart LR
   ci -- "push packages" --> cachix[(lonekirov.cachix.org)]
   moltres -- "cache.kanto.casa" --> slowpoke[💤 slowpoke] & articuno[❄️ articuno] & mew[🧬 mew]
   main -. "daily auto-upgrade" .-> moltres & slowpoke
-  articuno & mew & slowpoke -- "btrbk" --> moltres
+  articuno & mew -- "btrbk" --> moltres
 ```
 
 ## 🚀 Deploying

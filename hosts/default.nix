@@ -15,7 +15,7 @@
       backup.targets = ["moltres"];
     };
     moltres.backup.receive = "/srv/backup";
-    slowpoke.backup.targets = ["moltres"];
+    slowpoke = {};
   };
 in {
   # every ssh host's pinned key (keys/<host>.pub) must be the key its sops

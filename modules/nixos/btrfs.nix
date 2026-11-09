@@ -13,54 +13,25 @@
       lib.nameValuePair "ssh://${target}${config.hosts.${target}.backup.receive}/${hostName}/${subvolume}" {})
     targets);
 in {
-  options.btrbk.sshKeySopsFile = lib.mkOption {
-    type = lib.types.path;
-    description = "Sops file holding this host's btrbk ssh key under the `ssh_key` key; required when `host.backup.targets` is set.";
+  options.btrbk = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Snapshots /home and the persistent subvolume hourly with btrbk, sending them on to `host.backup.targets`.";
+    };
+    sshKeySopsFile = lib.mkOption {
+      type = lib.types.path;
+      description = "Sops file holding this host's btrbk ssh key under the `ssh_key` key; required when `host.backup.targets` is set.";
+    };
   };
 
   config = lib.mkIf hasBtrfs (lib.mkMerge [
     {
       services = {
         btrfs.autoScrub.enable = lib.mkDefault true;
-        btrbk = {
-          extraPackages = [pkgs.lz4];
-          instances.btrbk = {
-            onCalendar = "hourly";
-            settings = {
-              ssh_user = "btrbk";
-              snapshot_create = "onchange";
-              # local snapshots are for quick undo; longer history lives on the targets
-              snapshot_preserve = "24h 14d";
-              snapshot_preserve_min = "1h";
-              target_preserve = "24h 14d 12w 12m";
-              target_preserve_min = "1h";
-              stream_compress = "lz4";
-              subvolume."/home" = {
-                snapshot_dir = "/home/.snapshots";
-              };
-              subvolume."${config.persist.mountpoint}" = {
-                snapshot_dir = "${config.persist.mountpoint}/.snapshots";
-              };
-            };
-          };
-        };
+        btrbk.extraPackages = [pkgs.lz4];
       };
       systemd = {
-        services.btrbk-btrbk = {
-          wants = ["network-online.target"];
-          after = ["network-online.target"];
-          # the timer catches up right after resume, before DNS is back (see
-          # tailscale-restart-on-resume), so retry rather than wait an hour. A
-          # run whose target fails skips snapshot cleanup, so retrying until the
-          # target is back would pile up snapshots while offline
-          serviceConfig = {
-            Restart = "on-failure";
-            RestartSec = "2min";
-          };
-          startLimitBurst = 3;
-          startLimitIntervalSec = 15 * 60;
-        };
-
         # raid1 rewrites a bad copy from the good one without failing anything,
         # and scrub only fails on errors it couldn't repair, so these counters
         # can be the only sign of a failing disk. They persist across reboots,
@@ -81,11 +52,52 @@ in {
         };
         timers.btrfs-device-stats.timerConfig.Persistent = true;
       };
-      notify.healthchecks.btrbk-btrbk = "btrbk";
     }
+    (lib.mkIf config.btrbk.enable {
+      services.btrbk.instances.btrbk = {
+        onCalendar = "hourly";
+        settings = {
+          ssh_user = "btrbk";
+          snapshot_create = "onchange";
+          # local snapshots are for quick undo; longer history lives on the targets
+          snapshot_preserve = "24h 14d";
+          snapshot_preserve_min = "1h";
+          target_preserve = "24h 14d 12w 12m";
+          target_preserve_min = "1h";
+          stream_compress = "lz4";
+          subvolume."/home" = {
+            snapshot_dir = "/home/.snapshots";
+          };
+          subvolume."${config.persist.mountpoint}" = {
+            snapshot_dir = "${config.persist.mountpoint}/.snapshots";
+          };
+        };
+      };
+      systemd.services.btrbk-btrbk = {
+        wants = ["network-online.target"];
+        after = ["network-online.target"];
+        # the timer catches up right after resume, before DNS is back (see
+        # tailscale-restart-on-resume), so retry rather than wait an hour. A
+        # run whose target fails skips snapshot cleanup, so retrying until the
+        # target is back would pile up snapshots while offline
+        serviceConfig = {
+          Restart = "on-failure";
+          RestartSec = "2min";
+        };
+        startLimitBurst = 3;
+        startLimitIntervalSec = 15 * 60;
+      };
+      notify.healthchecks.btrbk-btrbk = "btrbk";
+    })
     (lib.mkIf (targets != []) {
       assertions =
-        map (target: {
+        [
+          {
+            assertion = config.btrbk.enable;
+            message = "${hostName} sends btrbk backups to ${lib.concatStringsSep ", " targets}, which needs btrbk.enable";
+          }
+        ]
+        ++ map (target: {
           # ssh hosts get their host key pinned, which btrbk relies on since its known_hosts isn't persisted
           assertion = config.hosts ? ${target} && config.hosts.${target}.ssh && config.hosts.${target}.backup.receive != null;
           message = "backup target ${target} of ${hostName} must be an ssh host that sets backup.receive";
