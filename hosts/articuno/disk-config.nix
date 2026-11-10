@@ -82,9 +82,10 @@
         };
       };
       nodev = {
+        # /tmp is a separate tmpfs, so this only holds /etc and state that isn't persisted
         "/" = {
           fsType = "tmpfs";
-          mountOptions = ["defaults" "size=50%" "mode=755"];
+          mountOptions = ["defaults" "size=25%" "mode=755"];
         };
       };
     };

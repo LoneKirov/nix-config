@@ -5,8 +5,12 @@
 {lib, ...}: {
   imports = [./disk-config.nix];
 
-  # lanzaboote's measured boot needs a TPM, which the Pi doesn't have
-  boot.lanzaboote.enable = false;
+  boot = {
+    # lanzaboote's measured boot needs a TPM, which the Pi doesn't have
+    lanzaboote.enable = false;
+    # the Pis have little RAM, so /tmp gets the same limit as the root tmpfs
+    tmp.tmpfsSize = lib.mkDefault "25%";
+  };
   # its only disk is the SD card, which has no SMART
   services.smartd.enable = false;
   # The Pis are appliances: a dead SD card means reinstalling from this flake
