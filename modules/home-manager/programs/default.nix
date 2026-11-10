@@ -32,6 +32,7 @@
     ./podman.nix
     ./ripgrep.nix
     ./ssh.nix
+    ./sshfs.nix
     ./starship.nix
     ./steam.nix
     ./swayimg.nix
