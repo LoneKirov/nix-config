@@ -1,0 +1,72 @@
+name: Stack auto-merge
+on:
+  pull_request:
+    types: [synchronize, ready_for_review]
+
+permissions: {}
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    # when a PR in a stack merges, GitHub retargets the next one to main and
+    # force-pushes it rebased, which arrives here as synchronize
+    if: >-
+      github.event.pull_request.base.ref == github.event.repository.default_branch
+      && !github.event.pull_request.draft
+      && !github.event.pull_request.auto_merge
+      && github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      # GitHub attributes an auto-merge to whoever enabled it, and merges
+      # made with GITHUB_TOKEN don't trigger workflows, so the next PR's
+      # rebase would run neither Nix CI nor this workflow
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.AUTOMERGE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTOMERGE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-workflows: write
+      - name: Enable auto-merge if the PR below merged with it
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          stack=$(gh api "repos/$GH_REPO/pulls/$PR" --jq '.stack // empty | "\(.number) \(.position)"')
+          [ -n "$stack" ] || exit 0
+          read -r stack_number position <<<"$stack"
+          [ "$position" -gt 1 ] || exit 0
+
+          below=$(gh api "repos/$GH_REPO/stacks/$stack_number" \
+            --jq ".pull_requests[$position - 2] | select(.merged_at) | .number")
+          [ -n "$below" ] || exit 0
+
+          # the last auto-merge event before the merge says whether auto-merge
+          # was still on, and with which method
+          # shellcheck disable=SC2016 # $owner and friends are GraphQL variables
+          last=$(gh api graphql -F owner="${GH_REPO%/*}" -F repo="${GH_REPO#*/}" -F number="$below" -f query='
+            query($owner: String!, $repo: String!, $number: Int!) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $number) {
+                  timelineItems(last: 1, itemTypes: [AUTO_MERGE_ENABLED_EVENT, AUTO_REBASE_ENABLED_EVENT, AUTO_SQUASH_ENABLED_EVENT, AUTO_MERGE_DISABLED_EVENT]) {
+                    nodes { __typename }
+                  }
+                }
+              }
+            }' --jq '.data.repository.pullRequest.timelineItems.nodes[0].__typename // empty')
+          case $last in
+            AutoSquashEnabledEvent) method=--squash ;;
+            AutoRebaseEnabledEvent) method=--rebase ;;
+            AutoMergeEnabledEvent) method=--merge ;;
+            *) exit 0 ;;
+          esac
+
+          # GitHub refuses to enable auto-merge on a PR that can already
+          # merge, as when a draft whose checks passed is marked ready
+          if [ "$(gh pr view "$PR" --json mergeStateStatus --jq .mergeStateStatus)" = CLEAN ]; then
+            gh pr merge "$method" "$PR"
+          else
+            gh pr merge --auto "$method" "$PR"
+          fi
