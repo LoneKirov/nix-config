@@ -23,7 +23,7 @@
   ];
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
   hardware.ledger.enable = true;
   user.hm = {
     programs.steam-flatpak.enable = true;

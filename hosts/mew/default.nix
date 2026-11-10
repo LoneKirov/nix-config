@@ -14,7 +14,7 @@
     key = "token";
     owner = config.user.username;
   };
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
   hardware = {
     facter.reportPath = ./facter.json;
     ledger.enable = true;
