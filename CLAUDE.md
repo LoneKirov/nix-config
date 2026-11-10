@@ -37,6 +37,7 @@ NixOS and home-manager flake for the hosts listed in the [README](README.md), wh
 ## Conventions
 
 - `hosts/default.nix` is the host inventory. NixOS modules read this host's flags from `config.host` and every host from `config.hosts`; each host directory is a plain NixOS module.
+- Every host imports `modules/nixos`, so config there is for all hosts, gated by inventory flags when it applies to some. A flag is for something other hosts or home-manager react to. `profiles/` holds kinds of machine, such as a board or an appliance; only the host directories that import a profile get it.
 - home-manager modules run inside NixOS (`user.hm`) and standalone through `lib.homeManagerConfiguration`, where there's no `osConfig`. Gate them on `config.host.*`, and read anything else from `osConfig` with an `or` fallback.
 - Set values hosts may want to change with `lib.mkDefault`, so they don't need `mkForce`. Put a custom option's default in the option itself.
 - Every non-WSL host boots with a tmpfs root. A module that keeps state outside `/nix` and `/home` must add it to `persist.directories` or `persist.files` itself.
