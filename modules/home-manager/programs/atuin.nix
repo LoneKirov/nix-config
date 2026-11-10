@@ -6,6 +6,9 @@
       settings = {
         enter_accept = true;
         sync.records = true;
+        # atuin's secrets_filter only knows specific token formats, so it lets
+        # through keys passed as a plain flag value
+        history_filter = ["--api-key[= ]"];
         # Stats split commands at `|`, so `cmd |& nom` counts as `& nom` unless
         # `&` is stripped as a prefix. Setting this replaces atuin's default of
         # just `sudo`.
