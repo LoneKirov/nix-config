@@ -20,6 +20,21 @@
   wslInterop = wsl.enable && wsl.wslConf.interop.enabled;
   windowsProfiles = "${wsl.wslConf.automount.root}/c/Users";
 
+  atuin = config.home-manager.users.${username}.programs.atuin;
+  # The hooks `atuin hook install claude-code` writes to ~/.claude/settings.json,
+  # kept here because the installer pins atuin's store path at install time.
+  atuinHook = [
+    {
+      matcher = "^Bash$";
+      hooks = [
+        {
+          type = "command";
+          command = "${lib.getExe atuin.package} hook claude-code";
+        }
+      ];
+    }
+  ];
+
   settings = {
     autoMode = {
       environment = [
@@ -138,6 +153,12 @@
           "Read(/${windowsProfiles}/*/.ssh/**)"
           "Read(/${windowsProfiles}/*/AppData/**)"
         ];
+    };
+
+    hooks = lib.optionalAttrs atuin.enable {
+      PreToolUse = atuinHook;
+      PostToolUse = atuinHook;
+      PostToolUseFailure = atuinHook;
     };
   };
 in {
