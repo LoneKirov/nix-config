@@ -3,6 +3,7 @@
     ./beszel-agent
     ./boot.nix
     ./btrfs.nix
+    ./claude-code.nix
     ./comma.nix
     ./dbus.nix
     ./fish.nix
