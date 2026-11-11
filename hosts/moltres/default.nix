@@ -20,7 +20,7 @@
       # backup starts at 04:00 (./restic)
       dates = "*-*-* 03:00:00";
     };
-    stateVersion = "26.05";
+    stateVersion = "26.11";
   };
   hardware.facter.reportPath = ./facter.json;
 }
