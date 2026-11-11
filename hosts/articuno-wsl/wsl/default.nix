@@ -3,6 +3,7 @@
     ./rbw.nix
     ./ssh.nix
     ./wezterm.nix
+    ./zram.nix
   ];
 
   wsl = {
