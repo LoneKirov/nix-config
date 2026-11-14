@@ -402,7 +402,9 @@
       "islandRouteWeather": "island",
       "islandRouteClipboard": "follow",
       "island": true,
-      "dot": false
+      "dot": false,
+      "islandDashTabs": true,
+      "islandMediaLyrics": true
     },
     {
       "id": "bar1771549113523",
@@ -502,7 +504,8 @@
       "shadowColorMode": "text",
       "shadowCustomColor": "#000000",
       "followInterfaceStyle": false,
-      "widgetFollowInterfaceStyle": false
+      "widgetFollowInterfaceStyle": false,
+      "widgetPadding": 8
     },
     {
       "id": "dot1792887092696",
@@ -708,6 +711,7 @@
       "showOnLastDisplay": true,
       "position": 2,
       "mode": "compact",
+      "middleClickAction": "close",
       "taskbarAlign": "center",
       "widgetExpansion": "popout",
       "iconSize": 40,
@@ -778,37 +782,27 @@
     {
       "id": "clock",
       "w": 2,
-      "h": 1,
-      "col": 0,
-      "row": 0
+      "h": 1
     },
     {
       "id": "weather",
       "w": 1,
-      "h": 1,
-      "col": 2,
-      "row": 0
+      "h": 1
     },
     {
       "id": "notifications",
       "w": 3,
-      "h": 5,
-      "col": 3,
-      "row": 0
+      "h": 5
     },
     {
       "id": "calendar",
       "w": 3,
-      "h": 3,
-      "col": 0,
-      "row": 1
+      "h": 3
     },
     {
       "id": "media",
       "w": 3,
-      "h": 1,
-      "col": 0,
-      "row": 4
+      "h": 1
     }
   ],
   "connectedFrameBarStyleBackups": {},
@@ -1019,5 +1013,7 @@
         "syncPositionAcrossScreens": true
       }
     }
-  ]
+  ],
+  "density": "comfortable",
+  "blurWallpaperOnOverview": false
 }
