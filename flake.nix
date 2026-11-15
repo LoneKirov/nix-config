@@ -4,7 +4,7 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    determinate.url = "github:determinateSystems/determinate/v3.24.1";
+    determinate.url = "github:determinateSystems/determinate/v3.24.2";
     systems.url = "github:nix-systems/default-linux";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
