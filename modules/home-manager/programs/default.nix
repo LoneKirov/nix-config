@@ -31,6 +31,7 @@
     ./pay-respects.nix
     ./podman.nix
     ./ripgrep.nix
+    ./signal.nix
     ./ssh.nix
     ./sshfs.nix
     ./starship.nix
