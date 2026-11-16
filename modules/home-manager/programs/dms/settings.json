@@ -181,13 +181,13 @@
   "monoFontFamily": "Maple Mono NF CN",
   "acMonitorTimeout": 600,
   "acLockTimeout": 300,
-  "acSuspendTimeout": 3600,
-  "acProfileName": "1",
+  "acSuspendTimeout": 0,
+  "acProfileName": "",
   "batteryMonitorTimeout": 180,
   "batteryLockTimeout": 120,
   "batterySuspendTimeout": 600,
   "batterySuspendBehavior": 2,
-  "batteryProfileName": "1",
+  "batteryProfileName": "",
   "batteryAutoPowerSaver": true,
   "lockBeforeSuspend": true,
   "fadeToLockGracePeriod": 10,
@@ -1015,5 +1015,7 @@
     }
   ],
   "density": "comfortable",
-  "blurWallpaperOnOverview": false
+  "blurWallpaperOnOverview": false,
+  "batteryChargeLimit": 80,
+  "batteryScaleToChargeLimit": true
 }
