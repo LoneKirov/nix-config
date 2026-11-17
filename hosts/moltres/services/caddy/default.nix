@@ -4,27 +4,54 @@
   pkgs,
   ...
 }: {
-  options.services.caddy-podman.virtualHosts = lib.mkOption {
-    type = lib.types.attrsOf lib.types.lines;
-    default = {};
-    description = "Accumulator for containerized Caddy virtual hosts.";
+  options.services.caddy-podman = {
+    virtualHosts = lib.mkOption {
+      type = lib.types.attrsOf lib.types.lines;
+      default = {};
+      description = "Accumulator for containerized Caddy virtual hosts.";
+    };
+    wildcardDomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      example = ["*.example.com"];
+      description = ''
+        Accumulator for wildcard domains, such as `*.example.com`, to get a
+        certificate for through the Cloudflare DNS challenge. Virtual hosts
+        under one use its certificate instead of getting their own, and
+        requests for its subdomains that match no virtual host are aborted.
+      '';
+    };
   };
   config = let
-    cfg = config.services.caddy-podman.virtualHosts;
-    containerAddHosts = lib.mapAttrsToList (domain: _: "${domain}:127.0.0.1") cfg;
+    cfg = config.services.caddy-podman;
+    containerAddHosts = lib.mapAttrsToList (domain: _: "${domain}:127.0.0.1") cfg.virtualHosts;
     trustLogins = lib.concatStringsSep "\n" (
       lib.mapAttrsToList (domain: _: ''
         trust login redirect uri domain exact ${domain} path prefix /
       '')
-      cfg
+      cfg.virtualHosts
     );
+    wildcards = lib.concatMapStringsSep "\n" (domain: ''
+      ${domain} {
+        tls {
+          dns cloudflare {$CLOUDFLARE_API_TOKEN}
+          # kanto.casa has split DNS: the LAN answers only A records for it
+          # and redirects all port-53 traffic, so the zone lookup and the
+          # propagation check would never see the public zone. OpenDNS also
+          # answers on port 5353, which the router lets moltres reach.
+          resolvers 208.67.222.222:5353 208.67.220.220:5353
+          propagation_timeout 60m
+        }
+        abort
+      }
+    '') (lib.unique cfg.wildcardDomains);
     domains = lib.concatStringsSep "\n" (
       lib.mapAttrsToList (domain: extraConfig: ''
         ${domain} {
           ${extraConfig}
         }
       '')
-      cfg
+      cfg.virtualHosts
     );
     caddyfile = pkgs.writeText "Caddyfile" ''
       {
@@ -81,13 +108,7 @@
         }
       }
 
-      *.kanto.casa {
-      	tls {
-      	  dns cloudflare {$CLOUDFLARE_API_TOKEN}
-      	  propagation_timeout 60m
-      	}
-      	abort
-      }
+      ${wildcards}
 
       ${domains}
     '';
@@ -139,6 +160,23 @@
           ];
         };
       };
+    };
+    services.caddy-podman.wildcardDomains = [
+      "*.kanto.casa"
+      "*.moltres.kanto.casa"
+    ];
+    services.caddy-podman.virtualHosts = {
+      "openwebui.kanto.casa" = ''
+        reverse_proxy vulpix.lan:8080
+      '';
+      "kvm.moltres.kanto.casa" = ''
+        reverse_proxy moltres-kvm.lan:443 {
+          transport http {
+            tls
+            tls_insecure_skip_verify
+          }
+        }
+      '';
     };
   };
 }

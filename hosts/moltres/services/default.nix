@@ -7,7 +7,6 @@ _: {
     ./esphome
     ./immich
     ./immich-frame
-    ./openwebui.nix
     ./plex
     ./pocket-id
     ./syncthing.nix
