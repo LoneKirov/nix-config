@@ -15,10 +15,11 @@
       default = [];
       example = ["*.example.com"];
       description = ''
-        Accumulator for wildcard domains, such as `*.example.com`, to get a
-        certificate for through the Cloudflare DNS challenge. Virtual hosts
-        under one use its certificate instead of getting their own, and
-        requests for its subdomains that match no virtual host are aborted.
+        Accumulator for wildcard domains, such as `*.example.com`, to get one
+        certificate for. Virtual hosts under one use its certificate rather
+        than getting their own, which keeps their names out of Certificate
+        Transparency logs. Requests for its subdomains that match no virtual
+        host are aborted.
       '';
     };
   };
@@ -33,15 +34,6 @@
     );
     wildcards = lib.concatMapStringsSep "\n" (domain: ''
       ${domain} {
-        tls {
-          dns cloudflare {$CLOUDFLARE_API_TOKEN}
-          # kanto.casa has split DNS: the LAN answers only A records for it
-          # and redirects all port-53 traffic, so the zone lookup and the
-          # propagation check would never see the public zone. OpenDNS also
-          # answers on port 5353, which the router lets moltres reach.
-          resolvers 208.67.222.222:5353 208.67.220.220:5353
-          propagation_timeout 60m
-        }
         abort
       }
     '') (lib.unique cfg.wildcardDomains);
@@ -57,6 +49,12 @@
       {
         email caddy@adammill.dev
         order authenticate before respond
+        acme_dns cloudflare {$CLOUDFLARE_API_TOKEN}
+        # kanto.casa has split DNS: the LAN answers only A records for it and
+        # redirects all port-53 traffic, so the DNS challenge's zone lookup
+        # and propagation check would never see the public zone. OpenDNS also
+        # answers on port 5353, which the router lets moltres reach.
+        tls_resolvers 208.67.222.222:5353 208.67.220.220:5353
         security {
           oauth identity provider generic {
             delay_start 3
@@ -164,6 +162,7 @@
     services.caddy-podman.wildcardDomains = [
       "*.kanto.casa"
       "*.moltres.kanto.casa"
+      "*.vulpix.kanto.casa"
     ];
     services.caddy-podman.virtualHosts = {
       "openwebui.kanto.casa" = ''
@@ -171,6 +170,14 @@
       '';
       "kvm.moltres.kanto.casa" = ''
         reverse_proxy moltres-kvm.lan:443 {
+          transport http {
+            tls
+            tls_insecure_skip_verify
+          }
+        }
+      '';
+      "kvm.vulpix.kanto.casa" = ''
+        reverse_proxy vulpix-kvm.lan:443 {
           transport http {
             tls
             tls_insecure_skip_verify
