@@ -61,10 +61,9 @@ A new host gets its key before its first install, so its secrets can be encrypte
 set tmp (mktemp -d)
 ssh-keygen -q -t ed25519 -N '' -C <host> -f $tmp/key
 mv $tmp/key.pub keys/<host>.pub
-ssh-to-age < keys/<host>.pub
 ```
 
-Add that recipient to `.sops.yaml`, with a rule for `<host>/` and the host in the catch-all rule, and run `sops updatekeys` on the files the catch-all covers. Then store the key:
+Add the key from `keys/<host>.pub`, without its comment, to `.sops.yaml` as the host's recipient, with a rule for `<host>/` and the host in the catch-all rule, and run `sops updatekeys` on the files the catch-all covers. Then store the key:
 
 ```fish
 sops encrypt --filename-override hosts/<host>/ssh_host_ed25519_key.sops.yaml \
