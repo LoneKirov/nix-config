@@ -23,7 +23,6 @@
       nix-output-monitor
       nurl
       sops
-      ssh-to-age
     ];
 
   languages.nix.enable = true;

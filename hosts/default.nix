@@ -24,12 +24,12 @@ in {
     checks.host-keys = let
       sshHosts = lib.attrNames (lib.filterAttrs (_: nixos: nixos.config.host.ssh) config.flake.nixosConfigurations);
     in
-      pkgs.runCommand "host-keys" {nativeBuildInputs = [pkgs.ssh-to-age];} ''
+      pkgs.runCommand "host-keys" {} ''
         check() {
-          want=$(sed -n "s/^ *- &$1 \(age1[a-z0-9]*\).*/\1/p" ${../.sops.yaml})
-          got=$(ssh-to-age < "$2")
+          want=$(sed -n "s/^ *- &$1 \(ssh-ed25519 [^ ]*\).*/\1/p" ${../.sops.yaml})
+          got=$(cut -d' ' -f1,2 "$2")
           if [ "$got" != "$want" ]; then
-            echo "keys/$1.pub converts to $got, but .sops.yaml has '$want' for $1" >&2
+            echo "keys/$1.pub is '$got', but .sops.yaml has '$want' for $1" >&2
             exit 1
           fi
         }

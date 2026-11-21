@@ -9,7 +9,7 @@ in {
     {
       # normal priority so a conflicting host definition errors instead of drifting from the inventory
       services.openssh.enable = config.host.ssh;
-      # pin every ssh host's key; CI checks each against its age recipient in .sops.yaml
+      # pin every ssh host's key; CI checks each against its recipient in .sops.yaml
       programs.ssh.knownHosts = lib.mapAttrs (name: _: {
         hostNames = [name "${name}.lan"];
         publicKeyFile = ../../keys/${name}.pub;

@@ -1,10 +1,10 @@
 keys:
   - &kirov age1arp20x5v3fjcvn8vy9udgg5fsn5ht0fjq4qg0yt8ulh3qgs89e3strvap8
-  - &articuno age1y4fmywng3a4ksqaatez7k6fyaezxlz5qclhzqdrqt0rr73dc3a4s8vntge
-  - &articuno-wsl age15l7g85ypry3zf648vqclqywku9t7teftt4tul8qd8r2xlvjpgdnsxp6ac4
-  - &mew age12evvsyf2kt9x7j5wtn672jwztrp8k2mmhjwdrkggazgxxfzhtc4q294je2
-  - &moltres age14eql5hfcrs2dkvfulckq6ntjyvhd6ytk2mpx2qlak8lvmv2zd48qgkcvve
-  - &slowpoke age1y62zzjnt22sm4lvt4dlxwvezed4r0pp5unjxegtyl73qvwdtwdaqg88m6q
+  - &articuno ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjYzxjiqJAlSeKo6wCyN0cJ0WTfVj+TS1fyNOOB6ZcA
+  - &articuno-wsl ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA+mIpraFFeAO0KzjKbfcMc/zOljIjfUBYvsd/eIBKBS
+  - &mew ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAMYjL9ppNReMh7cXbFzW4aBKk9PM2UHBiI79enpJYpt
+  - &moltres ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPOQtDmjaZa9K7lxVLlDOyJxjbJbG5pPA1jNsruyTOBS
+  - &slowpoke ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3iO/UFNsoogZ1QMHjqvo+U85h95CUAkx94UZBbHln2
 creation_rules:
   - path_regex: articuno/.*\.sops\.(yaml|json|env|ini)$
     key_groups:
