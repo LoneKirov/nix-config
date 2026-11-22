@@ -35,7 +35,37 @@
     }
   ];
 
+  # Claude Code honors this only from managed settings, and loads it in every
+  # project on the host, ahead of user and project CLAUDE.md files.
+  claudeMd = ''
+    ## Privilege escalation
+    - Never run sudo, doas, run0, pkexec or any other privilege escalation, locally or over ssh, without asking first. That includes harmless-looking probes like `sudo -n true`. When a step needs root, ask, or give the exact command for the user to run.
+
+    ## Secrets
+    - Never read, print, decrypt or copy the value of a secret or credential: rbw and Bitwarden, decrypted sops output and /run/secrets, age keys, ssh private keys, the gh and attic tokens, Claude Code's credentials, the atuin key, keyrings and browser profiles. Encrypted `*.sops.yaml` files and public keys are fine to read.
+    - Change credentials (rbw unlock, ssh-keygen, `sops updatekeys`, gh auth) only when the user asks for that change. When a task needs a secret's value, ask the user to run that step themselves with `!`.
+    - Shell history and atuin's captured agent threads can hold secrets that got past atuin's filters. Search them with `atuin search --search-mode full-text` or `atuin threads search`, narrow the output with `grep -F` on an exact marker, and never print raw history or whole threads.
+    - The managed permission rules are a backstop, not the line, so don't look for routes they miss. Their leading-wildcard Bash patterns match anywhere in a command, so keep secret paths out of `jj` commit messages.
+    - When adding a new secret location, offer to add it to the rules in `modules/nixos/claude-code.nix`.
+
+    ## Commands
+    - Write multi-step diagnostics as small single-purpose scripts in the scratchpad, each with a header comment saying what it does, and keep read-only queries apart from anything that changes state. Short one-liners can stay inline.
+
+    ## Commits and pull requests
+    - Keep commit body bullets to a line or two each, giving what changed and why. Leave out details the code or its comments already show. Keep a reason from the conversation only when it explains something technical in the change.
+    - Only speculate about what can't be checked before pushing. If a claim can be verified first (deploy a host, re-run CI, read a log), verify it or leave it out.
+    - Notes that only matter in review or at deploy time (what's still unverified, manual steps before or after deploying, "no other host changes") go in the PR description, not the commit. The user usually opens PRs: draft the description and offer to open it, but don't open it unasked.
+
+    ## Nix
+    - When the options are otherwise close, lean toward a stock NixOS or home-manager module over custom glue, and say so. It's a default, not a rule: custom code is fine when it fits better.
+
+    ## This flake (${flakeCheckout})
+    - A short-lived single-host workaround, such as a patch waiting for an upstream release, stays a local jj commit on top of main: keep it rebased and don't suggest a PR. When the fix ships, the patch stops applying and the commit gets abandoned. Permanent workarounds get pushed, host-specific or not.
+    - A separate flake for a work laptop consumes `lib.homeManagerConfiguration`. Don't export the host inventory or other personal-machine config to standalone home-manager. General CLI tools are welcome there, so when adding one at the NixOS level, consider whether standalone home-manager should get it too.
+  '';
+
   settings = {
+    inherit claudeMd;
     autoMode = {
       environment = [
         "### Org-wide"
