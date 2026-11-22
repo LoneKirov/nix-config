@@ -21,12 +21,29 @@ in {
           package = pkgs.symlinkJoin {
             name = "rbw-wrapped";
             paths = let
+              gnome3 = lib.getExe pkgs.pinentry-gnome3;
+              curses = lib.getExe pkgs.pinentry-curses;
+              # rbw-agent runs pinentry with the display variables of the rbw
+              # command that asked for the password, and ssh-agent requests
+              # reuse the last command's. pinentry-gnome3 ignores them and
+              # prompts on the desktop whenever it can reach the session bus,
+              # which pam_systemd also gives ssh logins, so a client without a
+              # local display gets the curses prompt on its own terminal. X
+              # forwarding sets DISPLAY to host:N, never :N.
               pinentry =
                 if gui
-                then lib.getExe pkgs.pinentry-gnome3
-                else lib.getExe pkgs.pinentry-curses;
+                then ''
+                  if [ -n "''${WAYLAND_DISPLAY-}" ]; then
+                    exec ${gnome3} "$@"
+                  fi
+                  case "''${DISPLAY-}" in
+                    :*) exec ${gnome3} "$@" ;;
+                  esac
+                  exec ${curses} "$@"
+                ''
+                else ''exec ${curses} "$@"'';
             in [
-              (pkgs.writeShellScriptBin "pinentry" ''${pinentry} "$@"'')
+              (pkgs.writeShellScriptBin "pinentry" pinentry)
               pkgs.rbw
             ];
           };
