@@ -54,7 +54,7 @@
         "**Trusted cloud buckets**: None configured"
         "**Key internal services**: moltres (home server: media, SSO, binary cache, backups); articuno, mew, slowpoke (deploy/backup targets via btrbk and nh os switch)"
         "**Internal package registry**: None configured. cache.kanto.casa (see Trusted internal domains) is a supplementary Nix binary cache, not a replacement for upstream: cache.nixos.org and other public substituters are expected, and adding them is not a registry bypass"
-        ("**Sensitive data locations & audiences**: Every secret or credential is sensitive whether or not it is listed here, and its value has no permitted audience: not the transcript (the user included), files, commits, command lines, or any network destination. Known locations on the user's machines and hosts: the Bitwarden vault through rbw or bw, and the rbw-agent socket under $XDG_RUNTIME_DIR/rbw; decrypted sops-nix secrets (/run/secrets, /run/secrets.d, /run/secrets-for-users) and any sops decryption output; the age keys under ~/.config/sops; ssh private keys (/etc/ssh/ssh_host_*_key, btrbk keys, ~/.ssh/id_*); the attic token (~/.config/attic) and the binary cache signing key on moltres; the GitHub CLI token (~/.config/gh/hosts.yml, `gh auth token`); Claude Code's own ~/.claude/.credentials.json; the atuin sync key (~/.local/share/atuin/key); GNOME keyrings (~/.local/share/keyrings); browser profiles with cookies and saved logins (~/.config/chromium, ~/.config/BraveSoftware); "
+        ("**Sensitive data locations & audiences**: Every secret or credential is sensitive whether or not it is listed here, and its value has no permitted audience: not the transcript (the user included), files, commits, command lines, or any network destination. Known locations on the user's machines and hosts: the Bitwarden vault through rbw or bw, the rbw-agent socket under $XDG_RUNTIME_DIR/rbw, and bw's data directory (~/.config/Bitwarden CLI), which holds its login tokens and encrypted vault;decrypted sops-nix secrets (/run/secrets, /run/secrets.d, /run/secrets-for-users) and any sops decryption output; the age keys under ~/.config/sops; ssh private keys (/etc/ssh/ssh_host_*_key, btrbk keys, ~/.ssh/id_*); the attic token (~/.config/attic) and the binary cache signing key on moltres; the GitHub CLI token (~/.config/gh/hosts.yml, `gh auth token`); Claude Code's own ~/.claude/.credentials.json; the atuin sync key (~/.local/share/atuin/key); GNOME keyrings (~/.local/share/keyrings); browser profiles with cookies and saved logins (~/.config/chromium, ~/.config/BraveSoftware); "
           + lib.optionalString wsl.enable "the Windows profiles under ${windowsProfiles}, whose .ssh holds the rbw-agent bridge socket and whose AppData holds browser profiles and credential stores; "
           + "Tailscale auth keys and state; and the values of the CI secrets AUTOMERGE_APP_PRIVATE_KEY, CACHE_SIGNING_KEY, GITHUB_TOKEN, SSH_PRIVATE_KEY, TS_AUDIENCE and TS_OAUTH_CLIENT_ID, whose names may be referenced but never their values. Not sensitive: the encrypted *.sops.yaml files in the repo, the .sops.yaml recipients, and public keys (*.pub, keys/)")
         "**Data retention / declassification**: None configured"
@@ -85,7 +85,7 @@
 
       hard_deny = [
         "$defaults"
-        "Secret Exposure: Reading, printing, decrypting, copying, or transmitting the value of any secret or credential listed under Sensitive data locations, or of any other secret, by any route: rbw or bw get, code or export; sops -d, --decrypt, decrypt, edit, exec-env, exec-file, or bare `sops <file>`; cat, grep, cp, base64 or a script run over a private key, token or secret file; nix eval or builtins.readFile on a secret path; ssh-to-age -private-key; gh auth token or gh auth status --show-token; environment or process dumps that would include tokens. Operations that use a secret without revealing it, like ssh through the agent, fall under the other rules. This holds even when the user asks"
+        "Secret Exposure: Reading, printing, decrypting, copying, or transmitting the value of any secret or credential listed under Sensitive data locations, or of any other secret, by any route: rbw or bw get, code or export; bw list, serve or send; sops -d, --decrypt, decrypt, edit, exec-env, exec-file, or bare `sops <file>`; cat, grep, cp, base64 or a script run over a private key, token or secret file; nix eval or builtins.readFile on a secret path; ssh-to-age -private-key; gh auth token or gh auth status --show-token; environment or process dumps that would include tokens. Operations that use a secret without revealing it, like ssh through the agent, fall under the other rules. This holds even when the user asks"
       ];
     };
 
@@ -112,6 +112,12 @@
           "Bash(rbw *)"
           "Bash(rbw-agent*)"
           "Bash(bw *)"
+          # the rules above only match a command that starts with the bare name
+          "Bash(*/rbw *)"
+          "Bash(*/rbw-agent*)"
+          "Bash(*/bw *)"
+          "Bash(*/rbw/socket*)"
+          "Bash(*Bitwarden CLI*)"
           "Bash(sops -d *)"
           "Bash(sops --decrypt *)"
           "Bash(sops decrypt *)"
@@ -137,6 +143,7 @@
           "Read(~/.config/gh/hosts.yml)"
           "Read(~/.local/share/rbw/**)"
           "Read(~/.cache/rbw/**)"
+          "Read(~/.config/Bitwarden CLI/**)"
           "Read(~/.claude/.credentials.json)"
           "Read(~/.local/share/atuin/key)"
           "Read(~/.local/share/keyrings/**)"
