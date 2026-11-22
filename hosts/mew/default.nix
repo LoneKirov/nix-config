@@ -20,6 +20,7 @@
     ledger.enable = true;
   };
   user.hm = {
+    programs.faugus-flatpak.enable = true;
     programs.steam-flatpak.enable = true;
     services.rbw-agent.enable = true;
   };
