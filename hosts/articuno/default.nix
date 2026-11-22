@@ -17,7 +17,10 @@
   time.hardwareClockInLocalTime = true;
   hardware.ledger.enable = true;
   user.hm = {
+    programs.faugus-flatpak.enable = true;
     programs.steam-flatpak.enable = true;
+    # the Steam library on the Windows drive
+    services.flatpak.overrides."com.valvesoftware.Steam".Context.filesystems = ["/mnt/games"];
     services.rbw-agent.enable = true;
   };
 }

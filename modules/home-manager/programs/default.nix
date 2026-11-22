@@ -17,6 +17,7 @@
     ./fish.nix
     ./flatpak.nix
     ./fzf.nix
+    ./games
     ./gh.nix
     ./git.nix
     ./jq.nix
@@ -35,7 +36,6 @@
     ./ssh.nix
     ./sshfs.nix
     ./starship.nix
-    ./steam.nix
     ./swayimg.nix
     ./syncthing.nix
     ./trash-cli.nix
