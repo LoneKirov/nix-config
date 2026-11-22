@@ -11,6 +11,9 @@
   # instead. It only does that when it finds a TPM and a BitLocker volume, and the
   # option is experimental; see loader.conf(5).
   boot.lanzaboote.settings.reboot-for-bitlocker = true;
+  # systemd-boot's id for the Windows entry it detects. When that entry is
+  # missing, systemd-boot falls back to the first NixOS entry.
+  boot.lanzaboote.settings.default = "auto-windows";
 
   systemd.services.windows-boot-files = {
     description = "Copy Windows' boot files to the ESP for systemd-boot";
