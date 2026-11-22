@@ -1,6 +1,7 @@
 {
   imports = [
     ./beszel-agent
+    ./bluetooth.nix
     ./boot.nix
     ./btrfs.nix
     ./claude-code.nix
