@@ -7,6 +7,22 @@
   inherit (lib) types;
   persistentMountpoint = "/persistent";
   isWSL = config.host.wsl;
+
+  # Preservation's tmpfiles rules run on every boot after the bind mount is up,
+  # so the ownership and mode in them override what the module that owns the
+  # state sets through its own tmpfiles rule, createHome or StateDirectory. The
+  # ":" prefix makes tmpfiles apply them only when it creates the path.
+  withCreateOnly = key: mode: entry:
+    {
+      user = ":root";
+      group = ":root";
+      mode = ":${mode}";
+    }
+    // (
+      if builtins.isString entry
+      then {${key} = entry;}
+      else entry
+    );
 in {
   imports = [
     inputs.preservation.nixosModules.preservation
@@ -24,12 +40,20 @@ in {
       directories = lib.mkOption {
         type = types.listOf (types.either types.str types.attrs);
         default = [];
-        description = "Directories to preserve under the persistent mountpoint.";
+        description = ''
+          Directories to preserve under the persistent mountpoint. Unless an
+          entry sets user, group or mode, a missing directory is created as
+          root:root 0755 and an existing one keeps its ownership and mode.
+        '';
       };
       files = lib.mkOption {
         type = types.listOf (types.either types.str types.attrs);
         default = [];
-        description = "Files to preserve under the persistent mountpoint.";
+        description = ''
+          Files to preserve under the persistent mountpoint. Unless an entry
+          sets user, group or mode, a missing file is created as root:root 0644
+          and an existing one keeps its ownership and mode.
+        '';
       };
     };
   };
@@ -80,7 +104,8 @@ in {
       # need /persistent available in initrd so preservation has access to it
       fileSystems.${persistentMountpoint}.neededForBoot = true;
       preservation.preserveAt.${persistentMountpoint} = {
-        inherit (config.persist) directories files;
+        directories = map (withCreateOnly "directory" "0755") config.persist.directories;
+        files = map (withCreateOnly "file" "0644") config.persist.files;
       };
       # setup /var/lib/private for persisting DynamicUser services
       systemd.tmpfiles.rules = [
