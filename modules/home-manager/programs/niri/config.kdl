@@ -51,6 +51,11 @@ hotkey-overlay {
     skip-at-startup
 }
 
+// Without this, CEF apps such as Spotify draw their own title bar, which before
+// CEF 149 is Chromium's old blue frame.
+// https://github.com/chromiumembedded/cef/issues/4061
+prefer-no-csd
+
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 // Discord and Telegram activate their windows from notifications and tray

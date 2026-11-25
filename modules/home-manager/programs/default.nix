@@ -33,6 +33,7 @@
     ./podman.nix
     ./ripgrep.nix
     ./signal.nix
+    ./spotify.nix
     ./ssh.nix
     ./sshfs.nix
     ./starship.nix
