@@ -51,6 +51,36 @@ in {
           startAt = "daily";
         };
         timers.btrfs-device-stats.timerConfig.Persistent = true;
+
+        # btrfs-scrub@ cancels its scrub when stopped, and its timer has already
+        # fired, so an upgrade's reboot would drop that scrub until the next
+        # interval. A balance needs no check, since it resumes on the next mount.
+        # Exiting 1 skips this run without failing it
+        services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
+          serviceConfig.ExecCondition = lib.getExe (pkgs.writeShellApplication {
+            name = "no-btrfs-scrub-running";
+            runtimeInputs = [pkgs.btrfs-progs pkgs.util-linux];
+            text = ''
+              for mountpoint in $(findmnt -t btrfs -nro UUID,TARGET | sort -u -k1,1 | cut -d' ' -f2); do
+                if [[ $(btrfs scrub status "$mountpoint") =~ Status:\ +running ]]; then
+                  echo "btrfs scrub running on $mountpoint, skipping this upgrade"
+                  exit 1
+                fi
+              done
+            '';
+          });
+        };
+
+        # Once unallocated space runs low (10 GiB on any filesystem bigger than
+        # that), the kernel moves data out of its emptiest block groups, more
+        # eagerly the closer it gets to none, so metadata can still get new
+        # chunks without a regular balance. The threshold is sized from data
+        # chunks, so metadata is left alone
+        # https://btrfs.readthedocs.io/en/latest/ch-sysfs.html
+        tmpfiles.settings.btrfs-reclaim = {
+          "/sys/fs/btrfs/*/allocation/data/dynamic_reclaim".w.argument = "1";
+          "/sys/fs/btrfs/*/allocation/data/periodic_reclaim".w.argument = "1";
+        };
       };
     }
     (lib.mkIf config.btrbk.enable {
