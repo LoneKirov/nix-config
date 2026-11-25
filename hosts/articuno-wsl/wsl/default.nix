@@ -35,10 +35,34 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   user.hm = {
+    config,
     lib,
     pkgs,
     ...
   }: {
+    options.windows.withInterop = lib.mkOption {
+      type = lib.types.path;
+      readOnly = true;
+      description = ''
+        Script running its arguments with `WSL_INTEROP` set to a listening
+        interop socket. Windows executables need it, and systemd units and
+        activation scripts don't inherit it. Exits non-zero if no interop
+        socket is listening.
+      '';
+      default = lib.getExe (pkgs.writeShellApplication {
+        name = "with-wsl-interop";
+        runtimeInputs = [pkgs.iproute2];
+        text = ''
+          if [[ $(ss -xl) =~ /run/WSL/[0-9]+_interop ]]; then
+            export WSL_INTEROP=''${BASH_REMATCH[0]}
+            exec "$@"
+          fi
+          echo "no WSL interop socket is listening" >&2
+          exit 1
+        '';
+      });
+    };
+
     options.windows.profile = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
@@ -47,10 +71,9 @@
         or as a Windows path when passed `-w`. Exits non-zero if Windows can't be reached.
       '';
       default = pkgs.writeShellScript "windows-profile" ''
-        export WSL_INTEROP=$(${lib.getExe' pkgs.iproute2 "ss"} -xl | grep -o '/run/WSL/[0-9]*_interop' | head -n 1)
         # cmd.exe warns when started from a UNC working directory
         cd /mnt/c || exit 1
-        profile=$(/mnt/c/Windows/System32/cmd.exe /d /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r')
+        profile=$(${config.windows.withInterop} /mnt/c/Windows/System32/cmd.exe /d /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r')
         case "$profile" in
           "" | *%*) exit 1 ;;
         esac
