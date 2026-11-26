@@ -83,6 +83,28 @@ in {
         };
       };
     }
+    (lib.mkIf (config.services.beesd.filesystems != {}) {
+      # bees 0.11 caps a match at 128 MiB, but btrfs preallocates extents of up
+      # to 256 MiB. In a duplicate extent longer than 128 MiB, every block past
+      # the cap starts a new match that walks 128 MiB back, a few seconds per
+      # block, so one file can hold a core for hours. The beesd module has no
+      # package option, hence the overlay
+      # https://github.com/Zygo/bees/issues/325
+      nixpkgs.overlays = [
+        (final: prev: {
+          bees = prev.bees.overrideAttrs (old: {
+            patches =
+              (old.patches or [])
+              ++ [
+                (final.fetchpatch {
+                  url = "https://github.com/Zygo/bees/commit/b8086fb41af052bdadf35dc13382604e246dc12c.patch";
+                  hash = "sha256-HhK0swaw9zfz4uoKSNq3nhQrs/UzmJ/GH0Yg9KLrW54=";
+                })
+              ];
+          });
+        })
+      ];
+    })
     (lib.mkIf config.btrbk.enable {
       services.btrbk.instances.btrbk = {
         onCalendar = "hourly";
