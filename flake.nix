@@ -47,6 +47,13 @@
       url = "github:AvengeMedia/base46";
       flake = false;
     };
+    # boot splash from a multi-package repo. Pinned to a reviewed commit that
+    # Dependabot leaves alone, so updating it means reviewing the new code;
+    # flake = false keeps the repo's own inputs out of flake.lock
+    plymouth-nixos-chase = {
+      url = "github:DanielTallon/nix-packages/8a9e67813b2087ba9c1ccbbde5fdace122f203db";
+      flake = false;
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak/v0.8.0";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
