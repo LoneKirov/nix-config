@@ -6,6 +6,7 @@
   isWSL = config.host.wsl;
 in {
   imports = [
+    ./facter-dhcp.nix
     ./tailscale.nix
   ];
 
