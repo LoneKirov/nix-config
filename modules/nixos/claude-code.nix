@@ -20,7 +20,71 @@
   wslInterop = wsl.enable && wsl.wslConf.interop.enabled;
   windowsProfiles = "${wsl.wslConf.automount.root}/c/Users";
 
-  atuin = config.home-manager.users.${username}.programs.atuin;
+  hm = config.home-manager.users.${username};
+  atuin = hm.programs.atuin;
+
+  # Claude Code's own worktrees are git branches, which jj repos like this one
+  # avoid; these hooks replace its git logic in every repo. In a jj repo the
+  # worktree is a jj workspace on trunk; elsewhere it's what Claude Code would
+  # make, a git worktree on its own branch.
+  worktreeCreate = pkgs.writeShellApplication {
+    name = "claude-worktree-create";
+    runtimeInputs = [hm.programs.jujutsu.package hm.programs.git.package pkgs.jq];
+    text = ''
+      input=$(cat)
+      name=$(jq -er .name <<<"$input")
+      dir=''${CLAUDE_PROJECT_DIR:-$(jq -er .cwd <<<"$input")}
+      if root=$(jj --ignore-working-copy -R "$dir" workspace root 2>/dev/null); then
+        path=$root/.claude/worktrees/$name
+        mkdir -p "$(dirname "$path")"
+        # jj registers a git worktree for the new workspace only when run from
+        # a colocated one, which the project's checkout is
+        jj -R "$root" workspace add --name "$name" -r 'coalesce(trunk() ~ root(), @-)' "$path" >&2
+      else
+        root=$(git -C "$dir" rev-parse --show-toplevel)
+        path=$root/.claude/worktrees/$name
+        base=$(git -C "$root" rev-parse --verify --quiet 'origin/HEAD^{commit}' || git -C "$root" rev-parse HEAD)
+        git -C "$root" worktree add -b "worktree-$name" "$path" "$base" >&2
+      fi
+      echo "$path"
+    '';
+  };
+  worktreeRemove = pkgs.writeShellApplication {
+    name = "claude-worktree-remove";
+    runtimeInputs = [hm.programs.jujutsu.package hm.programs.git.package pkgs.jq];
+    text = ''
+      path=$(jq -er .worktree_path)
+      [ -d "$path" ] || exit 0
+      name=$(basename "$path")
+      if [ -d "$path/.jj" ]; then
+        [ "$name" != default ]
+        [ "$(jj --ignore-working-copy -R "$path" workspace root)" = "$path" ]
+        jj --ignore-working-copy -R "$path" workspace list -T 'name ++ "\n"' | grep -qxF "$name"
+        # Record the workspace's edits before forgetting it: forget drops its
+        # working-copy commit only when that's empty, and if another workspace
+        # rewrote that commit, update-stale keeps the edits in a divergent copy
+        jj -R "$path" workspace update-stale >&2
+        jj -R "$path" status >&2
+        jj -R "$path" workspace forget "$name" >&2
+        rm -rf -- "$path"
+      else
+        common=$(git -C "$path" rev-parse --path-format=absolute --git-common-dir)
+        # both refuse to drop uncommitted changes or an unmerged branch
+        git --git-dir "$common" worktree remove "$path" >&2
+        git --git-dir "$common" branch -d "worktree-$name" >&2 || true
+      fi
+    '';
+  };
+  worktreeHook = script: [
+    {
+      hooks = [
+        {
+          type = "command";
+          command = lib.getExe script;
+        }
+      ];
+    }
+  ];
   # The hooks `atuin hook install claude-code` writes to ~/.claude/settings.json,
   # kept here because the installer pins atuin's store path at install time.
   atuinHook = [
@@ -50,6 +114,9 @@
 
     ## Commands
     - Write multi-step diagnostics as small single-purpose scripts in the scratchpad, each with a header comment saying what it does, and keep read-only queries apart from anything that changes state. Short one-liners can stay inline.
+
+    ## Worktrees
+    - To isolate work in a worktree, call `EnterWorktree` with a `name`. On this host a WorktreeCreate hook makes that a jj workspace on trunk in a jj repo, not a git branch (elsewhere, a git worktree on its own branch), and Claude Code forgets the workspace and deletes its directory with the session, keeping its commits. Don't make workspaces by hand or enter one by `path`, since that skips the cleanup.
 
     ## Commits and pull requests
     - Keep commit body bullets to a line or two each, giving what changed and why. Leave out details the code or its comments already show. Keep a reason from the conversation only when it explains something technical in the change.
@@ -192,11 +259,16 @@
         ];
     };
 
-    hooks = lib.optionalAttrs atuin.enable {
-      PreToolUse = atuinHook;
-      PostToolUse = atuinHook;
-      PostToolUseFailure = atuinHook;
-    };
+    hooks =
+      {
+        WorktreeCreate = worktreeHook worktreeCreate;
+        WorktreeRemove = worktreeHook worktreeRemove;
+      }
+      // lib.optionalAttrs atuin.enable {
+        PreToolUse = atuinHook;
+        PostToolUse = atuinHook;
+        PostToolUseFailure = atuinHook;
+      };
   };
 in {
   # Managed settings rather than ~/.claude/settings.json: the file is
