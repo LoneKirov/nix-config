@@ -610,6 +610,23 @@
         "type": "github"
       }
     },
+    "plymouth-nixos-chase": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795838318,
+        "narHash": "sha256-XiEDdJCzQZWHBmHsyEzg4gLL7Nux298jB9sa+pKH06Y=",
+        "owner": "DanielTallon",
+        "repo": "nix-packages",
+        "rev": "8a9e67813b2087ba9c1ccbbde5fdace122f203db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DanielTallon",
+        "repo": "nix-packages",
+        "rev": "8a9e67813b2087ba9c1ccbbde5fdace122f203db",
+        "type": "github"
+      }
+    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -680,6 +697,7 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
+        "plymouth-nixos-chase": "plymouth-nixos-chase",
         "preservation": "preservation",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix",

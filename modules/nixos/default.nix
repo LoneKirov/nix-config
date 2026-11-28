@@ -18,6 +18,7 @@
     ./nix
     ./notify
     ./pam.nix
+    ./plymouth.nix
     ./podman.nix
     ./power-profile.nix
     ./preservation.nix

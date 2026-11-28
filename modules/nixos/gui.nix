@@ -66,6 +66,12 @@ in {
 
     location.provider = "geoclue2";
 
+    # nixpkgs runs greetd as Type=idle, which holds each of its commands
+    # (dux-greeter adds an ExecStartPre) for up to 6s while boot jobs are still
+    # queued, so the console shows between the boot splash and the greeter. Idle
+    # only keeps boot messages off a text greeter's tty
+    systemd.services.greetd.serviceConfig.Type = lib.mkForce "simple";
+
     persist.directories = lib.mkIf config.services.displayManager.dux-greeter.enable [
       "/var/lib/dms-greeter"
     ];

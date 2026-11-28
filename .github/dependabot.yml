@@ -6,6 +6,9 @@ updates:
       interval: "weekly"
       day: "saturday"
       time: "14:00"
+    ignore:
+      # pinned to a reviewed commit in flake.nix
+      - dependency-name: "plymouth-nixos-chase"
     groups:
       flake-dependencies:
         patterns:
